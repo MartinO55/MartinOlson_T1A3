@@ -49,7 +49,7 @@ end
             puts "Double-wrapping your hands to protect them from the cold, you dig under some broken statues. In a few minutes you’ve uncovered a beautiful antique mace, its metal head coated in an unusual blue lacquer.\n\n
             Digging some more, you realize something – the weapon still has a frozen hand attached to it! A second later, your boot brushes aside the remains of the man’s face! The blue skin is cracked and broken. Apparently, some warrior died wielding this mace\n\n"
             
-            #add a skill check to take the mace
+            #add a skill check to take the mace (will). Mace has requirements
 
             puts "Which way now?"
             puts "[1] Through the servants door\n"
