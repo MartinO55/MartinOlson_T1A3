@@ -7,14 +7,16 @@ require_relative "game.rb"
 class Beyond_the_vale
     
     def initialize ()
-       # puts "you called beyond the vale"
-        getDestination(1)
+      #  puts "you called beyond the vale"
+        Card1.new.startCard1
+       # getDestination(1)
+
     end
 
     def getDestination(cardNumber) #so this needs to call a function from a class that knows all the cards, where each function is an individual card
         
-        #puts "I called number " + cardNumber.to_s
-        Card1.new.startCard1
+       # puts "I called number " + cardNumber.to_s
+        
     end
 
 end
