@@ -19,6 +19,9 @@ class Beyond_the_vale
         
     end
 
+
+    #TODO Game over function
+
 end
 
-#call the cards
+#call the cards - moved to the cards themselves
