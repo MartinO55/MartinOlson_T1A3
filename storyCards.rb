@@ -168,7 +168,7 @@ end
        elsif cardDestinations == 2
            Card22.new.startCard22
        else cardDestinations == 3
-           Card17.new.startcard17
+           Card17.new.startCard17
        end
     end
  end
@@ -741,7 +741,7 @@ class Card42 <StoryCard
         if cardDestinations == 1 
             Card4.new.startCard4
         else cardDestinations == 2
-            card45.new.startCard45
+            Card45.new.startCard45
         end
     end
 end
@@ -951,44 +951,91 @@ class Card54 <StoryCard
 end
 
 class Card55 <StoryCard
-    def startCard55() #this needs to clear the screen
+    def startCard55() 
         clearScreen()
-    puts ""
+    puts "Careful of the crumbling floor, you peer down into the dark hole.\n\nA horrible reek hits you, and you involuntarily snap your hand over your nose.\nEven in this cold weather, something down the hole smells really bad.\n\nYou look down further into the pit and see that the ground is about ten feet below where you stand. You could jump down.\n\nBrushing yourself off, you look around the dimly lit chamber. You realize your torch is sputtering.\nWithin seconds, the darkness in the chamber closes around you.\nYou can barely make out a worn door, a few feet away, indecipherable writings slashed into its wood."
+   # Make a DX roll. On a success, you jump down without injury. If you fail, you take 1d-4 cr damage from the fall.
+    puts "Now what?"
+
+    puts "[1] Creep up to the door and listen"
+    puts "[2] Go forward bravely and push the door aside"
+
+    getNextCard(cardDestinations)
+        if cardDestinations == 1
+            Card46.new.startCard46
+        else cardDestinations == 2
+            Card7.new.startCard7
+        end
     end
 end
 
     class Card56 <StoryCard
-        def startCard56() #this needs to clear the screen
+        def startCard56() 
             clearScreen()
-        puts ""
+        puts "Gritting your teeth you pull up the bloody, torn mattress that lies on the floor. A silver sparkle catches your eye.\nYou reach down and pick up a beautiful silver and glass scepter. Perhaps it belonged to the noble pictured in this room.\n\nConfident that you’ve found a great treasure, you throw your burning torch on the mattress and let the room ignite.\nYou’re determined to clean out the filth of the creature that lived here.\n\n Dashing out of the smoky room, you leave the Castle of Madness behind.\nSurely more treasure and adventure lies within its walls, but you feel better returning with trusted friends.\nPerhaps with a party of adventurers, the yetis and blood men will not pose as much of a threat"
+        puts "[1] Time to leave this place"
+
+        getNextCard(cardDestinations)
+            if cardDestinations == 1
+                Card60.new.startCard60
+            end
         end
     end
 
     class Card57 <StoryCard
         def startCard57() #this needs to clear the screen
             clearScreen()
-        puts ""
+        puts "You’re smart enough to know that it’s not the design on the tapestry that is worth gold, but the fabric itself.\nCarefully examining both tapestries, you see that the runed axe one is cheaper and shoddier than the finely woven fabric of the armored maiden tapestry is"
+        puts "[1] Take the Tapestry of the Armoured maiden, and examine the hole in the floor" #add armoured maiden to inventory
+            
+        getNextCard(cardDestinations)
+            if cardDestinations == 1
+                Card55.new.startCard55
+            end
         end
     end
 
     class Card58 <StoryCard
         def startCard58() #this needs to clear the screen
             clearScreen()
-        puts ""
+        puts "Grasping your knife tightly – the space around the bed is too small to wield your main weapon – you kick over the mattress.\nYou jump back in shock when you see a half-eaten, bloodless corpse staring up at you.\n\nTurning away in revulsion, you stagger back before you steady yourself for a second look.\nThe man has only been dead for a few weeks – he’s dressed in a wind-torn cloak and has well-worn boots on the remains of his feet.\nApparently, this man was exploring the castle like you.\nWhat ate him and stuffed his body in this bed, however, is beyond your imagination"
+        
+        puts "[1] leave the room and head down the corridor"
+
+        getNextCard(cardDestinations)
+            if cardDestinations == 1
+                Card25.new.startCard25
+            end
         end
     end
 
     class Card59 <StoryCard
-        def startCard59() #this needs to clear the screen
+        def startCard59() #this needs to add the crossbow
             clearScreen()
-        puts ""
+        puts "Your foot slips up the stairs once, but your tight hold on the railing saves you from a nasty fall down the steps.\nYou have to drag yourself up the last few steps, since the ice is about as thick as your fist.\nPulling your way onto a cold landing, where the wind whips through open windows and chills you to the bone, you glance around this ancient lookout tower.\n\nIt seems all barren, except for a lone crossbowmounted on the wall.\nYou pull it down and strap it to your back. You’ve never used a crossbow before, but it may come in handy later.\n\nYou kick the dirty snow beneath the crossbow and find what you were looking for – a single, rusty bolt.\nYou’ll have one shot with this crossbow.\nHappy that you found anything at all in this crumbling tower, you carefully make your way down the stairs"
+        puts "Now which way?"
+
+        puts "[1] Explore the Bedrooms"
+        puts "[2] Down the main corridor"
+
+        getNextCard(cardDestinations)
+            if cardDestinations == 1
+                Card28.new.startCard28
+            else cardDestinations == 2
+                Card25.new.startCard25
+            end
         end
     end
 
     class Card60 < StoryCard
         def startCard60()
             clearScreen()
-            puts "card 60"
+            puts "You arrive back in the town of Winterhaven a little injured, but safe.\nYou quickly head to the local merchant’s bazaar to sell the wares that you found.\nThe merchants are all very impressed - many of the goods you found were antiques and are quite valuable"
+            #if rescuer == true
+            puts "You drag the wounded warrior back to Winterhaven.\nYou discover his name is Jrak Kul, a lieutenant in Winterhaven’s town watch, and a member of the secretive Martyrs of War clan.\n\nThe Martyrs reward you handsomely for his safe return – 5 silver talents – and invite you to join their ranks."
+            puts "Congratulations - You have bested the Castle of Madness, and have quite the tale to tell the folks back in the tavern"
+            puts "Many thanks to JC Connors for writing this module, So I had something to use as a basis for the story.\nIt would not have been possible any other way. "
+            #Go back to main menu/call credits
         end
     end
 
