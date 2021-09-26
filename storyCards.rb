@@ -440,6 +440,7 @@ class Card20 <StoryCard
     #add Ambushed modifier. It doesn't matter in this case as it only affects tactical combat
 
     puts "[1] Prepare to Fight!"
+
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card17.new.startCard17
