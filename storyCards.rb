@@ -1,6 +1,6 @@
-require_relative "game.rb"
-require_relative "playercharacter.rb"
-require_relative "enemys.rb"
+require_relative "game.rb" #this is where the skill checks and probably comat will go
+require_relative "playercharacter.rb" #this is where inventory will need to be pushed to
+require_relative "enemys.rb" #this is where enemies will come from
 
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
     
