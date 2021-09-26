@@ -1,6 +1,6 @@
 require_relative "game.rb" #this is where the skill checks and probably comat will go
-require_relative "playercharacter.rb" #this is where inventory will need to be pushed to
-require_relative "enemys.rb" #this is where enemies will come from
+require_relative "characters.rb" #this is where inventory will need to be pushed to
+#require_relative "enemys.rb" #this is where enemies will come from. NOW OBSOLETE
 
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
     
@@ -21,6 +21,8 @@ class StoryCard #this class is all the cards, including the endings, whose desti
     end
 
     #needs a method to push new loot to player character hash, and inventory
+
+    #need method to call skill checks?
 
 end
 
@@ -54,7 +56,7 @@ end
             puts "Double-wrapping your hands to protect them from the cold, you dig under some broken statues. In a few minutes you’ve uncovered a beautiful antique mace, its metal head coated in an unusual blue lacquer.\n\n
             Digging some more, you realize something – the weapon still has a frozen hand attached to it! A second later, your boot brushes aside the remains of the man’s face! The blue skin is cracked and broken. Apparently, some warrior died wielding this mace\n\n"
             
-            #add a skill check to take the mace (will). Mace has requirements
+            #add a skill check to take the mace (will).
 
             puts "Which way now?"
             puts "[1] Through the servants door\n"
@@ -355,18 +357,31 @@ end
 class Card19 <StoryCard
     def startCard19() 
         clearScreen()
-    puts "You stumble another half-hour in the snow. The cave was probably the home to a pack of yetis, or ice trolls. It’s a good thing you avoided it.\n\nUnfortunately, the cold winds have begun to take their toll.\n\nYou stare up at the looming castle.\n\nIts stone has been covered with sheets of ice as thick as your body.\nWith any luck, you won’t have to climb up the walls to find an entrance"
-    #Reduce your FP by 1 and make a Survival (Mountains) roll.If you fail, you take an additional 1d-3 damage from exhaustion and hypothermia. 
-    puts "Where to now?"
-    puts "[1] Circle around the castle to look for an entrace"
-    puts "[2] Climb the wall with your rope and pitons"
+        puts "You stumble another half-hour in the snow. The cave was probably the home to a pack of yetis, or ice trolls. It’s a good thing you avoided it.\n\nUnfortunately, the cold winds have begun to take their toll.\n\nYou stare up at the looming castle.\n\nIts stone has been covered with sheets of ice as thick as your body.\nWith any luck, you won’t have to climb up the walls to find an entrance"
+        #Reduce your FP by 1 and make a Survival (Mountains) roll.If you fail, you take an additional 1d-3 damage from exhaustion and hypothermia. 
 
-    getNextCard(cardDestinations)
-        if cardDestinations == 1
-            Card3.new.startCard3
-        else cardDestinations == 2
-            Card35.new.startCard35
-        end
+        card19test = IQCheck.new.survivalCheck
+        puts  card19test
+        card19ToPass = Player.intelligence
+        puts card19ToPass
+            if card19test > card19ToPass#fail
+                puts "the cold starts to take its toll on you."
+                Player.hitpoints -=1
+                puts Player.hitpoints
+            else card19test <= card19ToPass
+                puts "test passed"
+            end
+
+        puts "Where to now?"
+        puts "[1] Circle around the castle to look for an entrace"
+        puts "[2] Climb the wall with your rope and pitons"
+
+        getNextCard(cardDestinations)
+            if cardDestinations == 1
+                Card3.new.startCard3
+            else cardDestinations == 2
+                Card35.new.startCard35
+            end
     end
 end
 

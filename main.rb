@@ -1,9 +1,9 @@
-include dice
+
 
 require_relative "storyCards.rb"
 require_relative "game.rb"
-require_relative "enemys.rb"
-require_relative "playercharacter.rb"
+require_relative "characters.rb"
+#require_relative "playercharacter.rb"
 #TODO - call necessary classes
 
 #TODO - Start game
