@@ -383,7 +383,16 @@ class Card18 <StoryCard
 
     getNextCard(cardDestinations)
         if cardDestinations == 1 
-            Card30.new.startCard30 #succeed lockpick, else back to 18. I think this becomes a very complicated nested series of loops
+            card18LockPickTest = DexChecks.new.lockpickingCheck 
+            card18LockPickTestToPass = Player.dexterity -2
+            if card18LockPickTest <= card18LockPickTestToPass
+                Card30.new.startCard30 #succeed lockpick
+            else card18LockPickTest >card18LockPickTestToPass
+                puts "the Lock refuses to budge" #go to 40
+                puts "[1] Continue"
+                card18lockpickfail = gets.chomp.to_i
+                Card40.new.startCard40
+            end
         elsif cardDestinations == 2 #breaking down the door
             Card40.new.startCard40
         else cardDestinations == 3
@@ -431,7 +440,6 @@ class Card20 <StoryCard
     #add Ambushed modifier. It doesn't matter in this case as it only affects tactical combat
 
     puts "[1] Prepare to Fight!"
-
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card17.new.startCard17
@@ -445,6 +453,11 @@ class Card21 <StoryCard
     puts "You spit a curse at the defeated troll. You quickly search the creature’s lair but find nothing of interest other than some bloody bones and troll teeth.\n\nYou spend some time bandaging your wounds.\n\nAnxious to leave this chamber before the ice troll finds the courage to come back, you push your way down a long twisting corridor.\n\nThe end of the tunnel appears about twenty minutes later, but it’s been completely frozen shut with ice and snow.\nYou draw your weapon out and start pounding.\n\nIn about ten minutes you manage to break through.\nYou push your body out the hole you’ve made and feel something hard and stone-like in front of you"
     #This activity costs you 2 Fatigue Points (FP) – if your FP ever reaches 0, you drop from exhaustion and die from the cold!
     puts "[1] Continue onwards ..." # Make a First Aid or Physician roll (or IQ-4 if you do not have  the skill). If you succeed, you restore 1d-3 HP. If you fail, you still  get 1 HP back.
+        
+        Player.hitpoints += 3 #should be d6-3 min 1
+    
+        Player.fatiguepoints -=2
+
         getNextCard(cardDestinations)
         if cardDestinations == 1
             Card47.new.startCard47
@@ -476,10 +489,21 @@ class Card23 <StoryCard
     puts "[1] Yoink!"
     puts "[2] Examine the tapestries more closely" # Make a Merchant roll (or IQ-5 if you do not have the skill) to examine the tapestries further. the axe tapestry is worth 10, the armoured maiden tapestry is worth 100
     getNextCard(cardDestinations)
+
+
         if cardDestinations == 1 #take both or fail check
             Card51.new.startCard51
-        else cardDestinations == 2 #suceed merchant check
-            Card57.new.startCard57
+        else cardDestinations == 2 
+
+            card23ToPass = Player.intelligence
+            card23Test = IQCheck.new.merchantCheck
+
+            if card23Test >card23ToPass 
+                Card51.new.startCard51
+            else card23Test <= card23ToPass
+                Card57.new.startCard57 #suceed merchant check
+            end
+            
         end
     end
 end
@@ -489,7 +513,16 @@ class Card24 <StoryCard
         clearScreen()
     puts "Wrapping some cloth around your hand for protection, you try to wedge the glass dagger out.\nWith any luck, this exotic dagger will be worth a lot of silvers.\nOr maybe you’ll decide to keep it as a backup weapon."
     #Make an DX roll. If you fail, the dagger slices through your gloves and into your hand. Take 1d-3 cut damage. If you succeed, you carefully pry the glass-like dagger out without injury. This is a very fine dagger and is enchanted to be Shatterproof
-    puts "..."
+    card24Test = DexChecks.new.dexterityCheck
+    card24TestToPass = Player.dexterity
+        if card24Test >card24TestToPass
+            puts "OWWW"
+            Player.hitpoints -=1 #d6-3
+        else card24Test <= card24TestToPass
+            puts "ooh shiny"
+            #add dagger to loot
+        end
+    
     puts "[1] Continue onwards"
 
     getNextCard(cardDestinations)
@@ -503,7 +536,16 @@ class Card25 <StoryCard
     def startCard25() 
         clearScreen()
     puts "Deciding to head towards the main part of the castle, you skip the bedrooms and head down a long, winding hallway.\nMuch to your surprise, the castle in this part looks sturdy and complete.\n\nPerhaps it looked like this years ago when it was a newly built stronghold.\n\n You come to a stairway going downwards.\n\nThe stairs are covered with a slick ice."
-    #make a dx roll if fail you slip down the steps and land hard on the hard stone. Take 1d-2 cr damage. You curse your clumsiness and stand up. 
+    #make a dx roll if fail  Take 1d-2 cr damage. 
+    card25Test = DexChecks.new.dexterityCheck
+    card25TestToPass = Player.dexterity
+        if card25Test>card25TestToPass #fail
+            Player.hitpoints -=2 #1d6-2
+            puts "You slip down the steps and land hard on the hard stone. You curse your clumsiness and stand up."
+        else card25Test <= card25TestToPass
+            puts "You carefully make your way down the steps and into a large, main room of the castle."
+        end
+
     puts "[1] Keep going"
         getNextCard(cardDestinations)
         if cardDestinations ==1
@@ -538,14 +580,24 @@ class Card27 <StoryCard
     puts "You slowly pad into the icy maze, trying to remember the turns you take.\n\nEvery once in a while you hear a soft moan from ahead of you."
     
     puts "[1] Follow the sounds...?" #Make a Tracking roll at +3, or an IQ-2 if you do not have the skill
+
     #suceed go to 37, fail go to 9 or 22
-        getNextCard(cardDestinations)
-        if cardDestinations == 1
+
+    card27Test = IQCheck.new.trackingCheck
+    card27TestToPass = Player.intelligence -3
+ 
+        if card27Test <= card27TestToPass
             Card37.new.startCard37
-        elsif cardDestinations == 2 #trodden path if failed
-            Card9.new.startCard9
-        else cardDestinations == 3 #icy path if failed
-            Card22.new.startCard22
+        else card27Test > card27TestToPass
+            puts "You strain to listen, but are unable to determine where the sound is coming from"
+            puts "Now what?"
+            puts "[1] Take the trodden path instead"
+            puts "[2] take the icy path instead"
+            getNextCard(cardDestinations)
+            elsif cardDestinations == 1 #trodden path if failed
+                Card9.new.startCard9
+            else cardDestinations == 2 #icy path if failed
+                Card22.new.startCard22
         end
     end
 end
@@ -572,6 +624,7 @@ class Card29 <StoryCard
         clearScreen()
     puts "You carefully climb the steps, but suddenly some of the stone crumbles underfoot.\n\nYour chin hits against the marble railing hard as you slide down to the bottom of the steps."
     #You take 1d-2 cr damage from the fall.
+    Player.hitpoints -=2 #1d6-2
     puts "What will you do now?"
 
     puts "[1] Try the stairs again..."
@@ -592,10 +645,13 @@ class Card30 <StoryCard
     puts "You push the door inwards and hear it slam against the wall sharply.\n Waiting for your eyes to adjust to the darkness, you look around the room.\nA dozen skeletons in tattered armor lie against the walls of the room.\n\nYou swallow hard, and then quickly examine the skeletons.\nYou see no injuries on them. Apparently, these men locked themselves in this room and died here.\nYou let out a small cry when you see a pale blue rat scurry across the floor.\nYou’ve never heard of ice rats before, but you chide yourself for having been startled so easily.\nSearching the room, you find that most of the weapons and armor have rusted away a long time ago."
         
     puts "[1] You search the room"#make a perception roll
-        getNextCard(cardDestinations)
-        if cardDestinations == 1 #success
+
+    card30Test = IQCheck.new.spotCheck
+    card30TestToPass = Player.intelligence
+       # getNextCard(cardDestinations)
+        if card30Test <= card30TestToPass #success
             Card13.new.startCard13
-        else cardDestinations == 2 #fail
+        else card30Test > card30TestToPass #fail
             Card6.new.startCard6
         end
     end
@@ -607,10 +663,12 @@ class Card31 <StoryCard
     puts "You silently pad up the trodden path. The cave comes to a sharp turn.\n\nYou peer around the bend and see a hulking, blood-covered ice troll chewing apart a half-dead seal.\n\nHe’s licking his knife-sized claws and seems to be enjoying the pitiful squeals the seal is making."
     
     puts "[1] You make a stealth check" #a DX roll
-        getNextCard(cardDestinations)
-        if cardDestinations == 1 #success
+        card31Test = DexChecks.new.stealthCheck
+        card31TestToPass = Player.dexterity
+       # getNextCard(cardDestinations)
+        if card31Test <= card31TestToPass #success
             Card8.new.startCard8
-        else cardDestinations == 2 #fail
+        else card31Test > card31TestToPass #fail
             Card41.new.startCard41
         end
     end
@@ -676,10 +734,13 @@ class Card35 <StoryCard
 
     puts "[1] This cannot possibly go wrong"#make a climb check
 
-    getNextCard(cardDestinations)
-        if cardDestinations == 1 #SUCCEED
+    card35Test = DexChecks.new.climbingCheck
+    card35TestToPass = Player.dexterity -3
+
+   # getNextCard(cardDestinations)
+        if card35Test =< card35TestToPass #SUCCEED
             Card42.new.startCard42
-        else cardDestinations == 2 #fail
+        else card35Test > card35TestToPass #fail
             Card5.new.startCard5
         end
     end
@@ -708,10 +769,13 @@ class Card37 <StoryCard
     puts "You find an injured hunter leaning against a cavern wall. He looks at you, his face ghastly and frostbitten.\n\n“How long have you been here?”you ask.\n\nThe wounded man swallows hard, “I don’t know. Three days, perhaps? Got lost tracking the most magnificent elk you’ve ever seen. \nAn unnatural creature ambushed me and snapped my leg like a dry branch. I crawled away as fast as I could, but now I’m lost and decided I have no stomach for running anymore.”\n\nYou look down and see the man’s leg twisted at an impossible angle. You grimace.\nThis man will not make it out of these caves alive."
     puts "[1] You try to help him"# make a Physician Check
 
+    card37Test = IQCheck.new.firstAidCheck
+    card37TestToPass = Player.intelligence
+
     getNextCard(cardDestinations)
-        if cardDestinations == 1 #pass
+        if card37Test <= card37TestToPass #pass
             Card32.new.startCard32
-        else cardDestinations == 2 #fail
+        else card37Test > card37TestToPass #fail
             Card61.new.startCard61
         end
     end
@@ -764,7 +828,22 @@ class Card40 <StoryCard
     getNextCard(cardDestinations)
 
         if cardDestinations == 1
-            Card30.new.startCard30
+            card40Test = StrengthChecks.new.forcedEntryCheck 
+            card40TestToPass = Player.strength -4
+                if card40Test =< card40TestToPass
+                    Card30.new.startCard30
+                else card40Test > card40TestToPass
+                    puts "The door refuses to budge"
+                    puts "[1] try picking the lock"
+                    puts "[2] Go try the servants door"
+                    getNextCard(cardDestinations)
+                        if cardDestinations ==1
+                            Card18.new.startCard18
+                        else cardDestinations ==2
+                            Card14.new.startCard14
+                        end  
+                end
+            
         elsif cardDestinations == 2
             Card18.new.startCard18
         else cardDestinations == 3
@@ -810,10 +889,14 @@ class Card43 <StoryCard
     puts "You dig around the bases of the various statues, looking for anything of value."
 
     puts "[1] I search the room" #make a search roll
-    getNextCard(cardDestinations)
-        if cardDestinations == 1 #succeed
+
+    card43Test = IQCheck.new.perceptionCheck
+    card43TestToPass = Player.intelligence
+
+    #getNextCard(cardDestinations)
+        if card43Test <= card43TestToPass #succeed
             Card2.new.startCard2
-        else cardDestinations == 2 #fail
+        else card43Test > card43TestToPass #fail
             Card39.new.startCard39
         end
     end
@@ -824,13 +907,15 @@ class Card44 <StoryCard
         clearScreen()
     puts "You try to sneak past the troll"
 
-    puts "[1] Quiet, Quiet" # make a steal check vs 12
+    puts "[1] Quiet, Quiet" # make a stealth check vs 12
+    
+    card44Test = DexChecks.new.stealthCheck
+    card44TestToPass = 12 #This is the trolls passive perception, but he isn't initialised yet, so its hardcoded. From my reading of the rules, I am not sure if the troll gets to roll, or if its just his passive perception value
+    #getNextCard(cardDestinations)
 
-    getNextCard(cardDestinations)
-
-        if cardDestinations == 1
+        if card44Test <= card44TestToPass
             Card10.new.startCard10
-        else cardDestinations == 2
+        else card44Test > card44TestToPass
             Card41.new.startCard41
         end
     end
@@ -864,6 +949,8 @@ class Card46 <StoryCard
         clearScreen()
     puts "You carefully press your ear to the door, holding your breath to keep the stench from interrupting your concentration.\n\nSuddenly, you feel this horrible pain in your ear.\nYou tear your ear from the door only to discover that you’re bleeding from hundreds of pores on the side of your face.\n\nYou gasp and draw out your weapon."
     #take 1 damage if you are still alive, keep going
+    Player.hitpoints -=1
+
     puts "What will you do"
     puts "[1] bugger this! (run from the castle)"
     puts "[2] Relight your torch and kick the door in, weapon in hand"
@@ -903,12 +990,14 @@ class Card48 <StoryCard
     
     puts "[1] You search the room" #make a will check
 
-    getNextCard(cardDestinations)
-        if cardDestinations == 1 #success
+    card48Test = WillCheck.new.willCheck
+    card48TestToPass = Player.will
+    #getNextCard(cardDestinations)
+        if if card48Test <= card48TestToPass #success
             Card56.new.startCard56
-        else cardDestinations == 2 #fail
+        else card48Test > card48TestToPass #fail
             puts "you do not have the stomach to rummage through the room’s bloody contents.\nYou decide to come back to the castle some other day –- perhaps with friends –- and discover its secrets in the safety of numbers"
-            puts "[1] Continue"
+            puts "[1] Leave this place"
             throwaway = gets.chomp.to_i #needs a wait for read function, or somehting to stop here. can I call the same function again here? could just be a gets.chomp to
             Card60.new.startCard60
         end
@@ -919,7 +1008,7 @@ class Card49 <StoryCard
     def startCard49() 
         clearScreen()
     puts "You race down the icy corridor, weapon clenched tightly in hand. Screaming a battle cry, you charge headlong into a gruesome sight.\n\nA blood-covered troll has his teeth half-sunk into a squealing seal.\n\n He looks at you in surprise, throws the half-dead seal into the cavern wall, and roars his own battle challenge"
-    puts "[1] DIE FOUL BEAST!!!!!!!"
+    puts "[1] DIE FOUL CREATURE!!!!!!!"
 
     getNextCard(cardDestinations)
         if cardDestinations == 1
@@ -933,20 +1022,22 @@ class Card50 <StoryCard
         clearScreen()
     puts "Holding on to a marble railing, you begin to climb up the long spiral stairs that surely leads up to one of the castle’s turrets.\n\nAs you make your way up, you notice that the steps are worn and icy from years of being exposed to the element"
     # make a DX roll (oh thats dexterity. that makes so much sense now)
-    getNextCard(cardDestinations)
-        if cardDestinations == 1 #success
+    card50Test = DexChecks.new.dexterityCheck
+    card50TestToPass = Player.dexterity
+    #getNextCard(cardDestinations)
+        if card50Test <= card50TestToPass #success
             Card59.new.startCard59
-        else cardDestinations == 2 #fail
+        else card50Test >card50TestToPass #fail
             Card29.new.startCard29
         end
     end
 end
 
 class Card51 <StoryCard
-    def startCard51() #this needs to clear the screen
+    def startCard51() 
         clearScreen()
     puts "You try to stuff both tapestries into your bag, but they’re just too heavy"
-    #check strength, if 14 or higher, you can only take 1
+    #check strength, if not 14 or higher, you can only take 1
     puts "Which will you take?"
     puts "[1] The Tapestry of the blue-eyed maiden in ornate armor"
     puts "[2] The Tapestry of the runed axe lying being presented to a white-haired queen"
@@ -966,12 +1057,15 @@ class Card52 <StoryCard
     puts "The cliff is icier than expected.\nYou slowly grasp and claw your way around the cliff, the winds constantly threatening to pick you up and toss you over.\n\nAs you circle around the cliff, a powerful gust picks up and sends you hurling towards the edge!"
     #make a DX check
     puts "[1] Grab for the edge!!!"
+    timewaster = gets.chomp.to_i
+        card52Test = DexChecks.new.dexterityCheck
+        card25TestToPass = Player.dexterity
+    #getNextCard(cardDestinations)
 
-    getNextCard(cardDestinations)
-
-        if cardDestinations == 1 #succeed
+        if card52Test <= card25TestToPass #succeed
             Card36.new.startCard36
-        else cardDestinations == 2 #fail
+        else card52Test > card25TestToPass #fail
+            Player.hitpoints -=5
             Card36.new.startCard36 #but take 2d6-2 fall damage. if you die you get eaten by grave ghouls
         end
     end
@@ -1013,6 +1107,14 @@ class Card55 <StoryCard
         clearScreen()
     puts "Careful of the crumbling floor, you peer down into the dark hole.\n\nA horrible reek hits you, and you involuntarily snap your hand over your nose.\nEven in this cold weather, something down the hole smells really bad.\n\nYou look down further into the pit and see that the ground is about ten feet below where you stand. You could jump down.\n\nBrushing yourself off, you look around the dimly lit chamber. You realize your torch is sputtering.\nWithin seconds, the darkness in the chamber closes around you.\nYou can barely make out a worn door, a few feet away, indecipherable writings slashed into its wood."
    # Make a DX roll. On a success, you jump down without injury. If you fail, you take 1d-4 cr damage from the fall.
+    card55Test = DexChecks.new.dexterityCheck
+    card55TestToPass = Player.dexterity
+    if card55Test <= card55TestToPass
+        puts "You jump down without injury\n\n"
+    else card55Test > card55TestToPass
+        puts "You don't quite stick the landing\n\n"
+        Player.hitpoints -=1
+    end
     puts "Now what?"
 
     puts "[1] Creep up to the door and listen"
@@ -1041,7 +1143,7 @@ end
     end
 
     class Card57 <StoryCard
-        def startCard57() #this needs to clear the screen
+        def startCard57() 
             clearScreen()
         puts "You’re smart enough to know that it’s not the design on the tapestry that is worth gold, but the fabric itself.\nCarefully examining both tapestries, you see that the runed axe one is cheaper and shoddier than the finely woven fabric of the armored maiden tapestry is"
         puts "[1] Take the Tapestry of the Armoured maiden, and examine the hole in the floor" #add armoured maiden to inventory
@@ -1054,7 +1156,7 @@ end
     end
 
     class Card58 <StoryCard
-        def startCard58() #this needs to clear the screen
+        def startCard58() 
             clearScreen()
         puts "Grasping your knife tightly – the space around the bed is too small to wield your main weapon – you kick over the mattress.\nYou jump back in shock when you see a half-eaten, bloodless corpse staring up at you.\n\nTurning away in revulsion, you stagger back before you steady yourself for a second look.\nThe man has only been dead for a few weeks – he’s dressed in a wind-torn cloak and has well-worn boots on the remains of his feet.\nApparently, this man was exploring the castle like you.\nWhat ate him and stuffed his body in this bed, however, is beyond your imagination"
         
@@ -1099,7 +1201,7 @@ end
 
     class Card61 <StoryCard
         def startCard61() #this was split off from card 37 to make it work with the logic
-            clearScreen()
+            clearScreen() #push amythest ring to inventory
         puts "“I know,” he answers, grinning as if he heard your thoughts.\n\n“I will not live more than a few hours. My god visited me just a few minutes ago and told me himself!”\n\n“Let me warn you,” he continues.\n\n“The trodden path leads to the home of the creature.\nI went down the icier path at first, but found an impassable cliff. The creature attacked me again there and dragged me to his lair before I escaped The man shudders.\n\n“Here, take this ring and give it to my the guard captain in Winterhaven. He will contact my family and tell them of my useless death.\nAnd if you see that great elk, hunt it down, roast it over a fire... and think of me.”\n\nHe hands you an amethyst ring and you nod.\n\nThe warrior starts shaking and shuddering, and you decide it is better to leave him now.\nYou head back to the slushy path and go back to the main cavern"
         
         puts "Which way now?"

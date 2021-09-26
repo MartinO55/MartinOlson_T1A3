@@ -12,7 +12,7 @@ class Beyond_the_vale
     
     def initialize ()
       #  puts "you called beyond the vale"
-        Card10.new.startCard10
+        Card1.new.startCard1
        # getDestination(1)
 
     end

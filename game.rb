@@ -21,7 +21,7 @@ class SkillChecks
         return roll
     end
 end
-
+    #This is a massive amount of repitition, but is future proofing in case I want to come back and add modifiers, since all these checks should have minuses in a character who hasn't been given all the skills
     class DexChecks < SkillChecks
 
         def dexterityCheck()
