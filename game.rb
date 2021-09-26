@@ -1,3 +1,6 @@
+require "crapshoot"
+require_relative "playercharacter.rb"
+
 #TODO - call a pause menu
     #- For Pause menu, call a save, quit to menu and back to game function, as well as load?
 
@@ -24,4 +27,9 @@
 # TODO - Call enemies as appropriate
 
 #TODO manage ascii art (if possible)
+def testMethod()
+out = SkillChecks.new.climbingCheck
+puts out
+end
 
+testMethod()

@@ -1,5 +1,9 @@
+include dice
+
 require_relative "storyCards.rb"
 require_relative "game.rb"
+require_relative "enemys.rb"
+require_relative "playercharacter.rb"
 #TODO - call necessary classes
 
 #TODO - Start game
@@ -19,6 +23,9 @@ class Beyond_the_vale
         
     end
 
+    def callCombat()
+
+    end
 
     #TODO Game over function
 

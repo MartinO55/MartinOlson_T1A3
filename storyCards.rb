@@ -1,23 +1,27 @@
 require_relative "game.rb"
+require_relative "playercharacter.rb"
+require_relative "enemys.rb"
 
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
     
     attr_accessor :cardNumber, :cardText, :cardDestinations, :cardArtwork
     
-
     def initialize ()
        @cardNumber = cardNumber
        @cardDestinations = cardDestinations
     end
 
     def clearScreen ()
-        puts "\e[H\e[2J"
+        puts "\e[H\e[2J"#this clears the screen. it seemed like the easiest solution I could fine. this could probablly be replaced with a gem if needed
     end
 
     def getNextCard (cardDestinations) #now offloaded to parent class. its something.jpg
         @cardDestinations = gets.chomp.to_i
         return @cardDestinations
     end
+
+    #needs a method to push new loot to player character hash, and inventory
+
 end
 
 #TODO - holds the list of all the cards
@@ -25,11 +29,11 @@ end
     class Card1 < StoryCard
         
         def startCard1()
-        puts "\nIt was already a freezing morning when you set out for the legendary “Castle of Madness” – the mysterious castle that is said to emerge from blizzards once every seven winters.\n\nNow, as it grows dark, the mountains’ glacial winds of this valley make the temperature seem hundreds of times colder. \n\nBoth hands wrap your winter cloak tightly around your body, but somehow you can still feel the ice-sharded winds as if on bare skin.\nYou squint your eyes down at your weapon and wonder if it has become frozen to your belt. 
-        \nNothing alive can possibly live in these temperatures, you reassure yourself, pushing back thoughts of the living dead you’ve heard emerge with the castle.\n\nSoon, you can make out the faint ruined form of the castle up ahead. The old crone’s rotting map was right! Your best guess tells you it’s another hour’s walk in the harsh cold. \nBefore you have time to think about the longer walk, you spot a gaping black opening in the snow. It must be a cave. The crone told you that underground tunnels could also lead into the castle.\n\nCould this be one? Or is it the lair of some beast \n\n" #this needs to be the formatted story text
+            clearScreen()
+        puts "\nIt was already a freezing morning when you set out for the legendary “Castle of Madness” – the mysterious castle that is said to emerge from blizzards once every seven winters.\n\nNow, as it grows dark, the mountains’ glacial winds of this valley make the temperature seem hundreds of times colder. \n\nBoth hands wrap your winter cloak tightly around your body, but somehow you can still feel the ice-sharded winds as if on bare skin.\nYou squint your eyes down at your weapon and wonder if it has become frozen to your belt. \nNothing alive can possibly live in these temperatures, you reassure yourself, pushing back thoughts of the living dead you’ve heard emerge with the castle.\n\nSoon, you can make out the faint ruined form of the castle up ahead. The old crone’s rotting map was right! Your best guess tells you it’s another hour’s walk in the harsh cold. \nBefore you have time to think about the longer walk, you spot a gaping black opening in the snow. It must be a cave. The crone told you that underground tunnels could also lead into the castle.\n\nCould this be one? Or is it the lair of some beast \n\n" #this needs to be the formatted story text
 
             puts "What do you want to do?""\n\n" #this needs to be the list of things you could do
-            puts "[1] Explore the cave\n\n"
+            puts "[1] Explore the cave"
             puts "[2] Continue on your cold trek to the castle"
 
            getNextCard(cardDestinations)
