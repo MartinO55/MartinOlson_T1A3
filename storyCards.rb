@@ -57,6 +57,14 @@ end
             Digging some more, you realize something – the weapon still has a frozen hand attached to it! A second later, your boot brushes aside the remains of the man’s face! The blue skin is cracked and broken. Apparently, some warrior died wielding this mace\n\n"
             
             #add a skill check to take the mace (will).
+            card2Test = WillCheck.new.willCheck
+            card2ToPass = Player.will
+            if card2Test > card2ToPass #fail
+                puts "ewwwWWWWW!\n\n"
+            else card2Test <= card2ToPass #success
+                puts "Gritting your teeth, you take the mace. It might come in handy\n\n"
+                #need to push mace to inventory
+            end
 
             puts "Which way now?"
             puts "[1] Through the servants door\n"
@@ -148,6 +156,14 @@ end
             clearScreen()
         puts "You stride forward with confidence and crack open the half-broken door but quickly realize that you can’t see – it’s too dark to make out anything but dim silhouettes.\n\nYou fumble to get a torch lit as you hear a hissing cackle that chills your bones."
         puts "..."# this needs to be replaced with the pass/fail skill check that adds a modifier to the next destination
+        darkness = false #this may need to move out of this class
+            card7Test = DexChecks.new.dexterityCheck
+            card7ToPass = Player.dexterity
+                if card7Test > card7ToPass #fail
+                    darkness = true
+                else card7Test <= card7ToPass
+                    darkness = false
+                end
         puts "[1] Continue"
 
         getNextCard(cardDestinations)
@@ -205,7 +221,17 @@ end
      puts "You dash past the creature into the smaller tunnel beyond him. You quickly jog down the cavern leaving the disgusting crunching noise behind you.\n\nThe tunnel winds its way for about twenty minutes until you can make out a bright white light from up ahead. When you come to this exit, you notice a thick layer of snow covering the cave opening.\n\nYou pull out your weapon and start digging.\nYour heart is pounding.\nSuddenly, from behind you, you hear the roar of the ice troll.\n\nDig faster!"
      puts "continue... (quickly)" #add fatigue
      puts "[1] dig, Dig, DIG!!" # make a strength check
-     getNextCard(cardDestinations) #this is a gets.chomp, and it needs to be a dice roll
+
+     card10Continue = gets.chomp.to_i
+   
+        card10Test = StrengthChecks.new.strengthCheck()
+        card10ToPass = Player.strength
+        if card10Test > card10ToPass
+            cardDestinations =2
+        else card10Test <= card10ToPass
+            cardDestinations =1
+        end
+
         if cardDestinations == 1 #pass
             Card26.new.startCard26
         else cardDestinations == 2 #fail
@@ -288,6 +314,8 @@ class Card15 <StoryCard
     puts "..."
     puts "[1] Climb down the mountain..." #Make a Climbing roll (or DX-5 if you do not have the skill). Remember that Climbing rolls are penalized at -1 per encumbrance level
     
+    
+
     getNextCard(cardDestinations)
         if cardDestinations == 1 #success
             Card36.new.startCard36
@@ -361,15 +389,16 @@ class Card19 <StoryCard
         #Reduce your FP by 1 and make a Survival (Mountains) roll.If you fail, you take an additional 1d-3 damage from exhaustion and hypothermia. 
 
         card19test = IQCheck.new.survivalCheck
-        puts  card19test
+        #puts  card19test
         card19ToPass = Player.intelligence
-        puts card19ToPass
+        #puts card19ToPass
             if card19test > card19ToPass#fail
-                puts "the cold starts to take its toll on you."
-                Player.hitpoints -=1
-                puts Player.hitpoints
+                puts "the cold starts to take its toll on you, and it hurts."
+                Player.fatiguepoints -=1
+                #also need to do D6 -3 damage here
             else card19test <= card19ToPass
-                puts "test passed"
+                puts "the cold takes its toll on you"
+                Player.fatiguepoints -=1
             end
 
         puts "Where to now?"
