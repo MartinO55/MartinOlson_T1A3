@@ -314,9 +314,19 @@ class Card15 <StoryCard
     puts "..."
     puts "[1] Climb down the mountain..." #Make a Climbing roll (or DX-5 if you do not have the skill). Remember that Climbing rolls are penalized at -1 per encumbrance level
     
-    
+    card15Continue = gets.chomp.to_i
 
-    getNextCard(cardDestinations)
+    card15Test = DexChecks.new.climbingCheck
+    card15ToPass = Player.dexterity
+        if card15Test > card15ToPass
+            cardDestinations = 2
+        elsif card15Test <= card15ToPass
+            cardDestinations = 1
+        else card15Test <=card15ToPass && Player.hitpoints == 0
+            cardDestinations = 3
+        end 
+
+   # getNextCard(cardDestinations)
         if cardDestinations == 1 #success
             Card36.new.startCard36
         elsif cardDestinations == 2 #fail and take damage
