@@ -14,8 +14,8 @@ class Beyond_the_vale
       #  puts "you called beyond the vale"
         Card1.new.startCard1
        # getDestination(1)
-
     end
+end
 
     def getDestination(cardNumber) #so this needs to call a function from a class that knows all the cards, where each function is an individual card
         
@@ -29,6 +29,5 @@ class Beyond_the_vale
 
     #TODO Game over function
 
-end
 
 #call the cards - moved to the cards themselves
