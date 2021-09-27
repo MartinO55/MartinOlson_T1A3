@@ -911,7 +911,8 @@ class Card44 <StoryCard
     puts "[1] Quiet, Quiet" # make a stealth check vs 12
     
     card44Test = DexChecks.new.stealthCheck
-    card44TestToPass = 12 #This is the trolls passive perception, but he isn't initialised yet, so its hardcoded. From my reading of the rules, I am not sure if the troll gets to roll, or if its just his passive perception value
+    card44TestToPass = Icetroll.perception #This is the trolls passive perception, so its 12. From my reading of the rules, I am not sure if the troll gets to roll, or if its just his passive perception value
+    #In any case, it is now dynamic in case it becomes possible to modify the trolls perception in future suing magic for example
     #getNextCard(cardDestinations)
 
         if card44Test <= card44TestToPass

@@ -34,45 +34,35 @@ Player = PlayerCharacter.new("steve",15,4,9,14,12,13,12,12,13) #this hardcodes t
 
 #TODO Troll
 class IceTroll < Character
-    def initialize
-    @type = "iceTroll"
-    @hitpoints = 15
-    @damageReduction = 2
-    @damageBlock = 9 #Dodge
-
-    @dexterity = 12
-    @strength = 15
-    @intelligence = 7
-    @will =11
-    @fatiguepoints = 12
+    def initialize (type, hitpoints,damageReduction,damageBlock,dexterity,strength,intelligence,will,fatiguepoints)
+    @type = type
+    @hitpoints = hitpoints
+    @damageReduction = damageReduction
+    @damageBlock = damageBlock #Dodge
+        #most of the below don't come up at all, but again, future proofing
+    @dexterity = dexterity
+    @strength = strength
+    @intelligence = intelligence
+    @will =will
+    @fatiguepoints = fatiguepoints
     end
 #damage = 1d6 +2
 end
-
+Icetroll = IceTroll.new(troll,15,2,9,12,15,7,11,12)
 #TODO Bloodman
 class Bloodman < Character
-    def initialize
-@type = "bloodman"
-@hitpoints = 15
-@damageReduction =1
-@damageBlock = 10
+    def initialize(type, hitpoints,damageReduction,damageBlock,dexterity,strength,intelligence,will,fatiguepoints)
+        @type = type
+        @hitpoints = hitpoints
+        @damageReduction =damageReduction
+        @damageBlock = damageBlock
 
-@dexterity = 12
-@strength = 13
-@intelligence = 9
-@will = 11
-@fatiguepoints = 12
+        @dexterity = dexterity
+        @strength = strength
+        @intelligence = intelligence
+        @will = will
+        @fatiguepoints = fatiguepoints
 #damage = d6 initially, then 1d6 -2 per round
     end
 end
-# player = PlayerCharacter.new(type = "player",
-#     hitpoints = 15,
-#     damageReduction = 4,
-#     damageBlock = 9,
-#     fatiguepoints = 14,
-
-#     dexterity = 12,
-#     strength = 13,
-#     intelligence = 12,
-#     will = 12,
-#     perception = 13)
+BloodMan = Bloodman.new(bloodman,15,1,10,12,13,9,11,12)
