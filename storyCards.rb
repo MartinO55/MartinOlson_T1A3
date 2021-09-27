@@ -335,7 +335,8 @@ class Card15 <StoryCard
         elsif cardDestinations == 2 #fail and take damage
             Card36.new.startCard36
         else cardDestinations == 3 #fail and die
-            main_menu.new.start #needs to go back to main menu or game over screen
+            puts "you died"
+            #main_menu.new.start #needs to go back to main menu or game over screen
         end
     end
 end
@@ -370,7 +371,7 @@ class Card17 <StoryCard
         if cardDestinations == 1 #the troll is killed or retreats. functionally identical. the troll makes a will roll to fight to the death - no idea if this needs to be implemented
             Card21.new.startCard21
         else cardDestinations == 2 # you died, game over
-            main_menu.new.start
+            puts "you died"
         end
 end
 end
@@ -1213,9 +1214,11 @@ end
             getNextCard(cardDestinations)
 
             if cardDestinations ==1 
-                main_menu.start
+                puts "not implemented"
+                #main_menu.start
             else cardDestinations == 2
-                main_menu.quitGame
+                puts "not implemented"
+                #main_menu.quitGame
             end
             #Go back to main menu/call credits
         end
