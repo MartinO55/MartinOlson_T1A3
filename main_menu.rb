@@ -43,8 +43,12 @@ def beginVOM()
     mainMenuNav =gets.chomp.to_i
     if mainMenuNav == 1
         startNewGame()
+    elsif mainMenuNav == 2
+        puts "this would load a game"
+    elsif mainMenuNav == 3
+        puts "quit the game"
     else
-        puts "not ready"
+        puts "unrecognised input"
     end
 end
 
