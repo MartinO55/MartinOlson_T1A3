@@ -32,6 +32,7 @@ end
 
 Player = PlayerCharacter.new("steve",15,4,9,14,12,13,12,12,13) #this hardcodes the player sheet, but can be accessed from anywhere
 
+
 #TODO Troll
 class IceTroll < Character
     def initialize (type, hitpoints,damageReduction,damageBlock,dexterity,strength,intelligence,will,fatiguepoints)
@@ -48,7 +49,8 @@ class IceTroll < Character
     end
 #damage = 1d6 +2
 end
-Icetroll = IceTroll.new(troll,15,2,9,12,15,7,11,12)
+Icetroll = IceTroll.new("troll",15,2,9,12,15,7,11,12)
+
 #TODO Bloodman
 class Bloodman < Character
     def initialize(type, hitpoints,damageReduction,damageBlock,dexterity,strength,intelligence,will,fatiguepoints)
@@ -65,4 +67,4 @@ class Bloodman < Character
 #damage = d6 initially, then 1d6 -2 per round
     end
 end
-BloodMan = Bloodman.new(bloodman,15,1,10,12,13,9,11,12)
+BloodMan = Bloodman.new("bloodman",15,1,10,12,13,9,11,12)

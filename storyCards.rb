@@ -1,14 +1,17 @@
 require_relative "game.rb" #this is where the skill checks and probably comat will go
 require_relative "characters.rb" #this is where inventory will need to be pushed to
+#require_relative "main_menu.rb" #So we can send the player back to the main menu #SO this breaks the app
 #require_relative "enemys.rb" #this is where enemies will come from. NOW OBSOLETE
 
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
     
-    attr_accessor :cardNumber, :cardText, :cardDestinations, :cardArtwork
+    attr_accessor :cardNumber, :cardText, :cardDestinations, :cardArtwork, :goToMainMenu, :quitNow
     
     def initialize ()
        @cardNumber = cardNumber
        @cardDestinations = cardDestinations
+       @goToMainMenu = goToMainMenu
+       @quitNow = quitNow
     end
 
     def clearScreen ()
@@ -332,7 +335,7 @@ class Card15 <StoryCard
         elsif cardDestinations == 2 #fail and take damage
             Card36.new.startCard36
         else cardDestinations == 3 #fail and die
-            Card1.new.startCard1 #placeholder - needs to go back to main menu or game over screen
+            main_menu.new.start #needs to go back to main menu or game over screen
         end
     end
 end
@@ -367,7 +370,7 @@ class Card17 <StoryCard
         if cardDestinations == 1 #the troll is killed or retreats. functionally identical. the troll makes a will roll to fight to the death - no idea if this needs to be implemented
             Card21.new.startCard21
         else cardDestinations == 2 # you died, game over
-            Card1.new.startCard1
+            main_menu.new.start
         end
 end
 end
@@ -376,15 +379,17 @@ class Card18 <StoryCard
     def startCard18() 
         clearScreen()
     puts "You kneel down in the snow and peer through the keyhole.\nJust as you suspected... the door is locked with an older type of lock. Several stone pegs keep the door in place.\nYour knife might be able to do the trick, but it’s formidable"
-    puts "what do you do"
+    puts "what do you do\n\n"
     puts "[1] Try to pick the lock" # make a Lockpicking roll at +2 (or DX-3 if you do not have the skill)
     puts "[2] Try to break the door down" #this should only be exposed after failing to pick the lock
     puts "[3] Try the servants door instead" 
 
     getNextCard(cardDestinations)
         if cardDestinations == 1 
+
             card18LockPickTest = DexChecks.new.lockpickingCheck 
-            card18LockPickTestToPass = Player.dexterity -2
+            card18LockPickTestMidway = Player.dexterity
+            card18LockPickTestToPass = card18LockPickTestMidway -2
             if card18LockPickTest <= card18LockPickTestToPass
                 Card30.new.startCard30 #succeed lockpick
             else card18LockPickTest >card18LockPickTestToPass
@@ -436,7 +441,7 @@ end
 class Card20 <StoryCard
     def startCard20() 
         clearScreen()
-    puts "You can’t dig fast enough.\n\nThe ice troll bounds up the cavern roaring in anger at your intrusion.\n\nYou turn your weapon on to the foul beast"
+    puts "You can’t dig fast enough.\n\nThe ice troll bounds up the cavern roaring in anger at your intrusion.\n\nYou turn your weapon on to the foul beast\n\n"
     #add Ambushed modifier. It doesn't matter in this case as it only affects tactical combat
 
     puts "[1] Prepare to Fight!"
@@ -469,7 +474,7 @@ end
 class Card22 <StoryCard
     def startCard22()
         clearScreen()
-    puts "Your body warms as you jog down the icy path.\nThough the walls of this tunnel are frozen solid, it is much warmer in here than in the cold, biting winds.\nYou glance down at the floor as you run, and are startled to see several large footprints walking in the direction you’re going.\nYou draw out your weapon to be on the safe side, and continue your journey down the dim hall.\n\nAlmost an hour later, you find the tunnel going uphill.\nYou slow down you pace – no need to get tired before reaching the castle.\n\nSuddenly, bright sunlight hits your eyes. You’ve found an exit! \n\nYou crawl out the small tunnel and find yourself looking over the edge of a tall cliff!\n\nAlmost directly below you lies the Castle of Madness.\nOnce you manage to get down the cliff, you’ll be near the walls of the castle"
+    puts "Your body warms as you jog down the icy path.\nThough the walls of this tunnel are frozen solid, it is much warmer in here than in the cold, biting winds.\nYou glance down at the floor as you run, and are startled to see several large footprints walking in the direction you’re going.\nYou draw out your weapon to be on the safe side, and continue your journey down the dim hall.\n\nAlmost an hour later, you find the tunnel going uphill.\nYou slow down you pace – no need to get tired before reaching the castle.\n\nSuddenly, bright sunlight hits your eyes. You’ve found an exit! \n\nYou crawl out the small tunnel and find yourself looking over the edge of a tall cliff!\n\nAlmost directly below you lies the Castle of Madness.\nOnce you manage to get down the cliff, you’ll be near the walls of the castle\n\n"
     puts "Which way now?"
     puts "[1] Climb down the cliff"
     puts "[2] Walk around the wind torn cliff"
@@ -485,7 +490,7 @@ end
 class Card23 <StoryCard
     def startCard23() 
         clearScreen()
-    puts "Some of the tapestries are still together; others are torn and destroyed.\n\nTwo, in particular, catch your eye.\nOne tapestry shows a striking, blue-eyed maiden in ornate armor, the other shows a runed axe lying on a gilded table, being presented to a white-haired queen."
+    puts "Some of the tapestries are still together; others are torn and destroyed.\n\nTwo, in particular, catch your eye.\nOne tapestry shows a striking, blue-eyed maiden in ornate armor, the other shows a runed axe lying on a gilded table, being presented to a white-haired queen.\n\n"
     
     puts "[1] Yoink!"
     puts "[2] Examine the tapestries more closely" # Make a Merchant roll (or IQ-5 if you do not have the skill) to examine the tapestries further. the axe tapestry is worth 10, the armoured maiden tapestry is worth 100
@@ -512,7 +517,7 @@ end
 class Card24 <StoryCard
     def startCard24()
         clearScreen()
-    puts "Wrapping some cloth around your hand for protection, you try to wedge the glass dagger out.\nWith any luck, this exotic dagger will be worth a lot of silvers.\nOr maybe you’ll decide to keep it as a backup weapon."
+    puts "Wrapping some cloth around your hand for protection, you try to wedge the glass dagger out.\nWith any luck, this exotic dagger will be worth a lot of silvers.\nOr maybe you’ll decide to keep it as a backup weapon.\n\n"
     #Make an DX roll. If you fail, the dagger slices through your gloves and into your hand. Take 1d-3 cut damage. If you succeed, you carefully pry the glass-like dagger out without injury. This is a very fine dagger and is enchanted to be Shatterproof
     card24Test = DexChecks.new.dexterityCheck
     card24TestToPass = Player.dexterity
@@ -536,15 +541,15 @@ end
 class Card25 <StoryCard
     def startCard25() 
         clearScreen()
-    puts "Deciding to head towards the main part of the castle, you skip the bedrooms and head down a long, winding hallway.\nMuch to your surprise, the castle in this part looks sturdy and complete.\n\nPerhaps it looked like this years ago when it was a newly built stronghold.\n\n You come to a stairway going downwards.\n\nThe stairs are covered with a slick ice."
+    puts "Deciding to head towards the main part of the castle, you skip the bedrooms and head down a long, winding hallway.\nMuch to your surprise, the castle in this part looks sturdy and complete.\n\nPerhaps it looked like this years ago when it was a newly built stronghold.\n\n You come to a stairway going downwards.\n\nThe stairs are covered with a slick ice.\n\n"
     #make a dx roll if fail  Take 1d-2 cr damage. 
     card25Test = DexChecks.new.dexterityCheck
     card25TestToPass = Player.dexterity
-        if card25Test>card25TestToPass #fail
+        if card25Test > card25TestToPass #fail
             Player.hitpoints -=2 #1d6-2
-            puts "You slip down the steps and land hard on the hard stone. You curse your clumsiness and stand up."
+            puts "You slip down the steps and land hard on the hard stone. You curse your clumsiness and stand up.\n\n"
         else card25Test <= card25TestToPass
-            puts "You carefully make your way down the steps and into a large, main room of the castle."
+            puts "You carefully make your way down the steps and into a large, main room of the castle.\n\n"
         end
 
     puts "[1] Keep going"
@@ -585,7 +590,8 @@ class Card27 <StoryCard
     #suceed go to 37, fail go to 9 or 22
 
     card27Test = IQCheck.new.trackingCheck
-    card27TestToPass = Player.intelligence -3
+    card27TestMidway = Player.intelligence
+    card27TestToPass = card27TestMidway -3
  
         if card27Test <= card27TestToPass
             Card37.new.startCard37
@@ -595,10 +601,12 @@ class Card27 <StoryCard
             puts "[1] Take the trodden path instead"
             puts "[2] take the icy path instead"
             getNextCard(cardDestinations)
-            elsif cardDestinations == 1 #trodden path if failed
+            if cardDestinations == 1 #trodden path if failed
                 Card9.new.startCard9
             else cardDestinations == 2 #icy path if failed
                 Card22.new.startCard22
+            end
+
         end
     end
 end
@@ -736,10 +744,11 @@ class Card35 <StoryCard
     puts "[1] This cannot possibly go wrong"#make a climb check
 
     card35Test = DexChecks.new.climbingCheck
-    card35TestToPass = Player.dexterity -3
+    card35TestMidway = Player.dexterity
+    card35TestToPass = card35TestMidway -3
 
    # getNextCard(cardDestinations)
-        if card35Test =< card35TestToPass #SUCCEED
+        if card35Test <= card35TestToPass #SUCCEED
             Card42.new.startCard42
         else card35Test > card35TestToPass #fail
             Card5.new.startCard5
@@ -759,7 +768,7 @@ class Card36 <StoryCard
         if cardDestinations == 1
             Card3.new.startCard3
         else cardDestinations == 2
-            Card25.new.startCard35
+            Card35.new.startCard35
         end
     end
 end
@@ -826,29 +835,30 @@ class Card40 <StoryCard
     puts "[2] On second thought, maybe I'll try the lock" #only if you havent failed this already although I don't see why you shouldnt get multiple bites at this apple
     puts "[3] lets just try the servants door"
 
-    getNextCard(cardDestinations)
-
+        getNextCard(cardDestinations)
         if cardDestinations == 1
             card40Test = StrengthChecks.new.forcedEntryCheck 
-            card40TestToPass = Player.strength -4
-                if card40Test =< card40TestToPass
+            card40TestMidway = Player.strength
+            card40TestToPass =  card40TestMidway -4
+               
+            if card40Test <= card40TestToPass
                     Card30.new.startCard30
-                else card40Test > card40TestToPass
-                    puts "The door refuses to budge"
-                    puts "[1] try picking the lock"
-                    puts "[2] Go try the servants door"
-                    getNextCard(cardDestinations)
-                        if cardDestinations ==1
-                            Card18.new.startCard18
-                        else cardDestinations ==2
-                            Card14.new.startCard14
-                        end  
-                end
+                    else card40Test > card40TestToPass
+                        puts "The door refuses to budge"
+                        puts "[1] try picking the lock"
+                        puts "[2] Go try the servants door"
+                        getNextCard(cardDestinations)
+                            if cardDestinations ==1
+                                Card18.new.startCard18
+                            else cardDestinations ==2
+                                Card14.new.startCard14
+                            end  
+                    end
             
-        elsif cardDestinations == 2
-            Card18.new.startCard18
-        else cardDestinations == 3
-            Card14.new.startCard14
+            elsif cardDestinations == 2
+                Card18.new.startCard18
+            else cardDestinations == 3
+                Card14.new.startCard14
         end
     end
 end
@@ -995,7 +1005,7 @@ class Card48 <StoryCard
     card48Test = WillCheck.new.willCheck
     card48TestToPass = Player.will
     #getNextCard(cardDestinations)
-        if if card48Test <= card48TestToPass #success
+        if card48Test <= card48TestToPass #success
             Card56.new.startCard56
         else card48Test > card48TestToPass #fail
             puts "you do not have the stomach to rummage through the room’s bloody contents.\nYou decide to come back to the castle some other day –- perhaps with friends –- and discover its secrets in the safety of numbers"
@@ -1107,27 +1117,27 @@ end
 class Card55 <StoryCard
     def startCard55() 
         clearScreen()
-    puts "Careful of the crumbling floor, you peer down into the dark hole.\n\nA horrible reek hits you, and you involuntarily snap your hand over your nose.\nEven in this cold weather, something down the hole smells really bad.\n\nYou look down further into the pit and see that the ground is about ten feet below where you stand. You could jump down.\n\nBrushing yourself off, you look around the dimly lit chamber. You realize your torch is sputtering.\nWithin seconds, the darkness in the chamber closes around you.\nYou can barely make out a worn door, a few feet away, indecipherable writings slashed into its wood."
-   # Make a DX roll. On a success, you jump down without injury. If you fail, you take 1d-4 cr damage from the fall.
-    card55Test = DexChecks.new.dexterityCheck
-    card55TestToPass = Player.dexterity
-    if card55Test <= card55TestToPass
-        puts "You jump down without injury\n\n"
-    else card55Test > card55TestToPass
-        puts "You don't quite stick the landing\n\n"
-        Player.hitpoints -=1
-    end
+        puts "Careful of the crumbling floor, you peer down into the dark hole.\n\nA horrible reek hits you, and you involuntarily snap your hand over your nose.\nEven in this cold weather, something down the hole smells really bad.\n\nYou look down further into the pit and see that the ground is about ten feet below where you stand. You could jump down.\n\nBrushing yourself off, you look around the dimly lit chamber. You realize your torch is sputtering.\nWithin seconds, the darkness in the chamber closes around you.\nYou can barely make out a worn door, a few feet away, indecipherable writings slashed into its wood."
+    # Make a DX roll. On a success, you jump down without injury. If you fail, you take 1d-4 cr damage from the fall.
+        card55Test = DexChecks.new.dexterityCheck
+        card55TestToPass = Player.dexterity
+            if card55Test <= card55TestToPass
+                puts "You jump down without injury\n\n"
+            else card55Test > card55TestToPass
+                puts "You don't quite stick the landing\n\n"
+                Player.hitpoints -=1
+            end
     puts "Now what?"
 
     puts "[1] Creep up to the door and listen"
     puts "[2] Go forward bravely and push the door aside"
 
-    getNextCard(cardDestinations)
+        getNextCard(cardDestinations)
         if cardDestinations == 1
-            Card46.new.startCard46
-        else cardDestinations == 2
-            Card7.new.startCard7
-        end
+                Card46.new.startCard46
+            else cardDestinations == 2
+                Card7.new.startCard7
+            end
     end
 end
 
@@ -1197,6 +1207,16 @@ end
             puts "You drag the wounded warrior back to Winterhaven.\nYou discover his name is Jrak Kul, a lieutenant in Winterhaven’s town watch, and a member of the secretive Martyrs of War clan.\n\nThe Martyrs reward you handsomely for his safe return – 5 silver talents – and invite you to join their ranks."
             puts "Congratulations - You have bested the Castle of Madness, and have quite the tale to tell the folks back in the tavern"
             puts "Many thanks to JC Connors for writing this module, So I had something to use as a basis for the story.\nIt would not have been possible any other way. "
+            
+            puts "[1] Back to Main Menu"
+            puts "[2] Quit the game"
+            getNextCard(cardDestinations)
+
+            if cardDestinations ==1 
+                main_menu.start
+            else cardDestinations == 2
+                main_menu.quitGame
+            end
             #Go back to main menu/call credits
         end
     end
