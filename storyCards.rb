@@ -111,7 +111,7 @@ end
     class Card2 < StoryCard
         def startCard2() #this needs to clear the screen
             clearScreen()
-            
+
             puts "Double-wrapping your hands to protect them from the cold, you dig under some broken statues. In a few minutes you’ve uncovered a beautiful antique mace, its metal head coated in an unusual blue lacquer.\n\n
             Digging some more, you realize something – the weapon still has a frozen hand attached to it! A second later, your boot brushes aside the remains of the man’s face! The blue skin is cracked and broken. Apparently, some warrior died wielding this mace\n\n"
             
@@ -186,6 +186,9 @@ end
             puts "..."
             puts "[1] Continue"
             #add Fall damage, and emphasis on the CRACK
+            fallDamageMid5 = CombatRolls.new.rollDamage
+            fallDamage5 = fallDamageMid5 -4
+            Player.hitpoints -=fallDamage5
     #The fall does 1d-1 cr damage, with only soft armor protecting.
             getNextCard(cardDestinations)
             #@cardDestinations = gets.chomp.to_i
@@ -280,7 +283,7 @@ end
      puts "You dash past the creature into the smaller tunnel beyond him. You quickly jog down the cavern leaving the disgusting crunching noise behind you.\n\nThe tunnel winds its way for about twenty minutes until you can make out a bright white light from up ahead. When you come to this exit, you notice a thick layer of snow covering the cave opening.\n\nYou pull out your weapon and start digging.\nYour heart is pounding.\nSuddenly, from behind you, you hear the roar of the ice troll.\n\nDig faster!"
      puts "continue... (quickly)" #add fatigue
      puts "[1] dig, Dig, DIG!!" # make a strength check
-
+        Player.fatiguepoints -=1
      card10Continue = gets.chomp.to_i
    
         card10Test = StrengthChecks.new.strengthCheck()
@@ -381,7 +384,7 @@ class Card15 <StoryCard
             cardDestinations = 2
         elsif card15Test <= card15ToPass
             cardDestinations = 1
-        else card15Test <=card15ToPass && Player.hitpoints == 0
+        else card15Test <=card15ToPass && Player.hitpoints <= 0
             cardDestinations = 3
         end 
 
@@ -402,6 +405,7 @@ class Card16 <StoryCard
         clearScreen()
     puts "As you rummage through the tattered remnants of the skeleton, your hand scrapes across something razor sharp!\nYou raise your bloody hand to your mouth and probe the wound with your tongue.\n\nKicking aside some torn cloth, you see a glass dagger half-embedded in the wood"
     #You take 1d-4 cut damage (minimum 1)
+    Player.hitpoints -=1
     puts "Now what?"
     puts "[1] Try to pry the dagger out"
     puts "[2] Leave it alone and keep going"
@@ -483,6 +487,9 @@ class Card19 <StoryCard
             if card19test > card19ToPass#fail
                 puts "the cold starts to take its toll on you, and it hurts."
                 Player.fatiguepoints -=1
+                damageFromColdmid = CombatRolls.new.rollDamage
+                damageFromCold = damageFromColdmid -3
+                Player.hitpoints -= damageFromCold
                 #also need to do D6 -3 damage here
             else card19test <= card19ToPass
                 puts "the cold takes its toll on you"
@@ -524,7 +531,7 @@ class Card21 <StoryCard
     #This activity costs you 2 Fatigue Points (FP) – if your FP ever reaches 0, you drop from exhaustion and die from the cold!
     puts "[1] Continue onwards ..." # Make a First Aid or Physician roll (or IQ-4 if you do not have  the skill). If you succeed, you restore 1d-3 HP. If you fail, you still  get 1 HP back.
         
-        Player.hitpoints += 3 #should be d6-3 min 1
+        Player.hitpoints += 3 #should be d6-3 min 1 #given how brutal the GM is here, I am just harcoding it
     
         Player.fatiguepoints -=2
 
