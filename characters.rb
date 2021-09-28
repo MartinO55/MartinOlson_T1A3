@@ -61,10 +61,10 @@ class IceTroll < Character
         return tAttackDamage +2
     end
 
-    def hp()
-        hitpoints = hp
-        return hp
-    end
+    # def hp()
+    #     hitpoints = hp
+    #     return hp
+    # end
 
 #damage = 1d6 +2
 end
@@ -84,6 +84,11 @@ class Bloodman < Character
         @will = will
         @fatiguepoints = fatiguepoints
 #damage = d6 
+    end
+
+    def attack()
+        bmAttackDamage = CombatRolls.new.rollDamage
+        return bmAttackDamage +1
     end
 end
 BloodMan = Bloodman.new("bloodman",15,1,10,12,13,9,11,12)

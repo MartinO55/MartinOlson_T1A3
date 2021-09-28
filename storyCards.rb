@@ -425,7 +425,12 @@ class Card17 <StoryCard
 
         manageCombat(Icetroll,Player)
 
-    getNextCard(cardDestinations)#this won't be a thing
+        if Player.hitpoints >0
+            cardDestinations ==1
+        else Player.hitpoints <=0
+            cardDestinations == 2
+        end
+    #getNextCard(cardDestinations)#this won't be a thing
         if cardDestinations == 1 #the troll is killed or retreats. functionally identical. the troll makes a will roll to fight to the death - no idea if this needs to be implemented
             Card21.new.startCard21
         else cardDestinations == 2 # you died, game over
@@ -858,8 +863,15 @@ class Card38 <StoryCard
     #this is where the darkness modifier (-3 to rolls) pays off, and is the only other combat encounter in the game
 
     puts "[1] Your time is up, foul creature" #go to combat
+
+    manageCombat(BloodMan,Player)
     
-    getNextCard(cardDestinations)
+        if Player.hitpoints > 0
+            cardDestinations =1
+        else Player.hitpoints <=0
+            cardDestinations =2
+        end
+    #getNextCard(cardDestinations)
         if cardDestinations == 1
             Card48.new.startCard48
         else cardDestinations == 2 # defeat, game over
