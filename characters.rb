@@ -32,7 +32,7 @@ class PlayerCharacter <Character
     end
 
     def attack()
-    pAttackDamage = CombatRolls.new.rollDamage
+        pAttackDamage = CombatRolls.new.rollDamage
         return pAttackDamage + 1 #hardcoded, should check inventory
     end
 
@@ -60,13 +60,6 @@ class IceTroll < Character
         tAttackDamage = CombatRolls.new.rollDamage
         return tAttackDamage +2
     end
-
-    # def hp()
-    #     hitpoints = hp
-    #     return hp
-    # end
-
-#damage = 1d6 +2
 end
 Icetroll = IceTroll.new("troll",15,2,9,12,15,7,11,12)
 
@@ -83,7 +76,6 @@ class Bloodman < Character
         @intelligence = intelligence
         @will = will
         @fatiguepoints = fatiguepoints
-#damage = d6 
     end
 
     def attack()

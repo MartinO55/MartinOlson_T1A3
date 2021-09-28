@@ -1,6 +1,8 @@
 require_relative "game.rb" #this is where the skill checks and probably comat will go
 require_relative "characters.rb" #this is where inventory will need to be pushed to
 #require_relative "main_menu.rb"  #SO this breaks the app
+require "colorize"
+require "colorized_string"
 
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
     
@@ -23,7 +25,7 @@ class StoryCard #this class is all the cards, including the endings, whose desti
     end
 
     def manageCombat(enemy,player)#this the mehtod called by cards where combat take place - passing the method the enemy mob to fight and the player character
-        puts "you are in a fight with a hideous creature\n\n" #so if you try to call the enemy here you get the memory reference
+        puts "you are in a fight with a hideous creature\n\n".colorize(:red) #so if you try to call the enemy here you get the memory reference
             #Combat loop - while both the player and enemy are alive, the attack sequence continues with the player going first
             while player.hitpoints >0 && enemy.hitpoints >0 #both are alive
                 
@@ -48,6 +50,7 @@ class StoryCard #this class is all the cards, including the endings, whose desti
 
                         if enemyRollToBlock >enemy.damageBlock #enemy rolls to dodge
                             enemy.hitpoints -= playerAttackDamage #player does damage
+                            puts "You hit the enemy with your weapon!!"
                             puts "enemy health is"
                             puts enemy.hitpoints
                         else enemyRollToBlock <= enemyRollToBlock
@@ -71,6 +74,7 @@ class StoryCard #this class is all the cards, including the endings, whose desti
                         #now you get to roll to dodge/block/parry - in GURPS there are these 3 options, but because it's just roll under the number, you would always pick your best option, and nothing in the module disallows any choice so, theres only one
                         if playerRollToBlock >player.damageBlock#roll to block
                             player.hitpoints -= enemyAttackDamage #enemy does damage
+                            puts "Enemy Hits you!!. It really hurts!!"
                             puts "player health is"
                             puts player.hitpoints
                         else playerRollToBlock <= player.damageBlock
@@ -867,7 +871,7 @@ class Card38 <StoryCard
         clearScreen()
     puts "You draw your weapon, expecting danger. The stench from this dark room is choking you.\n\nYou stare across the litter-filled room and gasp when you see that the whole room is covered in a liquid that can only be blood.\n\nIn the middle of the room, you can barely make out a skinny, man-like creature wearing practically nothing.\n\nYou see that his eyes are bloodshot and his skin is a disgusting mottled-red.\nHe lets out a half-hiss, half-cackle and stumbles towards you."
     
-    #this is where the darkness modifier (-3 to rolls) pays off, and is the only other combat encounter in the game
+    #this is where the darkness modifier (-3 to rolls) pays off, and is the only other combat encounter in the game. Not sure if needed
 
     puts "[1] Your time is up, foul creature" #go to combat
 

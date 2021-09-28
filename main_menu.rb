@@ -1,9 +1,14 @@
 require_relative "game.rb"
 require_relative "main.rb"
 
+require "colorize"
+require "colorized_string"
+
 #include game.rb
 #include main.rb
-
+#String.colors                       # return array of all possible colors names
+#String.modes                        # return array of all possible modes
+#String.color_samples                # displays color samples in all combinations
 #TODO - Create a main Menu
 
 #TODO - call New Game Function
@@ -27,7 +32,8 @@ def quitGame ()
 end
 
 def beginVOM()
-    puts "Beyond the Veil of Madness\n\n"
+    
+    puts  "Beyond the Veil of Madness\n\n".colorize(:blue)
 
     puts "A GURPS fantasy oneshot for one player by JC Connors\n\n"
 
@@ -46,7 +52,7 @@ def beginVOM()
     elsif mainMenuNav == 2
         puts "this would load a game"
     elsif mainMenuNav == 3
-        puts "quit the game"
+        puts "quit the game" #this technically works
     else
         puts "unrecognised input"
     end
