@@ -1,7 +1,6 @@
 require_relative "game.rb" #this is where the skill checks and probably comat will go
 require_relative "characters.rb" #this is where inventory will need to be pushed to
-#require_relative "main_menu.rb" #So we can send the player back to the main menu #SO this breaks the app
-#require_relative "enemys.rb" #this is where enemies will come from. NOW OBSOLETE
+#require_relative "main_menu.rb"  #SO this breaks the app
 
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
     
@@ -23,9 +22,65 @@ class StoryCard #this class is all the cards, including the endings, whose desti
         return @cardDestinations
     end
 
-    #needs a method to push new loot to player character hash, and inventory
+    def manageCombat(enemy,player)
+        puts "you are in a fight with a hideous creature\n\n" #so if you try to call the enemy here you get the memory reference
+       
+            while player.hitpoints >0 && enemy.hitpoints >0 #both are alive
+                
+                puts "[1] ATTACK!\n\n"
+                attackQueue = gets.chomp.to_i #breaks the sequence
 
-    #need method to call skill checks?
+                    playerDamgeReduction = player.damageReduction#initialize the damage reduction stats
+                    enemyDamageReduction = enemy.damageReduction
+
+                    playerAttackDamageMid = player.attack  #this is supposed to call the player variable passed to this method, which is the Player, which has a method attack (which provides damage)
+                    playerAttackDamage = playerAttackDamageMid -enemyDamageReduction #applies enemy DR
+                    
+                playerRollToHit = CombatRolls.new.rollToHit
+                enemyRollToBlock = CombatRolls.new.rollToBlock
+                #Players Attack sequence
+                    if playerRollToHit == 3
+                        puts "You score a Critical hit!!\n\n"
+                        enemy.hitpoints -= playerAttackDamage #no chance to block, go straight to damage
+                    elsif playerRollToHit > player.dexterity #Player Rolls to hit
+                        puts "you missed the target!!\n\n"
+                    else playerRollToHit <= player.dexterity
+
+                        if enemyRollToBlock >enemy.damageBlock #enemy rolls to dodge
+                            enemy.hitpoints -= playerAttackDamage #player does damage
+                            puts "enemy health is"
+                            puts enemy.hitpoints
+                        else enemyRollToBlock <= enemyRollToBlock
+                            puts "The enemy dodges your attack!!"
+                        end
+                       
+                    end
+
+                    enemyAttackDamageMid = enemy.attack # rolls the dice
+                    enemyAttackDamage=enemyAttackDamageMid-playerDamgeReduction #applies player DR
+                
+                enemyRollToHit = CombatRolls.new.rollToHit #enemy rolls to hit
+                playerRollToBlock = CombatRolls.new.rollToBlock
+                    #enemy Attack sequence
+                    if enemyRollToHit == 3
+                        puts "Your enemy scores a critical hit!!"
+                        player.hitpoints -= enemyAttackDamage #enemy does damage, no blocking allowed
+                    elsif enemyRollToHit > enemy.dexterity
+                        puts "Your enemy fails to hit you!!"
+                    else enemyRollToHit<=enemy.dexterity
+                        #now you get to roll to dodge/block/parry - in GURPS there are these 3 options, but because it's just roll under the number, you would always pick your best option, and nothing in the module disallows any choice so, theres only one
+                        if playerRollToBlock >player.damageBlock#roll to block
+                            player.hitpoints -= enemyAttackDamage #enemy does damage
+                            puts "player health is"
+                            puts player.hitpoints
+                        else playerRollToBlock <= player.damageBlock
+                            puts "You dodge the enemies attack!!"
+                        end
+                        
+                    end
+        end
+    end
+    #needs a method to push new loot to player character hash, and inventory
 
 end
 
@@ -33,8 +88,9 @@ end
 
     class Card1 < StoryCard
         
-        def startCard1()
+        def startCard1()#So we could write a universal method in the parent class that takes the card number
             clearScreen()
+            cardNumber = 1
         puts "\nIt was already a freezing morning when you set out for the legendary “Castle of Madness” – the mysterious castle that is said to emerge from blizzards once every seven winters.\n\nNow, as it grows dark, the mountains’ glacial winds of this valley make the temperature seem hundreds of times colder. \n\nBoth hands wrap your winter cloak tightly around your body, but somehow you can still feel the ice-sharded winds as if on bare skin.\nYou squint your eyes down at your weapon and wonder if it has become frozen to your belt. \nNothing alive can possibly live in these temperatures, you reassure yourself, pushing back thoughts of the living dead you’ve heard emerge with the castle.\n\nSoon, you can make out the faint ruined form of the castle up ahead. The old crone’s rotting map was right! Your best guess tells you it’s another hour’s walk in the harsh cold. \nBefore you have time to think about the longer walk, you spot a gaping black opening in the snow. It must be a cave. The crone told you that underground tunnels could also lead into the castle.\n\nCould this be one? Or is it the lair of some beast \n\n" #this needs to be the formatted story text
 
             puts "What do you want to do?""\n\n" #this needs to be the list of things you could do
@@ -367,13 +423,15 @@ class Card17 <StoryCard
     puts "..."
     puts "[1] Raise your weapons"
 
-    getNextCard(cardDestinations)
+        manageCombat(Icetroll,Player)
+
+    getNextCard(cardDestinations)#this won't be a thing
         if cardDestinations == 1 #the troll is killed or retreats. functionally identical. the troll makes a will roll to fight to the death - no idea if this needs to be implemented
             Card21.new.startCard21
         else cardDestinations == 2 # you died, game over
             puts "you died"
         end
-end
+    end
 end
 
 class Card18 <StoryCard

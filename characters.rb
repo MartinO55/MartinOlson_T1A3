@@ -1,3 +1,5 @@
+require_relative "game.rb"
+
 class Character
     attr_accessor :name, :hitpoints,:damageReduction, :damageBlock, :perception, :fatiguepoints, :dexterity,:strength,:intelligence,:will
 end
@@ -28,6 +30,12 @@ class PlayerCharacter <Character
     #separate hash for loot?
     #signet ring, chariot toy, tapestries, troll teeth, Rescuer keyword,amythest ring, blue chemise, silver tiara, silver sceptre. the sneaky thing to do here is use the value as the key to the hash
     end
+
+    def attack()
+    pAttackDamage = CombatRolls.new.rollDamage
+        return pAttackDamage + 1 #hardcoded, should check inventory
+    end
+
 end
 
 Player = PlayerCharacter.new("steve",15,4,9,14,12,13,12,12,13) #this hardcodes the player sheet, but can be accessed from anywhere
@@ -47,6 +55,17 @@ class IceTroll < Character
     @will =will
     @fatiguepoints = fatiguepoints
     end
+
+    def attack()
+        tAttackDamage = CombatRolls.new.rollDamage
+        return tAttackDamage +2
+    end
+
+    def hp()
+        hitpoints = hp
+        return hp
+    end
+
 #damage = 1d6 +2
 end
 Icetroll = IceTroll.new("troll",15,2,9,12,15,7,11,12)
@@ -64,7 +83,7 @@ class Bloodman < Character
         @intelligence = intelligence
         @will = will
         @fatiguepoints = fatiguepoints
-#damage = d6 initially, then 1d6 -2 per round
+#damage = d6 
     end
 end
 BloodMan = Bloodman.new("bloodman",15,1,10,12,13,9,11,12)

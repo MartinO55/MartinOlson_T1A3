@@ -95,21 +95,19 @@ end
         end
     end
 
-    #perception = IQ
-   
-    #Lockpicking - DX check
-   
-
-    #merchant - IQ
-    
-
-    #Survival - IQ. this check is called once
-   
-
-    #First aid - IQ
-  
-    #Forced entry - strength
-   
-
-    #stealth = DX - quick contest, both roll DX, troll looking for beat 12, lowest wins if both suceed
+   #different rolls for combat 
+class CombatRolls
+    def rollToHit()#roll under dex
+        attackRoll = Crapshoot.roll '3d6'
+        return attackRoll
+    end
+    def rollToBlock()#roll under block
+        blockRoll = Crapshoot.roll '3d6'
+        return blockRoll
+    end
+    def rollDamage()
+        damageRoll = Crapshoot.roll '1d6'
+        return damageRoll
+    end
+end
     
