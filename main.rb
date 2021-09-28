@@ -1,5 +1,5 @@
 
-
+#this file exists to serve as an intermediary between main_menu and the story, because it apparently needs one (don't know why, won't wuestion it again)
 require_relative "storyCards.rb"
 require_relative "game.rb"
 require_relative "characters.rb"
@@ -17,8 +17,9 @@ class Beyond_the_vale
     end
 end
 
-def getDestination(cardNumber) #so this needs to call a function from a class that knows all the cards, where each function is an individual card
-        
+def loadGame(cardNumber) #so this needs to call a function from a class that knows all the cards, where each function is an individual card
+        #this needs to concatanate cardnumber with Card to tell it where to go
+      cardToLoad = "Card" +cardNumber.to_s
        # puts "I called number " + cardNumber.to_s
         
 end
@@ -29,7 +30,7 @@ end
 
 #TODO Game over function
 class GAME_OVER
-  def initialize
+  def initialize()
     
   end
 
