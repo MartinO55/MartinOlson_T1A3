@@ -22,9 +22,9 @@ class StoryCard #this class is all the cards, including the endings, whose desti
         return @cardDestinations
     end
 
-    def manageCombat(enemy,player)
+    def manageCombat(enemy,player)#this the mehtod called by cards where combat take place - passing the method the enemy mob to fight and the player character
         puts "you are in a fight with a hideous creature\n\n" #so if you try to call the enemy here you get the memory reference
-       
+            #Combat loop - while both the player and enemy are alive, the attack sequence continues with the player going first
             while player.hitpoints >0 && enemy.hitpoints >0 #both are alive
                 
                 puts "[1] ATTACK!\n\n"
@@ -111,7 +111,7 @@ end
     class Card2 < StoryCard
         def startCard2() #this needs to clear the screen
             clearScreen()
-
+            
             puts "Double-wrapping your hands to protect them from the cold, you dig under some broken statues. In a few minutes you’ve uncovered a beautiful antique mace, its metal head coated in an unusual blue lacquer.\n\n
             Digging some more, you realize something – the weapon still has a frozen hand attached to it! A second later, your boot brushes aside the remains of the man’s face! The blue skin is cracked and broken. Apparently, some warrior died wielding this mace\n\n"
             
