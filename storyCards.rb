@@ -3,7 +3,7 @@ require_relative "characters.rb" #this is where inventory will need to be pushed
 #require_relative "main_menu.rb"  #SO this breaks the app
 require "colorize"
 require "colorized_string"
-require "tty-prompt"
+#require "tty-prompt" #dont do it it doesn't work, it just breaks everything and I don't know why
 #maybe tty prompt
 #ascii_paradise for ascii animations
 
