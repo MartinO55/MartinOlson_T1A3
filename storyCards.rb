@@ -29,11 +29,15 @@ class StoryCard #this class is all the cards, including the endings, whose desti
 
     def manageCombat(enemy,player)#this the mehtod called by cards where combat take place - passing the method the enemy mob to fight and the player character
         puts "you are in a fight with a hideous creature\n\n".colorize(:red) #so if you try to call the enemy here you get the memory reference
+        prompt = TTY::Prompt.new
             #Combat loop - while both the player and enemy are alive, the attack sequence continues with the player going first
             while player.hitpoints >0 && enemy.hitpoints >0 #both are alive
                 
-                puts "[1] ATTACK!\n\n".colorize(:red)
-                attackQueue = gets.chomp.to_i #breaks the sequence
+                attackMenu =prompt.select ("you are in a fight with a hideous creature\n\n").colorize(:red) do |menu|
+                menu.choice "[1] ATTACK!!\n\n"
+                end
+                #puts "[1] ATTACK!\n\n".colorize(:red)
+                #attackQueue = gets.chomp.to_i #breaks the sequence
 
                     playerDamgeReduction = player.damageReduction#initialize the damage reduction stats
                     enemyDamageReduction = enemy.damageReduction
@@ -56,7 +60,7 @@ class StoryCard #this class is all the cards, including the endings, whose desti
                             puts "enemy health is"
                             puts enemy.hitpoints
                         else enemyRollToBlock <= enemyRollToBlock
-                            puts "The enemy dodges your attack!!"
+                            puts "The enemy dodges your attack!!\n\n"
                         end
                     end
 
@@ -67,10 +71,10 @@ class StoryCard #this class is all the cards, including the endings, whose desti
                 playerRollToBlock = CombatRolls.new.rollToBlock
                     #enemy Attack sequence
                     if enemyRollToHit == 3
-                        puts "Your enemy scores a critical hit!!"
+                        puts "Your enemy scores a critical hit!!\n\n"
                         player.hitpoints -= enemyAttackDamage #enemy does damage, no blocking allowed
                     elsif enemyRollToHit > enemy.dexterity
-                        puts "Your enemy fails to hit you!!"
+                        puts "Your enemy fails to hit you!!\n\n"
                     else enemyRollToHit<=enemy.dexterity
                         #now you get to roll to dodge/block/parry - in GURPS there are these 3 options, but because it's just roll under the number, you would always pick your best option, and nothing in the module disallows any choice so, theres only one
                         if playerRollToBlock >player.damageBlock#roll to block
@@ -79,7 +83,7 @@ class StoryCard #this class is all the cards, including the endings, whose desti
                             puts "player health is"
                             puts player.hitpoints
                         else playerRollToBlock <= player.damageBlock
-                            puts "You dodge the enemies attack!!"
+                            puts "You dodge the enemies attack!!\n\n"
                         end
                     end
         end
@@ -104,24 +108,29 @@ end
         def startCard1()#So we could write a universal method in the parent class that takes the card number
             clearScreen()
             cardNumber = 1
+            prompt = TTY::Prompt.new
             #testitem = "testloot"
             #pushLoot(Player,testitem)
         puts "\nIt was already a freezing morning when you set out for the legendary “Castle of Madness” – the mysterious castle that is said to emerge from blizzards once every seven winters.\n\nNow, as it grows dark, the mountains’ glacial winds of this valley make the temperature seem hundreds of times colder. \n\nBoth hands wrap your winter cloak tightly around your body, but somehow you can still feel the ice-sharded winds as if on bare skin.\nYou squint your eyes down at your weapon and wonder if it has become frozen to your belt. \nNothing alive can possibly live in these temperatures, you reassure yourself, pushing back thoughts of the living dead you’ve heard emerge with the castle.\n\nSoon, you can make out the faint ruined form of the castle up ahead. The old crone’s rotting map was right! Your best guess tells you it’s another hour’s walk in the harsh cold. \nBefore you have time to think about the longer walk, you spot a gaping black opening in the snow. It must be a cave. The crone told you that underground tunnels could also lead into the castle.\n\nCould this be one? Or is it the lair of some beast \n\n" #this needs to be the formatted story text
+            card1Menu =prompt.select ("What do you want to do?\n\n") do |menu|
+                menu.choice "[1] Explore the cave", 1
+                menu.choice "[2] Continue on your cold trek to the castle", 2
+            end
 
-            puts "What do you want to do?\n\n" #this needs to be the list of things you could do
-            puts "[1] Explore the cave"
-            puts "[2] Continue on your cold trek to the castle"
+           # puts "What do you want to do?\n\n" #this needs to be the list of things you could do
+          #  puts "[1] Explore the cave"
+          #  puts "[2] Continue on your cold trek to the castle"
 
-           getNextCard(cardDestinations)
+         #  getNextCard(cardDestinations)
          #   @cardDestinations = gets.chomp.to_i #this is the input.#now moved to parent class
-            if cardDestinations ==1 #this is each of the possible choices, and will have an else for each possible destination
+            if card1Menu ==1 #this is each of the possible choices, and will have an else for each possible destination
                 Card12.new.startCard12#this calls the destination card
-            elsif cardDestinations ==2
+            elsif card1Menu ==2
                 Card19.new.startCard19
                 #need a copy paste catch statement for any other entry possibly a menu option
             else 
                 puts "unrecognised input" 
-                Card1.new.startCard1this 
+                Card1.new.startCard1
             end
         end
     end
@@ -129,7 +138,7 @@ end
     class Card2 < StoryCard
         def startCard2() #this needs to clear the screen
             clearScreen()
-
+            prompt = TTY::Prompt.new
             puts "Double-wrapping your hands to protect them from the cold, you dig under some broken statues. In a few minutes you’ve uncovered a beautiful antique mace, its metal head coated in an unusual blue lacquer.\n\n
             Digging some more, you realize something – the weapon still has a frozen hand attached to it! A second later, your boot brushes aside the remains of the man’s face! The blue skin is cracked and broken. Apparently, some warrior died wielding this mace\n\n"
             
@@ -145,16 +154,21 @@ end
                     puts "This is an error. I have no idea how you called it"
                 end
 
-            puts "Which way now?"
-            puts "[1] Through the servants door\n"
-            puts "[2] Through the Guardhouse\n"
+                card2Menu = prompt.select ("Which way now?") do |menu|
+                menu.choice "[1] Through the servants door", 1
+                menu.choice "[2] Through the Guardhouse", 2
+                end
 
-            getNextCard(cardDestinations)
+           # puts "Which way now?"
+            #puts "[1] Through the servants door\n"
+           # puts "[2] Through the Guardhouse\n"
+
+           # getNextCard(cardDestinations)
            # @cardDestinations = gets.chomp.to_i
 
-            if cardDestinations ==1
+            if card2Menu ==1
                 Card14.new.startCard14
-            elsif cardDestinations ==2
+            elsif card2Menu ==2
                 Card11.new.startCard11
             else
                 puts "you decide to head to the guardhouse"#I don't want to send the player back to the top because it would give them a second shot at the mace if they miss it
@@ -166,21 +180,28 @@ end
     class Card3 <StoryCard
         def startCard3() 
             clearScreen()
+            prompt = TTY::Prompt.new
             puts "Snow crunching underfoot, you jog along the intact half of the castle.\n\nJust as you begin to tire, you spot a broken gateway, where once armored guards stood with tall halberds. The portal lies open and shattered and leads into the courtyard of the castle.\n\n
             You swing under the broken gate and look around. Dozens of statues – most crumbled – litter the courtyard. You see two doors beyond the statue graveyard.\nThe smaller one seems to be a servant’s entrance; the other seems to be a guardhouse door"
-            puts "What will you do now?"
-            puts "[1] Search the courtyard\n"
-            puts "[2] Go through the servants door\n"
-            puts "[3] Go through to the Guardhouse\n"
+            # puts "What will you do now?"
+            # puts "[1] Search the courtyard"
+           # puts "[2] Go through the servants door"
+           # puts "[3] Go through to the Guardhouse"
 
-            getNextCard(cardDestinations)
+            card3Menu = prompt.select ("What will you do now?") do |menu|
+            menu.choice "[1] Search the courtyard", 1
+            menu.choice "[2] Go through the servants door", 2
+            menu.choice "[3] Go through to the Guardhouse",3 
+            end
+
+           # getNextCard(cardDestinations)
            # @cardDestinations = gets.chomp.to_i
 
-            if cardDestinations == 1
+            if card3Menu == 1
                 Card43.new.startCard43
-            elsif cardDestinations == 2
+            elsif card3Menu == 2
                 Card14.new.startCard14
-            elsif cardDestinations == 3
+            elsif card3Menu == 3
                 Card11.new.startCard11
             else
                 Card3.new.startCard3
@@ -191,14 +212,18 @@ end
     class Card4 <StoryCard
         def startCard4() #
             clearScreen()
+            prompt = TTY::Prompt.new
             puts "You see a woman, half-dressed, standing in the room. Her skin is icy pale. \nShe picks up the remnants of her clothes and stares at you, her ice blue eyes burning into the back of your head. \n\nBefore you can even wonder about the true nature of this delicate creature, she disappears in a flurry of fine ice. \nYou shake your head and enter the room"
-            puts "..."
-            puts "[1] Continue"
+            # puts "..."
+            # puts "[1] Continue"
+            card4menu = prompt.select("...") do |menu|
+            menu.choice "[1] Continue", 1
+            end
 
-            getNextCard(cardDestinations)
+           # getNextCard(cardDestinations)
            # @cardDestinations = gets.chomp.to_i
 
-            if cardDestinations ==1
+            if card4menu ==1
                 Card45.new.startCard45
             else
                 Card45.new.startCard45 #there is no escape
@@ -209,17 +234,23 @@ end
     class Card5 <StoryCard
         def startCard5() 
             clearScreen()
+            prompt = TTY::Prompt.new
             puts "You manage to loop the grapple around the gargoyle’s wing. Confident in your skill, you begin the treacherous climb.\n\nCRACK!\n\n The gargoyle breaks away and you plummet to the snowy ground.\n\nTending your sore arm from the fall, you decide to circle around the castle and look for another way in."
-            puts "..."
-            puts "[1] Continue"
+            # puts "..."
+            # puts "[1] Continue"
             #add Fall damage, and emphasis on the CRACK
             fallDamageMid5 = CombatRolls.new.rollDamage
             fallDamage5 = fallDamageMid5 -4
             Player.hitpoints -=fallDamage5
+
+            card5Menu = prompt.select("ow...") do |menu|
+            menu.choice "[1] Continue", 1
+            end
+
     #The fall does 1d-1 cr damage, with only soft armor protecting.
-            getNextCard(cardDestinations)
+           # getNextCard(cardDestinations)
             #@cardDestinations = gets.chomp.to_i
-            if cardDestinations ==1
+            if card5Menu ==1
                 Card3.new.startCard3
             else 
                 Card3.new.startCard3 #still no escape
@@ -230,13 +261,16 @@ end
     class Card6 <StoryCard
         def startCard6() 
             clearScreen()
-        puts "As you are about to leave, you spot a tarnished, silver ring on one of the skeletons.\nYou pull it off and examine it. Apparently, it was the captain of the guard’s signet ring.\nPocketing it, you head out the door for the servant’s entrance"
-        puts "..."
-        puts "[1] Continue..." #add signet ring to inventory
-
-        getNextCard(cardDestinations)
+            prompt = TTY::Prompt.new
+            puts "As you are about to leave, you spot a tarnished, silver ring on one of the skeletons.\nYou pull it off and examine it. Apparently, it was the captain of the guard’s signet ring.\nPocketing it, you head out the door for the servant’s entrance"
+            # puts "..."
+            # puts "[1] Continue..." #add signet ring to inventory
+            card6Prompt = prompt.select ("...") do|menu|
+                menu.choice "[1] Continue...",1
+            end
+       # getNextCard(cardDestinations)
        # @cardDestinations = gets.chomp.to_i
-            if cardDestinations ==1
+            if card6Prompt ==1
                 Card14.new.startCard14
             else 
                 Card14.new.startCard14
@@ -247,6 +281,7 @@ end
     class Card7 <StoryCard
         def startCard7() 
             clearScreen()
+            prompt = TTY::Prompt.new
         puts "You stride forward with confidence and crack open the half-broken door but quickly realize that you can’t see – it’s too dark to make out anything but dim silhouettes.\n\nYou fumble to get a torch lit as you hear a hissing cackle that chills your bones."
         puts "..."# this needs to be replaced with the pass/fail skill check that adds a modifier to the next destination
         darkness = false #this may need to move out of this class
@@ -258,11 +293,17 @@ end
                 else card7Test <= card7ToPass
                     darkness = false
                 end
-        puts "[1] Continue"
 
-        getNextCard(cardDestinations)
+            card7Prompt = prompt.select ("...") do |menu|
+            
+                menu.choice "[1] Continue", 1
+            end
+
+       # puts "[1] Continue"
+
+       # getNextCard(cardDestinations)
         #@cardDestinations = gets.chomp.to_i
-            if cardDestinations ==1
+            if card7Prompt ==1
                 Card38.new.startCard38
             else 
                 Card38.new.startCard38
@@ -273,19 +314,26 @@ end
 
  class Card8 <StoryCard
     def startCard8() 
-         clearScreen()
-     puts "You’re in luck – the strange monster is too busy with his meal to notice you.\n\nYou glance around the icy room and notice that there is a small tunnel that continues past the creature.\nWith any luck, you can get to it without him noticing you."
-    puts "Now What?"
-    puts "[1] Try to sneak past"
-    puts "[2] Turn around"
-    puts "[3] ATTACK!"
+        clearScreen()
+        prompt = TTY::Prompt.new
+    puts "You’re in luck – the strange monster is too busy with his meal to notice you.\n\nYou glance around the icy room and notice that there is a small tunnel that continues past the creature.\nWith any luck, you can get to it without him noticing you."
+    # puts "Now What?"
+    # puts "[1] Try to sneak past"
+    # puts "[2] Turn around"
+    # puts "[3] ATTACK!"
 
-    getNextCard(cardDestinations)
-       if cardDestinations == 1
+    card8Menu = prompt.select ("Now What?") do |menu|
+    menu.choice "[1] Try to sneak past", 1
+    menu.choice "[2] Turn around", 2
+    menu.choice "[3] ATTACK!", 3
+    end
+
+    #getNextCard(cardDestinations)
+       if card8Menu == 1
            Card44.new.startCard44
-       elsif cardDestinations == 2
+       elsif card8Menu == 2
            Card22.new.startCard22
-       elsif cardDestinations == 3
+       elsif card8Menu == 3
            Card17.new.startCard17
        else 
             Card8.new.startCard8
@@ -295,19 +343,25 @@ end
 
  class Card9 <StoryCard
     def startCard9() 
-         clearScreen()
-     puts "As you quietly move along the dark tunnel, you hear a disgusting noise from up ahead.\nYou hear pained squeals and horrible rending sounds about forty paces in front of you.\n\nYour skin crawls at the thought of what lies ahead."
-    puts "Now what?"
-    puts "[1] Turn around and go back the other way"
-    puts "[2] Sneak on ahead"
-    puts "[3] CHARGE!!!"
+        clearScreen()
+        prompt = TTY::Prompt.new
+    puts "As you quietly move along the dark tunnel, you hear a disgusting noise from up ahead.\nYou hear pained squeals and horrible rending sounds about forty paces in front of you.\n\nYour skin crawls at the thought of what lies ahead."
+    # puts "Now what?"
+    # puts "[1] Turn around and go back the other way"
+    # puts "[2] Sneak on ahead"
+    # puts "[3] CHARGE!!!"
 
-    getNextCard(cardDestinations)
-        if cardDestinations ==1
+    card9menu= prompt.select ("Now what?") do |menu|
+        menu.choice "[1] Turn around and go back the other way", 1
+        menu.choice "[2] Sneak on ahead", 2
+        menu.choice "[3] CHARGE!!!", 3
+    end
+   #getNextCard(cardDestinations)
+        if card9menu ==1
             Card22.new.startCard22
-        elsif cardDestinations ==2
+        elsif card9menu ==2
             Card31.new.startCard31
-        elsif cardDestinations ==3
+        elsif card9menu ==3
             Card49.new.startCard49
         else 
             Card9.new.startCard9
@@ -317,12 +371,17 @@ end
 
  class Card10 <StoryCard
      def startCard10() 
-         clearScreen()#this card has a strength check, and also checks fatigue
+         clearScreen()
+         prompt = TTY::Prompt.new
      puts "You dash past the creature into the smaller tunnel beyond him. You quickly jog down the cavern leaving the disgusting crunching noise behind you.\n\nThe tunnel winds its way for about twenty minutes until you can make out a bright white light from up ahead. When you come to this exit, you notice a thick layer of snow covering the cave opening.\n\nYou pull out your weapon and start digging.\nYour heart is pounding.\nSuddenly, from behind you, you hear the roar of the ice troll.\n\nDig faster!"
-     puts "continue... (quickly)" #add fatigue
-     puts "[1] dig, Dig, DIG!!" # make a strength check
+     #puts "continue... (quickly)" #add fatigue
+     #puts "[1] dig, Dig, DIG!!" # make a strength check
         Player.fatiguepoints -=1
-     card10Continue = gets.chomp.to_i
+     
+     
+        card10menu = prompt.select ("continue... (quickly)") do |menu|
+            menu.choice "[1] dig, Dig, DIG!!", 1
+        end
    
         card10Test = StrengthChecks.new.strengthCheck()
         card10ToPass = Player.strength
@@ -343,15 +402,22 @@ end
  class Card11 <StoryCard
      def startCard11() 
          clearScreen()
+         prompt = TTY::Prompt.new
      puts "You approach the guardhouse door and push on it.\nNo luck.\nApparently, the guardhouse door is either locked or frozen shut."
-     puts "What will you do?"
-     puts "[1] Use your dagger to pick the lock"
-     puts "[2] Try forcing the door open"
+    #  puts "What will you do?"
+    #  puts "[1] Use your dagger to pick the lock"
+    #  puts "[2] Try forcing the door open"
 
-     getNextCard(cardDestinations)
-        if cardDestinations == 1
+        card11menu = prompt.select ("What will you do?") do |menu|
+        menu.select "[1] Use your dagger to pick the lock", 1
+        menu.select "[2] Try forcing the door open",2 
+        end 
+
+
+    # getNextCard(cardDestinations)
+        if card11menu == 1
             Card18.new.startCard18
-        elsif cardDestinations == 2
+        elsif card11menu == 2
             Card40.new.startCard40
         else 
             Card11.new.startCard11
@@ -362,19 +428,27 @@ end
 class Card12 <StoryCard
     def startCard12()
         clearScreen()
+        prompt = TTY::Prompt.new
         puts "It feels warmer the moment you step into the cave, though the winds make an eerie whining sound throughout these dark tunnels. \n\nFortunately, you had enough foresight to bring a torch.\n\nStretching your numb fingers several times, you take out your tinderbox and light the torch.\nThe heat seems to melt your very face. Taking a deep breath, you walk down the winding tunnels making mental notes of its rock formations in case you get lost.\nIt seems as if someone, or something, walked these tunnels in the recent weeks. In a few minutes, you see that the tunnel turns and branches"
-        puts "Which path do you take?""\n\n"
-        puts "[1] The trodden path"
-        puts "[2] The icier path"
-        puts "[3] The warmer, rock path"
+        # puts "Which path do you take?""\n\n"
+        # puts "[1] The trodden path"
+        # puts "[2] The icier path"
+        # puts "[3] The warmer, rock path"
+
+        card12menu = prompt.select ("Which path do you take?") do |menu|
+            menu.select "[1] The trodden path", 1
+            menu.select "[2] The icier path",2 
+            menu.select "[3] The warmer, rock path", 3
+        end
+
 
        # @cardDestinations= gets.chomp.to_i
-        getNextCard(cardDestinations)
-            if cardDestinations == 1
+      # getNextCard(cardDestinations)
+            if card12menu == 1
                 Card9.new.startCard9
-            elsif cardDestinations == 2
+            elsif card12menu == 2
                 Card22.new.startCard22
-            elsif cardDestinations == 3
+            elsif card12menu == 3
                 Card54.new.startCard54
             else
                 Card12.new.startCard12
@@ -385,11 +459,16 @@ end
 class Card13 <StoryCard
     def startCard13() 
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "You spot something unusual – a small trap door in the side of the room.\nSmiling, and remembering that guardhouses often keep valuable weapons locked away, you head towards the door. Kneeling down, you pry it open easily – the lock has long since rusted away.\n\nInside the cubby hole is a pitted iron shortsword. It probably wouldn’t last a single swing, so you toss it aside.\nBehind the blade, however, is a steel-plated, medium shield. Painted on its face are three white bears.\nThough the paint is a little worn, it apparently protected the shield from the elements.\n\nYou carefully take the shield out, brush off some ice, and strap it to your back"
-    puts "..."
-    puts "[1] Continue (with a new shield)" #add shield to inventory/equipment
-    getNextCard(cardDestinations)
-        if cardDestinations ==1
+    # puts "..."
+    # puts "[1] Continue (with a new shield)" #add shield to inventory/equipment
+
+    card13menu = prompt.select ("...") do |menu|
+        menu.select "[1] Continue (with a new shield)", 1
+    end
+   # getNextCard(cardDestinations)
+        if card13menu ==1
             Card6.new.startCard6
         else 
             Card6.new.startCard6
@@ -400,14 +479,19 @@ end
 class Card14 <StoryCard
     def startCard14() 
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "You need to duck your head to get into the servant’s entrance – the doorframe collapsed years ago.\n\nAfter your eyes adjust to the dim entranceway, you see that some great creature entered the castle here.\nGiant footprints have cracked through the wood of the floor here, and age-old blood has been spattered against the walls.\n\nIt gives you a shiver to think of what kind of creature attacked the castle.\nDigging through some old supplies, you uncover a skeleton of a dead servant.\n\nYou’re not sure if it was a man or woman, as only tattered cloth lies around its bones."
-    puts "What now?"
-    puts "[1] Search the area around the corpse"
-    puts "[2] Continue onwards"
-    getNextCard(cardDestinations)
-        if cardDestinations == 1
+    # puts "What now?"
+    # puts "[1] Search the area around the corpse"
+    # puts "[2] Continue onwards"
+    card14menu = prompt.select("What now?") do |menu|
+        menu.select "[1] Search the area around the corpse",1 
+        menu.select "[2] Continue onwards", 2
+    end
+    #getNextCard(cardDestinations)
+        if card14menu == 1
             Card16.new.startCard16
-        elsif cardDestinations == 2
+        elsif card14menu == 2
             Card33.new.startCard33
         else
             Card14.new.startCard14
@@ -418,11 +502,16 @@ end
 class Card15 <StoryCard
     def startCard15() 
         clearScreen() 
+        prompt = TTY::Prompt.new
     puts "The cliff isn’t as steep as you imagined, and many of its hand and footholds aren’t covered with ice.\n\nMake no mistake – this still isn’t an easy climb, and you should be careful."
-    puts "..."
-    puts "[1] Climb down the mountain..." #Make a Climbing roll (or DX-5 if you do not have the skill). Remember that Climbing rolls are penalized at -1 per encumbrance level
+    # puts "..."
+    # puts "[1] Climb down the mountain..." #Make a Climbing roll (or DX-5 if you do not have the skill). Remember that Climbing rolls are penalized at -1 per encumbrance level
     
-    card15Continue = gets.chomp.to_i
+    #card15Continue = gets.chomp.to_i
+
+        card15menu = prompt.select ("...") do |menu|
+            menu.select "[1] Climb down the mountain...", 1
+        end
 
     card15Test = DexChecks.new.climbingCheck
     card15ToPass = Player.dexterity
@@ -449,16 +538,23 @@ end
 class Card16 <StoryCard
     def startCard16() 
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "As you rummage through the tattered remnants of the skeleton, your hand scrapes across something razor sharp!\nYou raise your bloody hand to your mouth and probe the wound with your tongue.\n\nKicking aside some torn cloth, you see a glass dagger half-embedded in the wood"
     #You take 1d-4 cut damage (minimum 1)
     Player.hitpoints -=1
-    puts "Now what?"
-    puts "[1] Try to pry the dagger out"
-    puts "[2] Leave it alone and keep going"
-    getNextCard(cardDestinations)
-        if cardDestinations == 1
+   
+   card16Menu = prompt.select ("Now what?") do |menu|
+    menu.select "[1] Try to pry the dagger out", 1
+    menu.select "[2] Leave it alone and keep going",2 
+   end
+
+    # puts "Now what?"
+    # puts "[1] Try to pry the dagger out"
+    # puts "[2] Leave it alone and keep going"
+    # getNextCard(cardDestinations)
+        if card16Menu == 1
             Card24.new.startCard24
-        else cardDestinations == 2
+        else card16Menu == 2
             Card33.new.startCard33
         end
 
@@ -468,18 +564,24 @@ end
 class Card17 <StoryCard
     def startCard17() 
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "You are in a battle with an ice troll, a massive beast with a shark-toothed maw and claws the size of long knives.\n\nYou’ve only seen one in your life – and that was a carcass a hunter brought back to your village when you were a child.\nThis one seems twice the size of that one!"
     #fight with the troll ensues - I think we just skip the tactical combat as there is only one other monster in the game
-    puts "..."
-    puts "[1] Raise your weapons"
-        card17Continue = gets.chomp.to_i
+    # puts "..."
+    # puts "[1] Raise your weapons"
+
+        # card17Continue = gets.chomp.to_i
+        card17menu = prompt.select ("...") do |menu|
+            menu.select "[1] Raise your weapons",1
+        end
+
 
         manageCombat(Icetroll,Player)
 
         if Player.hitpoints >0
-            cardDestinations ==1
+            cardDestinations =1
         else Player.hitpoints <=0
-            cardDestinations == 2
+            cardDestinations = 2
         end
     #getNextCard(cardDestinations)#this won't be a thing
         if cardDestinations == 1 #the troll is killed or retreats. functionally identical. the troll makes a will roll to fight to the death - no idea if this needs to be implemented
@@ -493,14 +595,21 @@ end
 class Card18 <StoryCard
     def startCard18() 
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "You kneel down in the snow and peer through the keyhole.\nJust as you suspected... the door is locked with an older type of lock. Several stone pegs keep the door in place.\nYour knife might be able to do the trick, but it’s formidable"
-    puts "what do you do\n\n"
-    puts "[1] Try to pick the lock" # make a Lockpicking roll at +2 (or DX-3 if you do not have the skill)
-    puts "[2] Try to break the door down" #this should only be exposed after failing to pick the lock
-    puts "[3] Try the servants door instead" 
+    # puts "what do you do"
+    # puts "[1] Try to pick the lock" # make a Lockpicking roll at +2 (or DX-3 if you do not have the skill)
+    # puts "[2] Try to break the door down" #this should only be exposed after failing to pick the lock
+    # puts "[3] Try the servants door instead" 
 
-    getNextCard(cardDestinations)
-        if cardDestinations == 1 
+    card18menu = prompt.select ("what do you do") do |menu|
+        menu.select "[1] Try to pick the lock", 1
+        menu.select "[2] Try to break the door down",2 
+        menu.select "[3] Try the servants door instead",3
+    end
+
+    #getNextCard(cardDestinations)
+        if card18menu == 1 
 
             card18LockPickTest = DexChecks.new.lockpickingCheck 
             card18LockPickTestMidway = Player.dexterity
@@ -514,9 +623,9 @@ class Card18 <StoryCard
                 card18lockpickfail = gets.chomp.to_i
                 Card40.new.startCard40
             end
-        elsif cardDestinations == 2 #breaking down the door
+        elsif card18menu == 2 #breaking down the door
             Card40.new.startCard40
-        else cardDestinations == 3
+        else card18menu == 3
             Card14.new.startCard14
         end  
     end
@@ -525,6 +634,7 @@ end
 class Card19 <StoryCard
     def startCard19() 
         clearScreen()
+        prompt = TTY::Prompt.new
         puts "You stumble another half-hour in the snow. The cave was probably the home to a pack of yetis, or ice trolls. It’s a good thing you avoided it.\n\nUnfortunately, the cold winds have begun to take their toll.\n\nYou stare up at the looming castle.\n\nIts stone has been covered with sheets of ice as thick as your body.\nWith any luck, you won’t have to climb up the walls to find an entrance"
         #Reduce your FP by 1 and make a Survival (Mountains) roll.If you fail, you take an additional 1d-3 damage from exhaustion and hypothermia. 
 
@@ -544,14 +654,19 @@ class Card19 <StoryCard
                 Player.fatiguepoints -=1
             end
 
-        puts "Where to now?"
-        puts "[1] Circle around the castle to look for an entrace"
-        puts "[2] Climb the wall with your rope and pitons"
+            card19menu = prompt.select ("Where to now?") do |menu|
+                menu.select "[1] Circle around the castle to look for an entrace", 1
+                menu.select "[2] Climb the wall with your rope and pitons", 2
+            end
 
-        getNextCard(cardDestinations)
-            if cardDestinations == 1
+        # puts "Where to now?"
+        # puts "[1] Circle around the castle to look for an entrace"
+        # puts "[2] Climb the wall with your rope and pitons"
+
+        #getNextCard(cardDestinations)
+            if card19menu == 1
                 Card3.new.startCard3
-            elsif cardDestinations == 2
+            elsif card19menu == 2
                 Card35.new.startCard35
             else 
                 puts "the climb looks scary" #don't like this solution, but it is a solution
@@ -563,13 +678,19 @@ end
 class Card20 <StoryCard
     def startCard20() 
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "You can’t dig fast enough.\n\nThe ice troll bounds up the cavern roaring in anger at your intrusion.\n\nYou turn your weapon on to the foul beast\n\n"
     #add Ambushed modifier. It doesn't matter in this case as it only affects tactical combat
 
-    puts "[1] Prepare to Fight!"
+  #  puts "[1] Prepare to Fight!"
 
-    getNextCard(cardDestinations)
-        if cardDestinations == 1
+card20menu = prompt.select ("....") do |menu|
+    menu.select "[1] Prepare to Fight!",1
+end
+
+
+   # getNextCard(cardDestinations)
+        if card20menu == 1
             Card17.new.startCard17
         else 
             Card17.new.startCard17
@@ -580,16 +701,21 @@ end
 class Card21 <StoryCard
     def startCard21() #Resolves the troll fight. add Ice troll teeth to inventory
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "You spit a curse at the defeated troll. You quickly search the creature’s lair but find nothing of interest other than some bloody bones and troll teeth.\n\nYou spend some time bandaging your wounds.\n\nAnxious to leave this chamber before the ice troll finds the courage to come back, you push your way down a long twisting corridor.\n\nThe end of the tunnel appears about twenty minutes later, but it’s been completely frozen shut with ice and snow.\nYou draw your weapon out and start pounding.\n\nIn about ten minutes you manage to break through.\nYou push your body out the hole you’ve made and feel something hard and stone-like in front of you"
     #This activity costs you 2 Fatigue Points (FP) – if your FP ever reaches 0, you drop from exhaustion and die from the cold!
-    puts "[1] Continue onwards ..." # Make a First Aid or Physician roll (or IQ-4 if you do not have  the skill). If you succeed, you restore 1d-3 HP. If you fail, you still  get 1 HP back.
-        
         Player.hitpoints += 3 #should be d6-3 min 1 #given how brutal the GM is here, I am just harcoding it
-    
+        puts "Your Health is: "
+        puts Player.hitpoints
         Player.fatiguepoints -=2
+    
+    card21menu = prompt.select ("phheww") do |menu|
+            menu.select "[1] Continue onwards ...", 1
+        end
 
-        getNextCard(cardDestinations)
-            if cardDestinations == 1
+   # puts "[1] Continue onwards ..." # Make a First Aid or Physician roll (or IQ-4 if you do not have  the skill). If you succeed, you restore 1d-3 HP. If you fail, you still  get 1 HP back.
+       # getNextCard(cardDestinations)
+            if card21menu == 1
                 Card47.new.startCard47
             else 
                 Card47.new.startCard47
@@ -600,14 +726,22 @@ end
 class Card22 <StoryCard
     def startCard22()
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "Your body warms as you jog down the icy path.\nThough the walls of this tunnel are frozen solid, it is much warmer in here than in the cold, biting winds.\nYou glance down at the floor as you run, and are startled to see several large footprints walking in the direction you’re going.\nYou draw out your weapon to be on the safe side, and continue your journey down the dim hall.\n\nAlmost an hour later, you find the tunnel going uphill.\nYou slow down you pace – no need to get tired before reaching the castle.\n\nSuddenly, bright sunlight hits your eyes. You’ve found an exit! \n\nYou crawl out the small tunnel and find yourself looking over the edge of a tall cliff!\n\nAlmost directly below you lies the Castle of Madness.\nOnce you manage to get down the cliff, you’ll be near the walls of the castle\n\n"
     puts "Which way now?"
-    puts "[1] Climb down the cliff"
-    puts "[2] Walk around the wind torn cliff"
-    getNextCard(cardDestinations)
-        if cardDestinations == 1
+
+    card22menu = prompt.select ("Which way now?") do |menu|
+        menu.select "[1] Climb down the cliff", 1
+        menu.select "[2] Walk around the wind torn cliff",2 
+
+    end
+
+    # puts "[1] Climb down the cliff"
+    # puts "[2] Walk around the wind torn cliff"
+    # getNextCard(cardDestinations)
+        if card22menu == 1
             Card15.new.startCard15
-        else cardDestinations == 2
+        else card22menu == 2
             Card52.new.startCard52
         end
     end
@@ -616,16 +750,20 @@ end
 class Card23 <StoryCard
     def startCard23() 
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "Some of the tapestries are still together; others are torn and destroyed.\n\nTwo, in particular, catch your eye.\nOne tapestry shows a striking, blue-eyed maiden in ornate armor, the other shows a runed axe lying on a gilded table, being presented to a white-haired queen.\n\n"
     
+    card23menu = prompt.select ("...") do |menu|
+        menu.select "[1] Yoink!",1 
+        menu.select "[2] Examine the tapestries more closely", 2
+    end
+
     puts "[1] Yoink!"
     puts "[2] Examine the tapestries more closely" # Make a Merchant roll (or IQ-5 if you do not have the skill) to examine the tapestries further. the axe tapestry is worth 10, the armoured maiden tapestry is worth 100
-    getNextCard(cardDestinations)
-
-
-        if cardDestinations == 1 #take both or fail check
+   # getNextCard(cardDestinations)
+        if card23menu == 1 #take both or fail check
             Card51.new.startCard51
-        else cardDestinations == 2 
+        else card23menu == 2 
 
             card23ToPass = Player.intelligence
             card23Test = IQCheck.new.merchantCheck
@@ -643,6 +781,7 @@ end
 class Card24 <StoryCard
     def startCard24()
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "Wrapping some cloth around your hand for protection, you try to wedge the glass dagger out.\nWith any luck, this exotic dagger will be worth a lot of silvers.\nOr maybe you’ll decide to keep it as a backup weapon.\n\n"
     #Make an DX roll. If you fail, the dagger slices through your gloves and into your hand. Take 1d-3 cut damage. If you succeed, you carefully pry the glass-like dagger out without injury. This is a very fine dagger and is enchanted to be Shatterproof
     card24Test = DexChecks.new.dexterityCheck
@@ -654,11 +793,13 @@ class Card24 <StoryCard
             puts "ooh shiny"
             #add dagger to loot
         end
-    
-    puts "[1] Continue onwards"
+    card24menu = prompt.select ("...") do |menu|
+        menu.select "[1] Continue onwards",1 
+    end
+    # puts "[1] Continue onwards"
 
-    getNextCard(cardDestinations)
-        if cardDestinations == 1
+    # getNextCard(cardDestinations)
+        if card24menu == 1
             Card33.new.startCard33
         else 
             Card33.new.startCard33
@@ -669,6 +810,7 @@ end
 class Card25 <StoryCard
     def startCard25() 
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "Deciding to head towards the main part of the castle, you skip the bedrooms and head down a long, winding hallway.\nMuch to your surprise, the castle in this part looks sturdy and complete.\n\nPerhaps it looked like this years ago when it was a newly built stronghold.\n\n You come to a stairway going downwards.\n\nThe stairs are covered with a slick ice.\n\n"
     #make a dx roll if fail  Take 1d-2 cr damage. 
     card25Test = DexChecks.new.dexterityCheck
@@ -679,10 +821,12 @@ class Card25 <StoryCard
         else card25Test <= card25TestToPass
             puts "You carefully make your way down the steps and into a large, main room of the castle.\n\n"
         end
-
-    puts "[1] Keep going"
-    getNextCard(cardDestinations)
-        if cardDestinations ==1
+            card25menu = prompt.select ("....") do |menu|
+                menu.select "[1] Keep going", 1
+            end
+    # puts "[1] Keep going"
+    # getNextCard(cardDestinations)
+        if card25menu ==1
             Card33.new.startCard33
         else 
             Card33.new.startCard33
@@ -693,18 +837,26 @@ end
 class Card26 <StoryCard
     def startCard26() 
         clearScreen()
+        prompt = TTY::Prompt.new
     puts "You barely make out the form of the ice troll at the far end of the cavern tunnel, but you know he’s coming fast!\n\nYou slam your weapon again and again against the ice and snow.\nSuddenly, sunlight rushes out to blind you.\nYou leap through the hole you’ve created and scramble out.\n\nYour head hits against something hard!\n\nYou look up and see a crumbled statue of an armored warrior in front of you.\n\nYou look around... you found a way into the courtyard of the Castle of Madness!\nYou shake your head and look around. The creature’s roar seems to have died off, so you’re safe for now.\n\nDozens of statues – most broken – litter the courtyard. You see two doors beyond the statue graveyard.\nThe smaller one looks to have been a a servant’s entrance; the other door, more reinforced, seems to be a guardhouse door"
-    puts "What will you do now?"
-    puts "[1] Search the courtyard"
-    puts "[2] Go through the servants door"
-    puts "[3] Go through the Guardhouse door"
+   
+    card26menu = prompt.select("What will you do now?") do |menu|
+        menu.select "[1] Search the courtyard",1 
+        menu.select "[2] Go through the servants door", 2
+        menu.select "[3] Go through the Guardhouse door",3 
+    end
+    
+    # puts "What will you do now?"
+    # puts "[1] Search the courtyard"
+    # puts "[2] Go through the servants door"
+    # puts "[3] Go through the Guardhouse door"
 
-    getNextCard(cardDestinations)
-        if cardDestinations == 1
+    # getNextCard(cardDestinations)
+        if card26menu == 1
             Card43.new.startCard43
-        elsif cardDestinations == 2
+        elsif card26menu == 2
             Card14.new.startCard14
-        else cardDestinations == 3
+        else card26menu == 3
             Card11.new.startCard11
         end
     end
@@ -713,10 +865,13 @@ end
 class Card27 <StoryCard
     def startCard27() 
         clearScreen()
+        prompt = TTY::Prompt.new
+        prompt2 = TTY::Prompt.new
     puts "You slowly pad into the icy maze, trying to remember the turns you take.\n\nEvery once in a while you hear a soft moan from ahead of you."
-    
-    puts "[1] Follow the sounds...?" #Make a Tracking roll at +3, or an IQ-2 if you do not have the skill
-
+        card27menu1 = prompt.select ("...") do |menu|
+            menu.select "[1] Follow the sounds...?", 1
+        end
+   #puts "[1] Follow the sounds...?" #Make a Tracking roll at +3, or an IQ-2 if you do not have the skill
     #suceed go to 37, fail go to 9 or 22
 
     card27Test = IQCheck.new.trackingCheck
@@ -726,14 +881,19 @@ class Card27 <StoryCard
         if card27Test <= card27TestToPass
             Card37.new.startCard37
         else card27Test > card27TestToPass
-            puts "You strain to listen, but are unable to determine where the sound is coming from"
-            puts "Now what?"
-            puts "[1] Take the trodden path instead"
-            puts "[2] take the icy path instead"
-            getNextCard(cardDestinations)
-                if cardDestinations == 1 #trodden path if failed
+            card27menu2 = prompt2.select ("You strain to listen, but are unable to determine where the sound is coming from") do |menu|
+                menu.select "[1] Take the trodden path instead", 1
+                menu.select "[2] take the icy path instead",2 
+            end
+
+            # puts "You strain to listen, but are unable to determine where the sound is coming from"
+            # puts "Now what?"
+            # puts "[1] Take the trodden path instead"
+            # puts "[2] take the icy path instead"
+            # getNextCard(cardDestinations)
+                if card27menu2 == 1 #trodden path if failed
                     Card9.new.startCard9
-                elsif cardDestinations == 2 #icy path if failed
+                elsif card27menu2 == 2 #icy path if failed
                     Card22.new.startCard22
                 else 
                     Card9.new.startCard9 #go fight the troll
