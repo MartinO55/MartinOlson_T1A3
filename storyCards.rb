@@ -4,7 +4,7 @@ require_relative "characters.rb" #this is where inventory will need to be pushed
 require "colorize"
 require "colorized_string"
 #require "tty-prompt" #dont do it it doesn't work, it just breaks everything and I don't know why
-#maybe tty prompt
+#maybe tty prompt#NO NOT AGAIN NEVER AGAIN
 #ascii_paradise for ascii animations
 
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
@@ -1235,7 +1235,7 @@ class Card52 <StoryCard
     puts "[1] Grab for the edge!!!"
     timewaster = gets.chomp.to_i
         card52Test = DexChecks.new.dexterityCheck
-        card25TestToPass = Player.dexterity
+        card25TestToPass = Player.dexterity #just noticed this typo. it doesn't matter
     #getNextCard(cardDestinations)
         if card52Test <= card25TestToPass #succeed
             Card36.new.startCard36
