@@ -107,7 +107,7 @@ end
             cardNumber = 1
         puts "\nIt was already a freezing morning when you set out for the legendary “Castle of Madness” – the mysterious castle that is said to emerge from blizzards once every seven winters.\n\nNow, as it grows dark, the mountains’ glacial winds of this valley make the temperature seem hundreds of times colder. \n\nBoth hands wrap your winter cloak tightly around your body, but somehow you can still feel the ice-sharded winds as if on bare skin.\nYou squint your eyes down at your weapon and wonder if it has become frozen to your belt. \nNothing alive can possibly live in these temperatures, you reassure yourself, pushing back thoughts of the living dead you’ve heard emerge with the castle.\n\nSoon, you can make out the faint ruined form of the castle up ahead. The old crone’s rotting map was right! Your best guess tells you it’s another hour’s walk in the harsh cold. \nBefore you have time to think about the longer walk, you spot a gaping black opening in the snow. It must be a cave. The crone told you that underground tunnels could also lead into the castle.\n\nCould this be one? Or is it the lair of some beast \n\n" #this needs to be the formatted story text
 
-            puts "What do you want to do?""\n\n" #this needs to be the list of things you could do
+            puts "What do you want to do?\n\n" #this needs to be the list of things you could do
             puts "[1] Explore the cave"
             puts "[2] Continue on your cold trek to the castle"
 
@@ -119,8 +119,8 @@ end
                 Card19.new.startCard19
                 #need a copy paste catch statement for any other entry possibly a menu option
             else 
-                puts "unrecognised input" #this auto quits
-                Card1.new.startCard1
+                puts "unrecognised input" 
+                Card1.new.startCard1this 
             end
         end
     end
@@ -472,6 +472,7 @@ class Card17 <StoryCard
     puts "..."
     puts "[1] Raise your weapons"
         card17Continue = gets.chomp.to_i
+
         manageCombat(Icetroll,Player)
 
         if Player.hitpoints >0
@@ -884,6 +885,7 @@ class Card35 <StoryCard
 
     puts "[1] This cannot possibly go wrong"#make a climb check
         card35Continue = gets.chomp.to_i
+
     card35Test = DexChecks.new.climbingCheck
     card35TestMidway = Player.dexterity
     card35TestToPass = card35TestMidway -3
@@ -908,8 +910,10 @@ class Card36 <StoryCard
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card3.new.startCard3
-        else cardDestinations == 2
+        elsif cardDestinations == 2
             Card35.new.startCard35
+        else 
+            Card36.new.startCard36
         end
     end
 end
@@ -1041,8 +1045,10 @@ class Card42 <StoryCard
     getNextCard(cardDestinations)
         if cardDestinations == 1 
             Card4.new.startCard4
-        else cardDestinations == 2
+        elsif cardDestinations == 2
             Card45.new.startCard45
+        else 
+            Card42.new.startCard42
         end
     end
 end
@@ -1103,8 +1109,10 @@ class Card45 <StoryCard
             Card50.new.startCard50
         elsif cardDestinations == 2
             Card28.new.startCard28
-        else cardDestinations == 3
+        elsif cardDestinations == 3
             Card25.new.startCard25
+        else 
+            Card45.new.startCard45
         end
     end
 end
@@ -1122,7 +1130,9 @@ class Card46 <StoryCard
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card53.new.startCard53
-        else cardDestinations == 2
+        elsif cardDestinations == 2
+            Card38.new.startCard38
+        else
             Card38.new.startCard38
         end
     end
@@ -1142,8 +1152,10 @@ class Card47 <StoryCard
             Card43.new.startCard43
         elsif cardDestinations == 2
             Card14.new.startCard14
-        else cardDestinations == 3
+        elsif cardDestinations == 3
             Card11.new.startCard11
+        else 
+            Card47.new.startCard47
         end
     end
 end
@@ -1177,6 +1189,8 @@ class Card49 <StoryCard
 
     getNextCard(cardDestinations)
         if cardDestinations == 1
+            Card17.new.startCard17
+        else
             Card17.new.startCard17
         end
     end
@@ -1231,6 +1245,9 @@ class Card52 <StoryCard
             Card36.new.startCard36
         else card52Test > card25TestToPass #fail
             Player.hitpoints -=5
+            puts "You hit the ground. Hard."
+            puts "[1] Continue"
+            card52continue = gets.chomp.to_i
             Card36.new.startCard36 #but take 2d6-2 fall damage. if you die you get eaten by grave ghouls
         end
     end
@@ -1244,6 +1261,8 @@ class Card53 <StoryCard
 
     getNextCard(cardDestinations)
         if cardDestinations == 1
+            Card60.new.startCard60
+        else
             Card60.new.startCard60
         end
     end
@@ -1261,8 +1280,10 @@ class Card54 <StoryCard
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card34.new.startCard34
-        else cardDestinations == 2
+        elsif cardDestinations == 2
             Card27.new.startCard27
+        else 
+            Card54.new.startCard54
         end
     end
 end
@@ -1286,10 +1307,12 @@ class Card55 <StoryCard
     puts "[2] Go forward bravely and push the door aside"
 
         getNextCard(cardDestinations)
-        if cardDestinations == 1
-                Card46.new.startCard46
-            else cardDestinations == 2
-                Card7.new.startCard7
+            if cardDestinations == 1
+                    Card46.new.startCard46
+            elsif cardDestinations == 2
+                    Card7.new.startCard7
+            else 
+                Card46.new.startCard46 #go fight the bad guy
             end
     end
 end
@@ -1302,6 +1325,8 @@ end
 
         getNextCard(cardDestinations)
             if cardDestinations == 1
+                Card60.new.startCard60
+            else 
                 Card60.new.startCard60
             end
         end
@@ -1316,6 +1341,8 @@ end
         getNextCard(cardDestinations)
             if cardDestinations == 1
                 Card55.new.startCard55
+            else 
+                Card55.new.startCard55
             end
         end
     end
@@ -1329,6 +1356,8 @@ end
 
         getNextCard(cardDestinations)
             if cardDestinations == 1
+                Card25.new.startCard25
+            else 
                 Card25.new.startCard25
             end
         end
@@ -1385,7 +1414,7 @@ end
         puts "Which way now?"
         puts "[1] Down the trodden path"
         puts "[2] The icier path"
-        puts "[3] Leave the cave and trek to the castle through the sbow"
+        puts "[3] Leave the cave and trek to the castle through the snow"
 
         getNextCard(cardDestinations)
 
@@ -1393,8 +1422,10 @@ end
                 Card9.new.startCard9
             elsif cardDestinations == 2
                 Card22.new.startCard22
-            else cardDestinations == 3
+            elsif cardDestinations == 3
                 Card19.new.startCard19
+            else 
+                Card61.new.startCard61
             end
         end
     end

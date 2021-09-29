@@ -19,8 +19,9 @@ class Beyond_the_vale
 end
 
 def loadGame(cardNumber) #so this needs to call a function from a class that knows all the cards, where each function is an individual card
+  #maybe it should call the players name as input with the autosave
         #this needs to concatanate cardnumber with Card to tell it where to go
-      cardToLoad = "Card" +cardNumber.to_s
+      #cardToLoad = "Card" +cardNumber.to_s #this is a bit silly
        # puts "I called number " + cardNumber.to_s
         
 end
