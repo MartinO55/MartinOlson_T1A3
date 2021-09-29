@@ -35,10 +35,10 @@ def beginVOM()
     
     puts  "Beyond the Veil of Madness\n\n".colorize(:blue)
 
-    puts "A GURPS fantasy oneshot for one player by JC Connors\n\n"
+    puts "A GURPS fantasy oneshot for one player by JC Connors\n\n".colorize(:blue)
 
-    puts "Now a ruby gem by Martin Olson\n\n"
-    puts "_______________________________________________________________________________"
+    puts "Now a ruby gem by Martin Olson\n\n".colorize(:blue)
+    puts "_______________________________________________________________________________\n\n"
 
     puts "Please select what you would like to do\n\n"
 

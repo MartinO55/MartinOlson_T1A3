@@ -111,3 +111,4 @@ class CombatRolls
     end
 end
     
+#Check loot function for the end?

@@ -6,7 +6,7 @@ end
 
 class PlayerCharacter <Character
     #needs health meter, you have HP equal to strength
-    def initialize(name,hitpoints,damageReduction,damageBlock,fatiguepoints,dexterity,strength,intelligence,will,perception)
+    def initialize(name,hitpoints,damageReduction,damageBlock,fatiguepoints,dexterity,strength,intelligence,will,perception,inventory,loot)
     @name = name
     @hitpoints = hitpoints
     @damageReduction = damageReduction
@@ -22,11 +22,11 @@ class PlayerCharacter <Character
     #pickups: crossbow, shield, dagger, antique mace - first question is will these matter
     
     #start with sword - d6 +1 damage. mace upgrades it to D6+3
-    #crossbow can be 1 shot, 2d6 damage
+    #crossbow can be 1 shot, 2d6 damage probably just be loot
     #attacking = 3d6, low is good, DX check. 3= critical. no defense, max damage
     # medium shield is +2
-    inventory = {}
-    loot = {}
+    @inventory = inventory
+    @loot = loot
     #separate hash for loot?
     #signet ring, chariot toy, tapestries, troll teeth, Rescuer keyword,amythest ring, blue chemise, silver tiara, silver sceptre. the sneaky thing to do here is use the value as the key to the hash
     end
@@ -38,7 +38,7 @@ class PlayerCharacter <Character
 
 end
 
-Player = PlayerCharacter.new("steve",15,4,9,14,12,13,12,12,13) #this hardcodes the player sheet, but can be accessed from anywhere
+Player = PlayerCharacter.new("steve",15,4,9,14,12,13,12,12,13,{},{}) #this hardcodes the player sheet, but can be accessed from anywhere
 
 
 #TODO Troll

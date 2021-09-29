@@ -3,6 +3,7 @@ require_relative "characters.rb" #this is where inventory will need to be pushed
 #require_relative "main_menu.rb"  #SO this breaks the app
 require "colorize"
 require "colorized_string"
+#maybe tty prompt
 
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
     
@@ -84,6 +85,15 @@ class StoryCard #this class is all the cards, including the endings, whose desti
                     end
         end
     end
+
+    def pushLoot(player)
+        
+    end
+
+    def pushInventory(player)
+
+    end
+
     #needs a method to push new loot to player character hash, and inventory
 
 end
@@ -105,9 +115,12 @@ end
          #   @cardDestinations = gets.chomp.to_i #this is the input.#now moved to parent class
             if cardDestinations ==1 #this is each of the possible choices, and will have an else for each possible destination
                 Card12.new.startCard12#this calls the destination card
-            else cardDestinations ==2
+            elsif cardDestinations ==2
                 Card19.new.startCard19
                 #need a copy paste catch statement for any other entry possibly a menu option
+            else 
+                puts "unrecognised input" #this auto quits
+                Card1.new.startCard1
             end
         end
     end
@@ -124,9 +137,11 @@ end
             card2ToPass = Player.will
             if card2Test > card2ToPass #fail
                 puts "ewwwWWWWW!\n\n"
-            else card2Test <= card2ToPass #success
+            elsif card2Test <= card2ToPass #success
                 puts "Gritting your teeth, you take the mace. It might come in handy\n\n"
                 #need to push mace to inventory
+            else
+                puts "This is an error. I have no idea how you called it"
             end
 
             puts "Which way now?"
@@ -138,8 +153,10 @@ end
 
             if cardDestinations ==1
                 Card14.new.startCard14
-            else cardDestinations ==2
+            elsif cardDestinations ==2
                 Card11.new.startCard11
+            else
+                puts "unrecognised input"#I don't want to send the player back to the top because it would give them a second shot at the mace if they miss it
             end
         end
     end
@@ -161,8 +178,10 @@ end
                 Card43.new.startCard43
             elsif cardDestinations == 2
                 Card14.new.startCard14
-            else cardDestinations == 3
+            elsif cardDestinations == 3
                 Card11.new.startCard11
+            else
+                Card3.new.startCard3
             end
         end
     end
@@ -179,6 +198,8 @@ end
 
             if cardDestinations ==1
                 Card45.new.startCard45
+            else
+                Card45.new.startCard45 #there is no escape
             end
         end
     end
@@ -198,6 +219,8 @@ end
             #@cardDestinations = gets.chomp.to_i
             if cardDestinations ==1
                 Card3.new.startCard3
+            else 
+                Card3.new.startCard3 #still no escape
             end
         end
     end
@@ -213,6 +236,8 @@ end
        # @cardDestinations = gets.chomp.to_i
             if cardDestinations ==1
                 Card14.new.startCard14
+            else 
+                Card14.new.startCard14
             end
         end
     end
@@ -227,6 +252,7 @@ end
             card7ToPass = Player.dexterity
                 if card7Test > card7ToPass #fail
                     darkness = true
+                    puts "You fumble with the torch before dropping it\n\n"
                 else card7Test <= card7ToPass
                     darkness = false
                 end
@@ -235,6 +261,8 @@ end
         getNextCard(cardDestinations)
         #@cardDestinations = gets.chomp.to_i
             if cardDestinations ==1
+                Card38.new.startCard38
+            else 
                 Card38.new.startCard38
             end
         end
@@ -255,8 +283,10 @@ end
            Card44.new.startCard44
        elsif cardDestinations == 2
            Card22.new.startCard22
-       else cardDestinations == 3
+       elsif cardDestinations == 3
            Card17.new.startCard17
+       else 
+            Card8.new.startCard8
        end
     end
  end
@@ -275,8 +305,10 @@ end
             Card22.new.startCard22
         elsif cardDestinations ==2
             Card31.new.startCard31
-        else cardDestinations ==3
+        elsif cardDestinations ==3
             Card49.new.startCard49
+        else 
+            Card9.new.startCard9
         end
     end
  end
@@ -317,8 +349,10 @@ end
      getNextCard(cardDestinations)
         if cardDestinations == 1
             Card18.new.startCard18
-        else cardDestinations == 2
+        elsif cardDestinations == 2
             Card40.new.startCard40
+        else 
+            Card11.new.startCard11
         end
     end
  end
@@ -338,8 +372,10 @@ class Card12 <StoryCard
                 Card9.new.startCard9
             elsif cardDestinations == 2
                 Card22.new.startCard22
-            else cardDestinations == 3
+            elsif cardDestinations == 3
                 Card54.new.startCard54
+            else
+                Card12.new.startCard12
             end
     end
 end
@@ -352,6 +388,8 @@ class Card13 <StoryCard
     puts "[1] Continue (with a new shield)" #add shield to inventory/equipment
     getNextCard(cardDestinations)
         if cardDestinations ==1
+            Card6.new.startCard6
+        else 
             Card6.new.startCard6
         end
     end
@@ -367,8 +405,10 @@ class Card14 <StoryCard
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card16.new.startCard16
-        else cardDestinations == 2
+        elsif cardDestinations == 2
             Card33.new.startCard33
+        else
+            Card14.new.startCard14
         end
     end
 end
@@ -430,7 +470,7 @@ class Card17 <StoryCard
     #fight with the troll ensues - I think we just skip the tactical combat as there is only one other monster in the game
     puts "..."
     puts "[1] Raise your weapons"
-
+        card17Continue = gets.chomp.to_i
         manageCombat(Icetroll,Player)
 
         if Player.hitpoints >0
@@ -461,7 +501,8 @@ class Card18 <StoryCard
 
             card18LockPickTest = DexChecks.new.lockpickingCheck 
             card18LockPickTestMidway = Player.dexterity
-            card18LockPickTestToPass = card18LockPickTestMidway -2
+            card18LockPickTestToPass = card18LockPickTestMidway -2 #because this test has a modifier
+
             if card18LockPickTest <= card18LockPickTestToPass
                 Card30.new.startCard30 #succeed lockpick
             else card18LockPickTest >card18LockPickTestToPass
@@ -507,8 +548,11 @@ class Card19 <StoryCard
         getNextCard(cardDestinations)
             if cardDestinations == 1
                 Card3.new.startCard3
-            else cardDestinations == 2
+            elsif cardDestinations == 2
                 Card35.new.startCard35
+            else 
+                puts "the climb looks scary" #don't like this solution, but it is a solution
+                Card3.new.startCard3
             end
     end
 end
@@ -523,6 +567,8 @@ class Card20 <StoryCard
 
     getNextCard(cardDestinations)
         if cardDestinations == 1
+            Card17.new.startCard17
+        else 
             Card17.new.startCard17
         end
     end
@@ -541,6 +587,8 @@ class Card21 <StoryCard
 
         getNextCard(cardDestinations)
         if cardDestinations == 1
+            Card47.new.startCard47
+        else 
             Card47.new.startCard47
         end
     end
@@ -1287,6 +1335,7 @@ end
             puts "You arrive back in the town of Winterhaven a little injured, but safe.\nYou quickly head to the local merchant’s bazaar to sell the wares that you found.\nThe merchants are all very impressed - many of the goods you found were antiques and are quite valuable"
             #if rescuer == true
             puts "You drag the wounded warrior back to Winterhaven.\nYou discover his name is Jrak Kul, a lieutenant in Winterhaven’s town watch, and a member of the secretive Martyrs of War clan.\n\nThe Martyrs reward you handsomely for his safe return – 5 silver talents – and invite you to join their ranks."
+            
             puts "Congratulations - You have bested the Castle of Madness, and have quite the tale to tell the folks back in the tavern"
             puts "Many thanks to JC Connors for writing this module, So I had something to use as a basis for the story.\nIt would not have been possible any other way. "
             
