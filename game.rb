@@ -14,9 +14,7 @@ require "crapshoot"
 
 #So the skill checks live here now. should these be general or specific 
 class SkillChecks
-
     def roll3d6()
-
         roll = Crapshoot.roll '3d6'
         return roll
     end
@@ -72,7 +70,6 @@ end
             trackCheck = roll3d6()
             return trackCheck
         end
-
     end
 
     class StrengthChecks <SkillChecks

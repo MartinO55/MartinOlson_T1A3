@@ -3,6 +3,8 @@ require_relative "main.rb"
 
 require "colorize"
 require "colorized_string"
+require "tty-prompt"
+
 
 #include game.rb
 #include main.rb
@@ -33,7 +35,7 @@ def quitGame ()
 end
 
 def beginVOM()
-    
+    prompt = TTY::Prompt.new
     puts  "Beyond the Veil of Madness\n\n".colorize(:blue)
 
     puts "A GURPS fantasy oneshot for one player by JC Connors\n\n".colorize(:blue)
@@ -41,13 +43,16 @@ def beginVOM()
     puts "Now a ruby gem by Martin Olson\n\n".colorize(:blue)
     puts "_______________________________________________________________________________\n\n"
 
-    puts "Please select what you would like to do\n\n"
+    #puts "Please select what you would like to do\n\n"
+    mainMenuNav = prompt.select("Please select what you would like to do\n\n") do |menu|
+        menu.choice "Start new adventure", 1
+        menu.choice "Load saved game", 2
+        menu.choice "Quit game", 3
+    end
+    #puts "[1] Start new adventure"
+    #puts "[2] Load saved game"
+    #puts "[3] Quit Game"
 
-    puts "[1] Start new adventure"
-    puts "[2] Load saved game"
-    puts "[3] Quit Game"
-
-    mainMenuNav =gets.chomp.to_i
     if mainMenuNav == 1
         startNewGame()
     elsif mainMenuNav == 2

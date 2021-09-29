@@ -3,7 +3,9 @@ require_relative "characters.rb" #this is where inventory will need to be pushed
 #require_relative "main_menu.rb"  #SO this breaks the app
 require "colorize"
 require "colorized_string"
+require "tty-prompt"
 #maybe tty prompt
+#ascii_paradise for ascii animations
 
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
     
@@ -30,7 +32,7 @@ class StoryCard #this class is all the cards, including the endings, whose desti
             #Combat loop - while both the player and enemy are alive, the attack sequence continues with the player going first
             while player.hitpoints >0 && enemy.hitpoints >0 #both are alive
                 
-                puts "[1] ATTACK!\n\n"
+                puts "[1] ATTACK!\n\n".colorize(:red)
                 attackQueue = gets.chomp.to_i #breaks the sequence
 
                     playerDamgeReduction = player.damageReduction#initialize the damage reduction stats
@@ -48,7 +50,6 @@ class StoryCard #this class is all the cards, including the endings, whose desti
                     elsif playerRollToHit > player.dexterity #Player Rolls to hit
                         puts "you missed the target!!\n\n"
                     else playerRollToHit <= player.dexterity
-
                         if enemyRollToBlock >enemy.damageBlock #enemy rolls to dodge
                             enemy.hitpoints -= playerAttackDamage #player does damage
                             puts "You hit the enemy with your weapon!!"
