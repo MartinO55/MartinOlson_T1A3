@@ -15,6 +15,7 @@ require "colorized_string"
 #starts the game and goes to card 1
 
 def startNewGame ()
+    #could have you enter your name
     newGame = Beyond_the_vale.new #this calls the new game class, whose init method calls the first card
 end
 

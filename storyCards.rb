@@ -657,6 +657,8 @@ class Card24 <StoryCard
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card33.new.startCard33
+        else 
+            Card33.new.startCard33
         end
     end
 end
@@ -678,6 +680,8 @@ class Card25 <StoryCard
     puts "[1] Keep going"
         getNextCard(cardDestinations)
         if cardDestinations ==1
+            Card33.new.startCard33
+        else 
             Card33.new.startCard33
         end
     end
@@ -726,8 +730,10 @@ class Card27 <StoryCard
             getNextCard(cardDestinations)
             if cardDestinations == 1 #trodden path if failed
                 Card9.new.startCard9
-            else cardDestinations == 2 #icy path if failed
+            elsif cardDestinations == 2 #icy path if failed
                 Card22.new.startCard22
+            else 
+                Card9.new.startCard9 #go fight the troll
             end
 
         end
@@ -745,8 +751,10 @@ class Card28 <StoryCard
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card25.new.startCard25
-        else cardDestinations == 2
+        elsif cardDestinations == 2
             Card58.new.startCard58
+        else 
+            Card28.new.startCard28
         end 
     end
 end
@@ -765,8 +773,11 @@ class Card29 <StoryCard
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card50.new.startCard50
-        else cardDestinations == 2
+        elsif cardDestinations == 2
             Card25.new.startCard25
+        else 
+            puts "You wont let these stairs defeat you!!\n\n"
+            Card50.new.startCard50
         end
     end
 end
@@ -822,8 +833,10 @@ class Card32 <StoryCard
             Card9.new.startCard9
         elsif cardDestinations == 2
             Card22.new.startCard22
-        else cardDestinations == 3
+        elsif cardDestinations == 3
             Card19.new.startCard19
+        else 
+            Card32.new.startCard32
         end
     end
 end
@@ -901,11 +914,12 @@ class Card37 <StoryCard
         clearScreen()
     puts "You find an injured hunter leaning against a cavern wall. He looks at you, his face ghastly and frostbitten.\n\n“How long have you been here?”you ask.\n\nThe wounded man swallows hard, “I don’t know. Three days, perhaps? Got lost tracking the most magnificent elk you’ve ever seen. \nAn unnatural creature ambushed me and snapped my leg like a dry branch. I crawled away as fast as I could, but now I’m lost and decided I have no stomach for running anymore.”\n\nYou look down and see the man’s leg twisted at an impossible angle. You grimace.\nThis man will not make it out of these caves alive."
     puts "[1] You try to help him"# make a Physician Check
+        card37Continue = gets.chomp.to_i
 
     card37Test = IQCheck.new.firstAidCheck
     card37TestToPass = Player.intelligence
 
-    getNextCard(cardDestinations)
+   # getNextCard(cardDestinations)
         if card37Test <= card37TestToPass #pass
             Card32.new.startCard32
         else card37Test > card37TestToPass #fail
@@ -922,7 +936,7 @@ class Card38 <StoryCard
     #this is where the darkness modifier (-3 to rolls) pays off, and is the only other combat encounter in the game. Not sure if needed
 
     puts "[1] Your time is up, foul creature" #go to combat
-
+        card38Continue = gets.chomp.to_i #maybe delete this next line
     manageCombat(BloodMan,Player)
     
         if Player.hitpoints > 0
@@ -950,8 +964,10 @@ class Card39 <StoryCard
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card14.new.startCard14
-        else cardDestinations == 2
+        elsif cardDestinations == 2
             Card11.new.startCard11
+        else
+            Card39.new.startCard39
         end
     end
 end
@@ -1002,6 +1018,8 @@ class Card41 <StoryCard
 
     getNextCard(cardDestinations)
         if cardDestinations == 1
+            Card17.new.startCard17
+        else 
             Card17.new.startCard17
         end   
     end

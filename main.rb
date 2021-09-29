@@ -12,6 +12,7 @@ class Beyond_the_vale
     
     def initialize ()
       #  puts "you called beyond the vale"
+      #if you take the name from the main menu, push it to the player character object and use that as an autosave function?
         Card1.new.startCard1
        # getDestination(1)
     end
