@@ -85,10 +85,10 @@ class StoryCard #this class is all the cards, including the endings, whose desti
     end
 
     def pushLoot(player,lootToPush)
-        player.loot
+        
     end
 
-    def pushInventory(player,ItemToPush)
+    def pushInventory(player,itemToPush)
         player.inventory
     end
 
@@ -103,6 +103,8 @@ end
         def startCard1()#So we could write a universal method in the parent class that takes the card number
             clearScreen()
             cardNumber = 1
+            #testitem = "testloot"
+            #pushLoot(Player,testitem)
         puts "\nIt was already a freezing morning when you set out for the legendary “Castle of Madness” – the mysterious castle that is said to emerge from blizzards once every seven winters.\n\nNow, as it grows dark, the mountains’ glacial winds of this valley make the temperature seem hundreds of times colder. \n\nBoth hands wrap your winter cloak tightly around your body, but somehow you can still feel the ice-sharded winds as if on bare skin.\nYou squint your eyes down at your weapon and wonder if it has become frozen to your belt. \nNothing alive can possibly live in these temperatures, you reassure yourself, pushing back thoughts of the living dead you’ve heard emerge with the castle.\n\nSoon, you can make out the faint ruined form of the castle up ahead. The old crone’s rotting map was right! Your best guess tells you it’s another hour’s walk in the harsh cold. \nBefore you have time to think about the longer walk, you spot a gaping black opening in the snow. It must be a cave. The crone told you that underground tunnels could also lead into the castle.\n\nCould this be one? Or is it the lair of some beast \n\n" #this needs to be the formatted story text
 
             puts "What do you want to do?\n\n" #this needs to be the list of things you could do
@@ -788,7 +790,7 @@ class Card30 <StoryCard
         
     puts "[1] You search the room"#make a perception roll
 
-    card30Test = IQCheck.new.spotCheck
+    card30Test = IQCheck.new.perceptionCheck
     card30TestToPass = Player.intelligence
        # getNextCard(cardDestinations)
         if card30Test <= card30TestToPass #success
