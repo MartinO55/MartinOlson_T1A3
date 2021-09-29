@@ -57,7 +57,6 @@ class StoryCard #this class is all the cards, including the endings, whose desti
                         else enemyRollToBlock <= enemyRollToBlock
                             puts "The enemy dodges your attack!!"
                         end
-                       
                     end
 
                     enemyAttackDamageMid = enemy.attack # rolls the dice
@@ -81,17 +80,16 @@ class StoryCard #this class is all the cards, including the endings, whose desti
                         else playerRollToBlock <= player.damageBlock
                             puts "You dodge the enemies attack!!"
                         end
-                        
                     end
         end
     end
 
-    def pushLoot(player)
-        
+    def pushLoot(player,lootToPush)
+        player.loot
     end
 
-    def pushInventory(player)
-
+    def pushInventory(player,ItemToPush)
+        player.inventory
     end
 
     #needs a method to push new loot to player character hash, and inventory
@@ -135,14 +133,14 @@ end
             #add a skill check to take the mace (will).
             card2Test = WillCheck.new.willCheck
             card2ToPass = Player.will
-            if card2Test > card2ToPass #fail
-                puts "ewwwWWWWW!\n\n"
-            elsif card2Test <= card2ToPass #success
-                puts "Gritting your teeth, you take the mace. It might come in handy\n\n"
-                #need to push mace to inventory
-            else
-                puts "This is an error. I have no idea how you called it"
-            end
+                if card2Test > card2ToPass #fail
+                    puts "ewwwWWWWW!\n\n"
+                elsif card2Test <= card2ToPass #success
+                    puts "Gritting your teeth, you take the mace. It might come in handy\n\n"
+                    #need to push mace to inventory
+                else
+                    puts "This is an error. I have no idea how you called it"
+                end
 
             puts "Which way now?"
             puts "[1] Through the servants door\n"
@@ -325,17 +323,17 @@ end
    
         card10Test = StrengthChecks.new.strengthCheck()
         card10ToPass = Player.strength
-        if card10Test > card10ToPass
-            cardDestinations =2
-        else card10Test <= card10ToPass
-            cardDestinations =1
-        end
+            if card10Test > card10ToPass
+                cardDestinations =2
+            else card10Test <= card10ToPass
+                cardDestinations =1
+            end
 
-        if cardDestinations == 1 #pass
-            Card26.new.startCard26
-        else cardDestinations == 2 #fail
-            Card20.new.startCard20
-        end
+            if cardDestinations == 1 #pass
+                Card26.new.startCard26
+            else cardDestinations == 2 #fail
+                Card20.new.startCard20
+            end
     end
  end
 
@@ -588,11 +586,11 @@ class Card21 <StoryCard
         Player.fatiguepoints -=2
 
         getNextCard(cardDestinations)
-        if cardDestinations == 1
-            Card47.new.startCard47
-        else 
-            Card47.new.startCard47
-        end
+            if cardDestinations == 1
+                Card47.new.startCard47
+            else 
+                Card47.new.startCard47
+            end
     end
 end
 
@@ -680,7 +678,7 @@ class Card25 <StoryCard
         end
 
     puts "[1] Keep going"
-        getNextCard(cardDestinations)
+    getNextCard(cardDestinations)
         if cardDestinations ==1
             Card33.new.startCard33
         else 
@@ -730,14 +728,13 @@ class Card27 <StoryCard
             puts "[1] Take the trodden path instead"
             puts "[2] take the icy path instead"
             getNextCard(cardDestinations)
-            if cardDestinations == 1 #trodden path if failed
-                Card9.new.startCard9
-            elsif cardDestinations == 2 #icy path if failed
-                Card22.new.startCard22
-            else 
-                Card9.new.startCard9 #go fight the troll
-            end
-
+                if cardDestinations == 1 #trodden path if failed
+                    Card9.new.startCard9
+                elsif cardDestinations == 2 #icy path if failed
+                    Card22.new.startCard22
+                else 
+                    Card9.new.startCard9 #go fight the troll
+                end
         end
     end
 end
@@ -830,7 +827,6 @@ class Card32 <StoryCard
     puts "[3] Leave the cave and trek to the castle through the snow"
 
     getNextCard(cardDestinations)
-
         if cardDestinations == 1
             Card9.new.startCard9
         elsif cardDestinations == 2
@@ -954,11 +950,11 @@ class Card38 <StoryCard
             cardDestinations =2
         end
     #getNextCard(cardDestinations)
-        if cardDestinations == 1
-            Card48.new.startCard48
-        else cardDestinations == 2 # defeat, game over
-            Card1.new.startCard1
-        end
+            if cardDestinations == 1
+                Card48.new.startCard48
+            else cardDestinations == 2 # defeat, game over
+                Card1.new.startCard1
+            end
     end
 end
 
@@ -997,7 +993,7 @@ class Card40 <StoryCard
             card40TestToPass =  card40TestMidway -4
                
             if card40Test <= card40TestToPass
-                    Card30.new.startCard30
+                Card30.new.startCard30
                     else card40Test > card40TestToPass
                         puts "The door refuses to budge"
                         puts "[1] try picking the lock"
@@ -1083,7 +1079,6 @@ class Card44 <StoryCard
     card44TestToPass = Icetroll.perception #This is the trolls passive perception, so its 12. From my reading of the rules, I am not sure if the troll gets to roll, or if its just his passive perception value
     #In any case, it is now dynamic in case it becomes possible to modify the trolls perception in future suing magic for example
     #getNextCard(cardDestinations)
-
         if card44Test <= card44TestToPass
             Card10.new.startCard10
         else card44Test > card44TestToPass
@@ -1104,7 +1099,6 @@ class Card45 <StoryCard
     puts "[3] Skip the bedrooms, straight down the corridor"
 
     getNextCard(cardDestinations)
-
         if cardDestinations == 1
             Card50.new.startCard50
         elsif cardDestinations == 2
@@ -1187,7 +1181,7 @@ class Card49 <StoryCard
     puts "You race down the icy corridor, weapon clenched tightly in hand. Screaming a battle cry, you charge headlong into a gruesome sight.\n\nA blood-covered troll has his teeth half-sunk into a squealing seal.\n\n He looks at you in surprise, throws the half-dead seal into the cavern wall, and roars his own battle challenge"
     puts "[1] DIE FOUL CREATURE!!!!!!!"
 
-    getNextCard(cardDestinations)
+    getNextCard(cardDestinations) #this loop doesn't need to be here anymore
         if cardDestinations == 1
             Card17.new.startCard17
         else
@@ -1240,7 +1234,6 @@ class Card52 <StoryCard
         card52Test = DexChecks.new.dexterityCheck
         card25TestToPass = Player.dexterity
     #getNextCard(cardDestinations)
-
         if card52Test <= card25TestToPass #succeed
             Card36.new.startCard36
         else card52Test > card25TestToPass #fail
@@ -1302,7 +1295,6 @@ class Card55 <StoryCard
                 Player.hitpoints -=1
             end
     puts "Now what?"
-
     puts "[1] Creep up to the door and listen"
     puts "[2] Go forward bravely and push the door aside"
 
@@ -1394,14 +1386,13 @@ end
             puts "[1] Back to Main Menu"
             puts "[2] Quit the game"
             getNextCard(cardDestinations)
-
-            if cardDestinations ==1 
-                puts "not implemented"
-                #main_menu.start
-            else cardDestinations == 2
-                puts "not implemented"
-                #main_menu.quitGame
-            end
+                if cardDestinations ==1 
+                    puts "not implemented"
+                    #main_menu.start
+                else cardDestinations == 2
+                    puts "not implemented"
+                    #main_menu.quitGame
+                end
             #Go back to main menu/call credits
         end
     end
@@ -1410,22 +1401,19 @@ end
         def startCard61() #this was split off from card 37 to make it work with the logic
             clearScreen() #push amythest ring to inventory
         puts "“I know,” he answers, grinning as if he heard your thoughts.\n\n“I will not live more than a few hours. My god visited me just a few minutes ago and told me himself!”\n\n“Let me warn you,” he continues.\n\n“The trodden path leads to the home of the creature.\nI went down the icier path at first, but found an impassable cliff. The creature attacked me again there and dragged me to his lair before I escaped The man shudders.\n\n“Here, take this ring and give it to my the guard captain in Winterhaven. He will contact my family and tell them of my useless death.\nAnd if you see that great elk, hunt it down, roast it over a fire... and think of me.”\n\nHe hands you an amethyst ring and you nod.\n\nThe warrior starts shaking and shuddering, and you decide it is better to leave him now.\nYou head back to the slushy path and go back to the main cavern"
-        
         puts "Which way now?"
         puts "[1] Down the trodden path"
         puts "[2] The icier path"
         puts "[3] Leave the cave and trek to the castle through the snow"
-
-        getNextCard(cardDestinations)
-
-            if cardDestinations == 1
-                Card9.new.startCard9
-            elsif cardDestinations == 2
-                Card22.new.startCard22
-            elsif cardDestinations == 3
-                Card19.new.startCard19
-            else 
-                Card61.new.startCard61
+            getNextCard(cardDestinations)
+                if cardDestinations == 1
+                    Card9.new.startCard9
+                elsif cardDestinations == 2
+                    Card22.new.startCard22
+                elsif cardDestinations == 3
+                    Card19.new.startCard19
+                else 
+                    Card61.new.startCard61
+                end
             end
-        end
     end
