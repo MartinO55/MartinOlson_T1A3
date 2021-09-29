@@ -156,7 +156,8 @@ end
             elsif cardDestinations ==2
                 Card11.new.startCard11
             else
-                puts "unrecognised input"#I don't want to send the player back to the top because it would give them a second shot at the mace if they miss it
+                puts "you decide to head to the guardhouse"#I don't want to send the player back to the top because it would give them a second shot at the mace if they miss it
+                Card11.new.startCard11 #so they go the way that takes them through more of the story
             end
         end
     end
@@ -777,7 +778,7 @@ class Card29 <StoryCard
             Card25.new.startCard25
         else 
             puts "You wont let these stairs defeat you!!\n\n"
-            Card50.new.startCard50
+            Card50.new.startCard50 #this isn't vindictive at all
         end
     end
 end
@@ -853,20 +854,24 @@ class Card33 <StoryCard
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card55.new.startCard55
-        else cardDestinations == 2
+        elsif cardDestinations == 2
             Card23.new.startCard23
+        else 
+            Card33.new.startCard33
         end
     end
 end
 
 class Card34 <StoryCard
-    def startCard34() #this needs to clear the screen
+    def startCard34() 
         clearScreen()
     puts "In the bravest voice you can muster, you shout your name and clan. You hear a soft whisper from the passage ahead.\n\n“Help me, please. My leg is broken.”\n\nYou call out to the injured man,\n\n“Keep talking so I can find you.”\n\nWisely, you tie a piece of long cord to a nearby stalagmite. You can follow the cord back to this tunnel branch in case you get lost."
     puts "[1] Follow the voice"
 
     getNextCard(cardDestinations)
         if cardDestinations == 1
+            Card37.new.startCard37
+        else 
             Card37.new.startCard37
         end
     end
@@ -878,7 +883,7 @@ class Card35 <StoryCard
     puts "You remove your rope and grapple and find a nice target – a broken gargoyle near an open window."
 
     puts "[1] This cannot possibly go wrong"#make a climb check
-
+        card35Continue = gets.chomp.to_i
     card35Test = DexChecks.new.climbingCheck
     card35TestMidway = Player.dexterity
     card35TestToPass = card35TestMidway -3
