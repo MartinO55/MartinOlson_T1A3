@@ -27,8 +27,8 @@ end
 def loadGame()
     save_data = YAML.load_file "saveGame.yaml"
    # save_data = YAML.load(File.open(File.join(File.dirname("saveGame.yaml"),'saveGame.yaml')))
-    cardnumbertopass = save_data["cardnumber"]
-    puts cardnumbertopass
+    cardnumbertopass = save_data["cardNumber"]
+   # puts cardnumbertopass
    # puts save_data.inspect
    # puts cardnumber
    # savedCard ['playerSave']['cardnumber']
