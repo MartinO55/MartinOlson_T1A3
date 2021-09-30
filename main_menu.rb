@@ -19,15 +19,25 @@ require "yaml"
 
 def startNewGame ()
     #could have you enter your name
+    unless File.exist?("saveGame.yaml")
+        File.new("saveGame.yaml","w+")
+    end
+
     newGame = Beyond_the_vale.new #this calls the new game class, whose init method calls the first card
 end
 
 #TODO - call load game
 #starts the game at a specific card, based on a save file
 def loadGame()
-    save_data = YAML.load_file "saveGame.yaml"
+
+    unless File.exist?("saveGame.yaml")
+        File.new("saveGame.yaml","w+")
+        newGame = Beyond_the_vale.new
+    end
+        @saveGame = YAML.load_file ("saveGame.yaml")
+     
    # save_data = YAML.load(File.open(File.join(File.dirname("saveGame.yaml"),'saveGame.yaml')))
-    cardnumbertopass = save_data["cardNumber"]
+    cardnumbertopass = @saveGame["cardNumber"]
    # puts cardnumbertopass
    # puts save_data.inspect
    # puts cardnumber

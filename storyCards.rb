@@ -11,7 +11,7 @@ require "yaml"
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
     
     attr_accessor :cardNumber, :cardText, :cardDestinations, :cardArtwork, :goToMainMenu, :quitNow
-    SAVEDATA = []
+    
 
     def initialize ()
        @cardNumber = cardNumber
@@ -20,10 +20,14 @@ class StoryCard #this class is all the cards, including the endings, whose desti
        @quitNow = quitNow
     end
 
-    def autoSave(cardNumber)
-        File.open('saveGame.yaml') do |file|
-            cardNumber.write(SAVEDATA.to_yaml)
-        end
+    def autoSave(cardNumberSaved)
+        playerSave = Player.name
+        cardnumber = cardNumberSaved
+        loot = Player.loot
+            File.open("saveGame.yaml","r+") do |f|
+                f.write(cardNumber.to_yaml,loot.to_yaml)
+            end
+
     end
 
     def clearScreen ()
@@ -184,7 +188,7 @@ end
         
         def startCard1()#So we could write a universal method in the parent class that takes the card number
             clearScreen()
-            cardNumber = 1
+            autoSave(1)
             #pushLoot("testItem")
             # pushLoot("testitem2")
             #testitem = "testloot"
@@ -1530,8 +1534,7 @@ end
             autoSave(60)
             puts "You arrive back in the town of Winterhaven a little injured, but safe.\nYou quickly head to the local merchant’s bazaar to sell the wares that you found.\nThe merchants are all very impressed - many of the goods you found were antiques and are quite valuable\n\n"
             #if rescuer == true
-            countLoot()
-
+           
                 if Player.loot.include? "Jrak Kull" #this is a sneaky way of doing it, but it works and the player will never see
                 puts "You drag the wounded warrior back to Winterhaven.\nYou discover his name is Jrak Kul, a lieutenant in Winterhaven’s town watch, and a member of the secretive Martyrs of War clan.\n\nThe Martyrs reward you handsomely for his safe return – 5 silver talents – and invite you to join their ranks.\n\n"
                 elsif Player.loot.include? "Amythest Ring"
@@ -1541,7 +1544,7 @@ end
                 end
 
                 #need to add your total loot score here
-
+                countLoot()
             puts "Congratulations - You have bested the Castle of Madness, and have quite the tale to tell the folks back in the tavern\n\n"
             puts "Many thanks to JC Connors for writing this module, So I had something to use as a basis for the story.\nIt would not have been possible any other way.\n\n"
             
