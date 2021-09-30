@@ -3,6 +3,7 @@ require_relative "characters.rb" #this is where inventory will need to be pushed
 #require_relative "main_menu.rb"  #SO this breaks the app
 require "colorize"
 require "colorized_string"
+require "yaml"
 #require "tty-prompt" #dont do it it doesn't work, it just breaks everything and I don't know why
 #maybe tty prompt#NO NOT AGAIN NEVER AGAIN
 #ascii_paradise for ascii animations
@@ -10,12 +11,19 @@ require "colorized_string"
 class StoryCard #this class is all the cards, including the endings, whose destinations have to be main menu
     
     attr_accessor :cardNumber, :cardText, :cardDestinations, :cardArtwork, :goToMainMenu, :quitNow
-    
+    SAVEDATA = []
+
     def initialize ()
        @cardNumber = cardNumber
        @cardDestinations = cardDestinations
        @goToMainMenu = goToMainMenu
        @quitNow = quitNow
+    end
+
+    def autoSave()
+        File.open('saveGame.yaml') do |file|
+            file.write(SAVEDATA.to_yaml)
+        end
     end
 
     def clearScreen ()
@@ -103,12 +111,13 @@ class StoryCard #this class is all the cards, including the endings, whose desti
        #puts lootArray
     end
 
-    def pushInventory(item)
+    def pushInventory(item) #strictly speaking this is no longer necessary, its here for future proofing
         inventory = Player.inventory #Okay we tried this as a hash, it was stupid, is now an array
       # puts inventory
         inventory << item
       # puts inventory
     end
+
     def countLoot()#so there are a number of different ways this could be done - this could just be a long function in card 60, this could take in the players inventory and loot as variables passed to the method...
         #if I had defined these as hashes, this method would be shorter, but the push functions longer... so yeah.
         cashEarned =0
@@ -170,7 +179,7 @@ class StoryCard #this class is all the cards, including the endings, whose desti
 end
 
 #TODO - holds the list of all the cards
-
+#TODO - refactor all the data to a yaml file at some point
     class Card1 < StoryCard
         
         def startCard1()#So we could write a universal method in the parent class that takes the card number
@@ -183,6 +192,7 @@ end
         puts "\nIt was already a freezing morning when you set out for the legendary “Castle of Madness” – the mysterious castle that is said to emerge from blizzards once every seven winters.\n\nNow, as it grows dark, the mountains’ glacial winds of this valley make the temperature seem hundreds of times colder. \n\nBoth hands wrap your winter cloak tightly around your body, but somehow you can still feel the ice-sharded winds as if on bare skin.\nYou squint your eyes down at your weapon and wonder if it has become frozen to your belt. \nNothing alive can possibly live in these temperatures, you reassure yourself, pushing back thoughts of the living dead you’ve heard emerge with the castle.\n\nSoon, you can make out the faint ruined form of the castle up ahead. The old crone’s rotting map was right! Your best guess tells you it’s another hour’s walk in the harsh cold. \nBefore you have time to think about the longer walk, you spot a gaping black opening in the snow. It must be a cave. The crone told you that underground tunnels could also lead into the castle.\n\nCould this be one? Or is it the lair of some beast \n\n" #this needs to be the formatted story text
 
             puts "What do you want to do?\n\n" #this needs to be the list of things you could do
+            puts "To choose, type the number corresponding to your choice and press enter"
             puts "[1] Explore the cave"
             puts "[2] Continue on your cold trek to the castle"
 

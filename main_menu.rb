@@ -4,6 +4,7 @@ require_relative "main.rb"
 require "colorize"
 require "colorized_string"
 require "tty-prompt"
+require "yaml"
 
 
 #include game.rb
@@ -24,7 +25,17 @@ end
 #TODO - call load game
 #starts the game at a specific card, based on a save file
 def loadGame()
+    save_data = YAML.load_file "saveGame.yaml"
+   # save_data = YAML.load(File.open(File.join(File.dirname("saveGame.yaml"),'saveGame.yaml')))
+    cardnumbertopass = save_data["cardnumber"]
+    puts cardnumbertopass
+   # puts save_data.inspect
+   # puts cardnumber
+   # savedCard ['playerSave']['cardnumber']
+   # puts savedCard
+   # puts save_data[:cardnumber]
 
+    Load.new.loadGame(cardnumbertopass)
 end
 
 #TODO - Call quit from application
@@ -57,8 +68,9 @@ def beginVOM()
         startNewGame()
     elsif mainMenuNav == 2
         puts "this would load a game"
+        loadGame()
     elsif mainMenuNav == 3
-        puts "quit the game" #this technically works
+        puts "You quit the game" #this technically works
     else
         puts "unrecognised input"
     end
