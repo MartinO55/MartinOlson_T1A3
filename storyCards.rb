@@ -31,7 +31,7 @@ class StoryCard #this class is all the cards, including the endings, whose desti
         puts "you are in a fight with a hideous creature\n\n".colorize(:red) #so if you try to call the enemy here you get the memory reference
             #Combat loop - while both the player and enemy are alive, the attack sequence continues with the player going first
         if player.loot.include? "Bear Shield" #shield does shield thinds
-                damageBlock +=3
+                player.damageBlock +=3
         end
 
             while player.hitpoints >0 && enemy.hitpoints >0 #both are alive
