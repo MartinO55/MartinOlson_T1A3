@@ -30,16 +30,27 @@ class StoryCard #this class is all the cards, including the endings, whose desti
     def manageCombat(enemy,player)#this the mehtod called by cards where combat take place - passing the method the enemy mob to fight and the player character
         puts "you are in a fight with a hideous creature\n\n".colorize(:red) #so if you try to call the enemy here you get the memory reference
             #Combat loop - while both the player and enemy are alive, the attack sequence continues with the player going first
+        if player.loot.include? "Bear Shield" #shield does shield thinds
+                damageBlock +=3
+        end
+
             while player.hitpoints >0 && enemy.hitpoints >0 #both are alive
                 
                 puts "[1] ATTACK!\n\n".colorize(:red)
                 attackQueue = gets.chomp.to_i #breaks the sequence
 
                     playerDamgeReduction = player.damageReduction#initialize the damage reduction stats
+                       
                     enemyDamageReduction = enemy.damageReduction
 
                     playerAttackDamageMid = player.attack  #this is supposed to call the player variable passed to this method, which is the Player, which has a method attack (which provides damage)
-                    playerAttackDamage = playerAttackDamageMid -enemyDamageReduction #applies enemy DR
+                    playerDamageMod =1
+                    
+                        if player.loot.include? "Antique Mace" #mace does mace things
+                            playerDamageMod = 3
+                        end
+
+                    playerAttackDamage = playerAttackDamageMid -enemyDamageReduction + playerDamageMod #applies enemy DR
                     
                 playerRollToHit = CombatRolls.new.rollToHit
                 enemyRollToBlock = CombatRolls.new.rollToBlock

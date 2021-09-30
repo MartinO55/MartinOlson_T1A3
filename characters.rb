@@ -33,7 +33,7 @@ class PlayerCharacter <Character
 
     def attack()
         pAttackDamage = CombatRolls.new.rollDamage
-        return pAttackDamage + 1 #hardcoded, should check inventory
+        return pAttackDamage #no longer hardocded, damage mod is moved to the combat method
     end
 
 end
