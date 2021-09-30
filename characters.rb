@@ -1,7 +1,7 @@
 require_relative "game.rb"
 
 class Character
-    attr_accessor :name, :hitpoints,:damageReduction, :damageBlock, :perception, :fatiguepoints, :dexterity,:strength,:intelligence,:will
+    attr_accessor :name, :hitpoints,:damageReduction, :damageBlock, :perception, :fatiguepoints, :dexterity,:strength,:intelligence,:will,:inventory,:loot
 end
 
 class PlayerCharacter <Character
@@ -38,7 +38,7 @@ class PlayerCharacter <Character
 
 end
 
-Player = PlayerCharacter.new("steve",15,4,9,14,12,13,12,12,13,{},{}) #this hardcodes the player sheet, but can be accessed from anywhere
+Player = PlayerCharacter.new("steve",15,4,9,14,12,13,12,12,13,["Sword","Scale Mail"],[]) #this hardcodes the player sheet, but can be accessed from anywhere
 
 
 #TODO Troll

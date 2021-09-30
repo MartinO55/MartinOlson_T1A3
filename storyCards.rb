@@ -85,12 +85,20 @@ class StoryCard #this class is all the cards, including the endings, whose desti
         end
     end
 
-    def pushLoot(player,lootToPush)
-        
+    def pushLoot(lootToPush)
+        lootArray = Player.loot
+       #puts lootArray
+        lootArray << lootToPush
+       #puts lootArray
     end
 
-    def pushInventory(player,itemToPush)
-        player.inventory
+    def pushInventory(item)
+        
+        inventory = Player.inventory #Okay we tried this as a hash, it was stupid, is now an array
+      # puts inventory
+
+        inventory << item
+      # puts inventory
     end
 
     #needs a method to push new loot to player character hash, and inventory
@@ -104,6 +112,8 @@ end
         def startCard1()#So we could write a universal method in the parent class that takes the card number
             clearScreen()
             cardNumber = 1
+            # pushLoot("testItem")
+            # pushLoot("testitem2")
             #testitem = "testloot"
             #pushLoot(Player,testitem)
         puts "\nIt was already a freezing morning when you set out for the legendary “Castle of Madness” – the mysterious castle that is said to emerge from blizzards once every seven winters.\n\nNow, as it grows dark, the mountains’ glacial winds of this valley make the temperature seem hundreds of times colder. \n\nBoth hands wrap your winter cloak tightly around your body, but somehow you can still feel the ice-sharded winds as if on bare skin.\nYou squint your eyes down at your weapon and wonder if it has become frozen to your belt. \nNothing alive can possibly live in these temperatures, you reassure yourself, pushing back thoughts of the living dead you’ve heard emerge with the castle.\n\nSoon, you can make out the faint ruined form of the castle up ahead. The old crone’s rotting map was right! Your best guess tells you it’s another hour’s walk in the harsh cold. \nBefore you have time to think about the longer walk, you spot a gaping black opening in the snow. It must be a cave. The crone told you that underground tunnels could also lead into the castle.\n\nCould this be one? Or is it the lair of some beast \n\n" #this needs to be the formatted story text
@@ -140,7 +150,7 @@ end
                     puts "ewwwWWWWW!\n\n"
                 elsif card2Test <= card2ToPass #success
                     puts "Gritting your teeth, you take the mace. It might come in handy\n\n"
-                    #need to push mace to inventory
+                    pushInventory("Antique Mace")  #need to push mace to inventory
                 else
                     puts "This is an error. I have no idea how you called it"
                 end
@@ -233,7 +243,7 @@ end
         puts "As you are about to leave, you spot a tarnished, silver ring on one of the skeletons.\nYou pull it off and examine it. Apparently, it was the captain of the guard’s signet ring.\nPocketing it, you head out the door for the servant’s entrance"
         puts "..."
         puts "[1] Continue..." #add signet ring to inventory
-
+            pushLoot("Signet Ring")
         getNextCard(cardDestinations)
        # @cardDestinations = gets.chomp.to_i
             if cardDestinations ==1
@@ -249,7 +259,7 @@ end
             clearScreen()
         puts "You stride forward with confidence and crack open the half-broken door but quickly realize that you can’t see – it’s too dark to make out anything but dim silhouettes.\n\nYou fumble to get a torch lit as you hear a hissing cackle that chills your bones."
         puts "..."# this needs to be replaced with the pass/fail skill check that adds a modifier to the next destination
-        darkness = false #this may need to move out of this class
+        darkness = false #this may need to move out of this class we could just replace this with a torch item in the inventory
             card7Test = DexChecks.new.dexterityCheck
             card7ToPass = Player.dexterity
                 if card7Test > card7ToPass #fail
@@ -388,6 +398,7 @@ class Card13 <StoryCard
     puts "You spot something unusual – a small trap door in the side of the room.\nSmiling, and remembering that guardhouses often keep valuable weapons locked away, you head towards the door. Kneeling down, you pry it open easily – the lock has long since rusted away.\n\nInside the cubby hole is a pitted iron shortsword. It probably wouldn’t last a single swing, so you toss it aside.\nBehind the blade, however, is a steel-plated, medium shield. Painted on its face are three white bears.\nThough the paint is a little worn, it apparently protected the shield from the elements.\n\nYou carefully take the shield out, brush off some ice, and strap it to your back"
     puts "..."
     puts "[1] Continue (with a new shield)" #add shield to inventory/equipment
+    pushInventory("Bear Shield")
     getNextCard(cardDestinations)
         if cardDestinations ==1
             Card6.new.startCard6
@@ -587,7 +598,7 @@ class Card21 <StoryCard
         Player.hitpoints += 3 #should be d6-3 min 1 #given how brutal the GM is here, I am just harcoding it
     
         Player.fatiguepoints -=2
-
+        pushLoot("Troll Teeth")
         getNextCard(cardDestinations)
             if cardDestinations == 1
                 Card47.new.startCard47
@@ -652,6 +663,7 @@ class Card24 <StoryCard
             Player.hitpoints -=1 #d6-3
         else card24Test <= card24TestToPass
             puts "ooh shiny"
+            pushLoot("Glass Dagger")
             #add dagger to loot
         end
     
@@ -823,12 +835,12 @@ class Card32 <StoryCard
     def startCard32() 
         clearScreen()
     puts "The man’s leg is broken, but perhaps you can keep him alive until you head back this way.\nThe cave is warm enough to keep him alive, and there’s enough water for him to live on.\n\n“I will not live more than a few hours. My goddess visited me just a few minutes ago,“ he continues.\n\n “Well, she’ll make good company until I come back,” you say as you bandage and splint his leg.\n\n “Listen, I won’t be at the Castle of Madness for more than a day. When I come back, I’ll bring you with me.\nI’d take you now, but unless you can offer me a king’s treasure, I can’t afford it.”\n\nThe man nods gratefully, “I appreciate any effort you might make.”\n\nYou finish bandaging him and leave him some food.\n\n“I’d make you a fire, but the creature you mentioned might come back. Wouldn’t want you to lose another leg.”\n\nThe man grasps your shoulder.\n\n“Let me warn you... the trodden path leads to the home of the creature. I went down the icier path at first, but found an impassable cliff.\nThe creature attacked me and dragged me to his lair before I escaped.”\n\nThe warrior closes his eyes to rest, and you decide it is better to leave him now."
-    puts "You head back to the slushy path and go back to the main cavern." #gain Rescuer modifier
+    puts "You head back to the slushy path and go back to the main cavern." 
     puts "Which way will you go now?"
     puts "[1] The trodden Path (even though it goes to the lair of the creature)"
     puts "[2] The Icier Path"
     puts "[3] Leave the cave and trek to the castle through the snow"
-
+        pushLoot("Jrak Kul")
     getNextCard(cardDestinations)
         if cardDestinations == 1
             Card9.new.startCard9
@@ -1093,8 +1105,9 @@ end
 class Card45 <StoryCard
     def startCard45() 
         clearScreen()
-    puts "You swing your body over the icy sill of the window and leap into the dim room.\nThe white light shines through the window and illuminates the remnants of this old bedroom. A broken bed lies in the corner of the room, its decorative blanket still well preserved in the cold.\n\nA dresser with a shattered mirror sits opposite the bed, and you can almost feel the ghosts of the nobility who once slept here.\nYou look through some of the dressers, and find nothing but old clothes.\n\nNo, wait.\n\nUnderneath a fine blue chemise is a tarnished silver tiara.\n\nSmiling, you place the jewelry and the blue chemisein your sack.\n\nYou walk to the door and peer out.\n\nDark stairs lead upwards into a turret, and to the right, a corridor heads down to more abandoned bedrooms"
-    
+    puts "You swing your body over the icy sill of the window and leap into the dim room.\nThe white light shines through the window and illuminates the remnants of this old bedroom. A broken bed lies in the corner of the room, its decorative blanket still well preserved in the cold.\n\nA dresser with a shattered mirror sits opposite the bed, and you can almost feel the ghosts of the nobility who once slept here.\nYou look through some of the dressers, and find nothing but old clothes.\n\nNo, wait.\n\nUnderneath a fine blue chemise is a tarnished silver tiara.\n\nSmiling, you place the jewelry and the blue chemise in your sack.\n\nYou walk to the door and peer out.\n\nDark stairs lead upwards into a turret, and to the right, a corridor heads down to more abandoned bedrooms"
+    pushLoot("Silver Tiara")
+    pushLoot("Blue Chemise")
     puts "Which way now?"
 
     puts "[1] Up the stairs"
@@ -1220,8 +1233,10 @@ class Card51 <StoryCard
 
     getNextCard(cardDestinations)
         if cardDestinations == 1 #but with the relevant one in your inventory
+            pushLoot("Maiden Tapestry")
             Card55.new.startCard55 
         else cardDestinations == 2
+            pushLoot("Axe Tapestry")
             Card55.new.startCard55
         end
     end
@@ -1317,7 +1332,7 @@ end
             clearScreen()
         puts "Gritting your teeth you pull up the bloody, torn mattress that lies on the floor. A silver sparkle catches your eye.\nYou reach down and pick up a beautiful silver and glass scepter. Perhaps it belonged to the noble pictured in this room.\n\nConfident that you’ve found a great treasure, you throw your burning torch on the mattress and let the room ignite.\nYou’re determined to clean out the filth of the creature that lived here.\n\n Dashing out of the smoky room, you leave the Castle of Madness behind.\nSurely more treasure and adventure lies within its walls, but you feel better returning with trusted friends.\nPerhaps with a party of adventurers, the yetis and blood men will not pose as much of a threat"
         puts "[1] Time to leave this place"
-
+            pushLoot("Glass Sceptre")
         getNextCard(cardDestinations)
             if cardDestinations == 1
                 Card60.new.startCard60
@@ -1332,7 +1347,7 @@ end
             clearScreen()
         puts "You’re smart enough to know that it’s not the design on the tapestry that is worth gold, but the fabric itself.\nCarefully examining both tapestries, you see that the runed axe one is cheaper and shoddier than the finely woven fabric of the armored maiden tapestry is"
         puts "[1] Take the Tapestry of the Armoured maiden, and examine the hole in the floor" #add armoured maiden to inventory
-            
+            pushLoot("Maiden Tapestry")
         getNextCard(cardDestinations)
             if cardDestinations == 1
                 Card55.new.startCard55
@@ -1362,6 +1377,7 @@ end
         def startCard59() #this needs to add the crossbow
             clearScreen()
         puts "Your foot slips up the stairs once, but your tight hold on the railing saves you from a nasty fall down the steps.\nYou have to drag yourself up the last few steps, since the ice is about as thick as your fist.\nPulling your way onto a cold landing, where the wind whips through open windows and chills you to the bone, you glance around this ancient lookout tower.\n\nIt seems all barren, except for a lone crossbowmounted on the wall.\nYou pull it down and strap it to your back. You’ve never used a crossbow before, but it may come in handy later.\n\nYou kick the dirty snow beneath the crossbow and find what you were looking for – a single, rusty bolt.\nYou’ll have one shot with this crossbow.\nHappy that you found anything at all in this crumbling tower, you carefully make your way down the stairs"
+        pushLoot("Crossbow")
         puts "Now which way?"
 
         puts "[1] Explore the Bedrooms"
