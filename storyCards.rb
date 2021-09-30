@@ -100,8 +100,63 @@ class StoryCard #this class is all the cards, including the endings, whose desti
         inventory << item
       # puts inventory
     end
-
-    #needs a method to push new loot to player character hash, and inventory
+    def countLoot()#so there are a number of different ways this could be done - this could just be a long function in card 60, this could take in the players inventory and loot as variables passed to the method...
+        #if I had defined these as hashes, this method would be shorter, but the push functions longer... so yeah.
+        cashEarned =0
+        loot = Player.loot
+        while loot.length >0
+            if loot.include? "Antique Mace"
+                cashEarned += 80
+                loot.delete ("Antique Mace")
+            elsif loot.include? "Troll Teeth"
+                cashEarned += 15
+                loot.delete ("Troll Teeth")
+            elsif loot.include? "Amythest Ring"
+                cashEarned += 200
+                loot.delete ("Amythest Ring")
+            elsif loot.include? "Jrak Kull"
+                cashEarned += 500
+                loot.delete ("Jrak Kull")
+            elsif loot.include? "Maiden Tapestry"
+                cashEarned += 100
+                loot.delete ("Maiden Tapestry")
+            elsif loot.include? "Axe Tapestry"
+                cashEarned += 10
+                loot.delete ("Axe Tapestry")
+            elsif loot.include? "Signet Ring"
+                cashEarned += 150
+                loot.delete ("Signet Ring")
+            elsif loot.include? "Bear Shield"
+                cashEarned += 100
+                loot.delete ("Bear Shield")
+            elsif loot.include? "Glass Dagger"
+                cashEarned += 50
+                loot.delete ("Glass Dagger")
+            elsif loot.include? "Crossbow"
+                cashEarned += 150
+                loot.delete ("Crossbow")
+            elsif loot.include? "Silver Tiara"
+                cashEarned +=300
+                loot.delete ("Silver Tiara")
+            elsif loot.include? "Blue Chemise"
+                cashEarned += 20
+                loot.delete ("Blue Chemise")
+            elsif loot.include? "Chariot Toy"
+                cashEarned += 25
+                loot.delete ("Chariot Toy")
+            else loot.include? "Glass Sceptre"
+                cashEarned += 400
+                loot.delete ("Glass Sceptre")
+            end
+        end
+        if cashEarned > 0
+            puts "Your adventure earned you #{cashEarned} silver"    
+        else
+            puts "You have escaped with your life, but little of value"
+        end
+        #puts cashEarned
+        return cashEarned
+    end
 
 end
 
@@ -131,7 +186,7 @@ end
                 #need a copy paste catch statement for any other entry possibly a menu option
             else 
                 puts "unrecognised input" 
-                Card1.new.startCard1this 
+                Card1.new.startCard1 
             end
         end
     end
@@ -150,7 +205,7 @@ end
                     puts "ewwwWWWWW!\n\n"
                 elsif card2Test <= card2ToPass #success
                     puts "Gritting your teeth, you take the mace. It might come in handy\n\n"
-                    pushInventory("Antique Mace")  #need to push mace to inventory
+                    pushLoot("Antique Mace")  #need to push mace to inventory
                 else
                     puts "This is an error. I have no idea how you called it"
                 end
@@ -398,7 +453,7 @@ class Card13 <StoryCard
     puts "You spot something unusual – a small trap door in the side of the room.\nSmiling, and remembering that guardhouses often keep valuable weapons locked away, you head towards the door. Kneeling down, you pry it open easily – the lock has long since rusted away.\n\nInside the cubby hole is a pitted iron shortsword. It probably wouldn’t last a single swing, so you toss it aside.\nBehind the blade, however, is a steel-plated, medium shield. Painted on its face are three white bears.\nThough the paint is a little worn, it apparently protected the shield from the elements.\n\nYou carefully take the shield out, brush off some ice, and strap it to your back"
     puts "..."
     puts "[1] Continue (with a new shield)" #add shield to inventory/equipment
-    pushInventory("Bear Shield")
+    pushLoot("Bear Shield")
     getNextCard(cardDestinations)
         if cardDestinations ==1
             Card6.new.startCard6
@@ -1397,16 +1452,19 @@ end
         def startCard60()
             clearScreen()
             puts "You arrive back in the town of Winterhaven a little injured, but safe.\nYou quickly head to the local merchant’s bazaar to sell the wares that you found.\nThe merchants are all very impressed - many of the goods you found were antiques and are quite valuable"
-            
             #if rescuer == true
+            countLoot()
+
                 if Player.loot.include? "Jrak Kull" #this is a sneaky way of doing it, but it works and the player will never see
                 puts "You drag the wounded warrior back to Winterhaven.\nYou discover his name is Jrak Kul, a lieutenant in Winterhaven’s town watch, and a member of the secretive Martyrs of War clan.\n\nThe Martyrs reward you handsomely for his safe return – 5 silver talents – and invite you to join their ranks."
-                else Player.loot.include? "Amythest Ring"
+                elsif Player.loot.include? "Amythest Ring"
                     puts "You take the amythest ring back to the captain of the guard in Winterhaven, where you discover the mans name was Jrak Kul. The lietenant thanks you for bringing it back and pays you a few silver coins for its return."
+                else 
+                    puts "The local guard captain asks you if you saw his lieutenant, but you can only tell him where he was not"
                 end
 
                 #need to add your total loot score here
-                
+
             puts "Congratulations - You have bested the Castle of Madness, and have quite the tale to tell the folks back in the tavern"
             puts "Many thanks to JC Connors for writing this module, So I had something to use as a basis for the story.\nIt would not have been possible any other way. "
             
