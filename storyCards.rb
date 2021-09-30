@@ -104,10 +104,8 @@ class StoryCard #this class is all the cards, including the endings, whose desti
     end
 
     def pushInventory(item)
-        
         inventory = Player.inventory #Okay we tried this as a hash, it was stupid, is now an array
       # puts inventory
-
         inventory << item
       # puts inventory
     end
@@ -161,9 +159,9 @@ class StoryCard #this class is all the cards, including the endings, whose desti
             end
         end
         if cashEarned > 0
-            puts "Your adventure earned you #{cashEarned} silver"    
+            puts "Your adventure earned you #{cashEarned} silver\n\n"    
         else
-            puts "You have escaped with your life, but little of value"
+            puts "You have escaped with your life, but little of value\n\n"
         end
         #puts cashEarned
         return cashEarned
@@ -1462,22 +1460,22 @@ end
     class Card60 < StoryCard
         def startCard60()
             clearScreen()
-            puts "You arrive back in the town of Winterhaven a little injured, but safe.\nYou quickly head to the local merchant’s bazaar to sell the wares that you found.\nThe merchants are all very impressed - many of the goods you found were antiques and are quite valuable"
+            puts "You arrive back in the town of Winterhaven a little injured, but safe.\nYou quickly head to the local merchant’s bazaar to sell the wares that you found.\nThe merchants are all very impressed - many of the goods you found were antiques and are quite valuable\n\n"
             #if rescuer == true
             countLoot()
 
                 if Player.loot.include? "Jrak Kull" #this is a sneaky way of doing it, but it works and the player will never see
-                puts "You drag the wounded warrior back to Winterhaven.\nYou discover his name is Jrak Kul, a lieutenant in Winterhaven’s town watch, and a member of the secretive Martyrs of War clan.\n\nThe Martyrs reward you handsomely for his safe return – 5 silver talents – and invite you to join their ranks."
+                puts "You drag the wounded warrior back to Winterhaven.\nYou discover his name is Jrak Kul, a lieutenant in Winterhaven’s town watch, and a member of the secretive Martyrs of War clan.\n\nThe Martyrs reward you handsomely for his safe return – 5 silver talents – and invite you to join their ranks.\n\n"
                 elsif Player.loot.include? "Amythest Ring"
-                    puts "You take the amythest ring back to the captain of the guard in Winterhaven, where you discover the mans name was Jrak Kul. The lietenant thanks you for bringing it back and pays you a few silver coins for its return."
+                    puts "You take the amythest ring back to the captain of the guard in Winterhaven, where you discover the mans name was Jrak Kul. The lietenant thanks you for bringing it back and pays you a few silver coins for its return.\n\n"
                 else 
                     puts "The local guard captain asks you if you saw his lieutenant, but you can only tell him where he was not"
                 end
 
                 #need to add your total loot score here
 
-            puts "Congratulations - You have bested the Castle of Madness, and have quite the tale to tell the folks back in the tavern"
-            puts "Many thanks to JC Connors for writing this module, So I had something to use as a basis for the story.\nIt would not have been possible any other way. "
+            puts "Congratulations - You have bested the Castle of Madness, and have quite the tale to tell the folks back in the tavern\n\n"
+            puts "Many thanks to JC Connors for writing this module, So I had something to use as a basis for the story.\nIt would not have been possible any other way.\n\n"
             
             puts "[1] Back to Main Menu"
             puts "[2] Quit the game"
