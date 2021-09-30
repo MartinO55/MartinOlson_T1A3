@@ -112,10 +112,10 @@ end
         def startCard1()#So we could write a universal method in the parent class that takes the card number
             clearScreen()
             cardNumber = 1
-            # pushLoot("testItem")
+            #pushLoot("testItem")
             # pushLoot("testitem2")
             #testitem = "testloot"
-            #pushLoot(Player,testitem)
+           
         puts "\nIt was already a freezing morning when you set out for the legendary “Castle of Madness” – the mysterious castle that is said to emerge from blizzards once every seven winters.\n\nNow, as it grows dark, the mountains’ glacial winds of this valley make the temperature seem hundreds of times colder. \n\nBoth hands wrap your winter cloak tightly around your body, but somehow you can still feel the ice-sharded winds as if on bare skin.\nYou squint your eyes down at your weapon and wonder if it has become frozen to your belt. \nNothing alive can possibly live in these temperatures, you reassure yourself, pushing back thoughts of the living dead you’ve heard emerge with the castle.\n\nSoon, you can make out the faint ruined form of the castle up ahead. The old crone’s rotting map was right! Your best guess tells you it’s another hour’s walk in the harsh cold. \nBefore you have time to think about the longer walk, you spot a gaping black opening in the snow. It must be a cave. The crone told you that underground tunnels could also lead into the castle.\n\nCould this be one? Or is it the lair of some beast \n\n" #this needs to be the formatted story text
 
             puts "What do you want to do?\n\n" #this needs to be the list of things you could do
@@ -758,6 +758,7 @@ class Card28 <StoryCard
     def startCard28() 
         clearScreen()
     puts "Unfortunately, most of the bedroom entries have collapsed and now lie blocked with rubble and debris.\nYou go down the hall, pushing on doors until you find one that opens.\n\nPeering into the room, you quickly discover that this was once a child’s bedroom.\n\nOld wooden toys lie on the floor. Many are broken, others are still intact. You pick up a finely-carved wooden chariot toy.\nIt seems to be holding figurine of a white-haired queen.\n\nYou take the chariot toy and figurine and place it gently into your sack.\nYour niece might like this one.\n\nThe small bed in the room is still intact, but as you come closer, you notice an oily and rancid smell coming from the mattress."
+    pushLoot("Chariot Toy")
     puts "What do you do?"
     puts "[1] Return to the main corridor and keep going down it"
     puts "[2] Draw your weapon and lift the mattress"
@@ -1396,9 +1397,16 @@ end
         def startCard60()
             clearScreen()
             puts "You arrive back in the town of Winterhaven a little injured, but safe.\nYou quickly head to the local merchant’s bazaar to sell the wares that you found.\nThe merchants are all very impressed - many of the goods you found were antiques and are quite valuable"
-            #if rescuer == true
-            puts "You drag the wounded warrior back to Winterhaven.\nYou discover his name is Jrak Kul, a lieutenant in Winterhaven’s town watch, and a member of the secretive Martyrs of War clan.\n\nThe Martyrs reward you handsomely for his safe return – 5 silver talents – and invite you to join their ranks."
             
+            #if rescuer == true
+                if Player.loot.include? "Jrak Kull" #this is a sneaky way of doing it, but it works and the player will never see
+                puts "You drag the wounded warrior back to Winterhaven.\nYou discover his name is Jrak Kul, a lieutenant in Winterhaven’s town watch, and a member of the secretive Martyrs of War clan.\n\nThe Martyrs reward you handsomely for his safe return – 5 silver talents – and invite you to join their ranks."
+                else Player.loot.include? "Amythest Ring"
+                    puts "You take the amythest ring back to the captain of the guard in Winterhaven, where you discover the mans name was Jrak Kul. The lietenant thanks you for bringing it back and pays you a few silver coins for its return."
+                end
+
+                #need to add your total loot score here
+                
             puts "Congratulations - You have bested the Castle of Madness, and have quite the tale to tell the folks back in the tavern"
             puts "Many thanks to JC Connors for writing this module, So I had something to use as a basis for the story.\nIt would not have been possible any other way. "
             
@@ -1419,6 +1427,7 @@ end
     class Card61 <StoryCard
         def startCard61() #this was split off from card 37 to make it work with the logic
             clearScreen() #push amythest ring to inventory
+            pushLoot("Amythest Ring")
         puts "“I know,” he answers, grinning as if he heard your thoughts.\n\n“I will not live more than a few hours. My god visited me just a few minutes ago and told me himself!”\n\n“Let me warn you,” he continues.\n\n“The trodden path leads to the home of the creature.\nI went down the icier path at first, but found an impassable cliff. The creature attacked me again there and dragged me to his lair before I escaped The man shudders.\n\n“Here, take this ring and give it to my the guard captain in Winterhaven. He will contact my family and tell them of my useless death.\nAnd if you see that great elk, hunt it down, roast it over a fire... and think of me.”\n\nHe hands you an amethyst ring and you nod.\n\nThe warrior starts shaking and shuddering, and you decide it is better to leave him now.\nYou head back to the slushy path and go back to the main cavern"
         puts "Which way now?"
         puts "[1] Down the trodden path"
