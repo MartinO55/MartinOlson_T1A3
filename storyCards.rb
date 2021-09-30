@@ -23,9 +23,9 @@ class StoryCard #this class is all the cards, including the endings, whose desti
     def autoSave(cardNumberSaved)
         playerSave = Player.name
         cardnumber = cardNumberSaved
-        loot = Player.loot
+       # loot = Player.loot
             File.open("saveGame.yaml","r+") do |f|
-                f.write(cardNumber.to_yaml,loot.to_yaml)
+                f.write(cardNumber.to_yaml)
             end
 
     end

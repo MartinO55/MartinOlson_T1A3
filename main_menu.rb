@@ -29,7 +29,6 @@ end
 #TODO - call load game
 #starts the game at a specific card, based on a save file
 def loadGame()
-
     unless File.exist?("saveGame.yaml")
         File.new("saveGame.yaml","w+")
         newGame = Beyond_the_vale.new
