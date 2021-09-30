@@ -477,9 +477,9 @@ class Card17 <StoryCard
         manageCombat(Icetroll,Player)
 
         if Player.hitpoints >0
-            cardDestinations ==1
+            cardDestinations =1
         else Player.hitpoints <=0
-            cardDestinations == 2
+            cardDestinations = 2
         end
     #getNextCard(cardDestinations)#this won't be a thing
         if cardDestinations == 1 #the troll is killed or retreats. functionally identical. the troll makes a will roll to fight to the death - no idea if this needs to be implemented
