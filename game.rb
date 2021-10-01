@@ -4,12 +4,6 @@ require "crapshoot"
 #TODO - call a pause menu
     #- For Pause menu, call a save, quit to menu and back to game function, as well as load?
 
-#TODO - manage character interactions
-
-# TODO - Manage Dice interactions
-
-# TODO - Call enemies as appropriate
-
 #TODO manage ascii art (if possible)
 
 #So the skill checks live here now. should these be general or specific 

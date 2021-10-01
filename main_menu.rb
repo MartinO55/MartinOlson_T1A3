@@ -7,16 +7,6 @@ require "tty-prompt"
 require "yaml"
 
 
-#include game.rb
-#include main.rb
-#String.colors                       # return array of all possible colors names
-#String.modes                        # return array of all possible modes
-#String.color_samples                # displays color samples in all combinations
-#TODO - Create a main Menu
-
-#TODO - call New Game Function
-#starts the game and goes to card 1
-
 def startNewGame ()
     #could have you enter your name
     # unless File.exist?("saveGame.yaml")
@@ -52,6 +42,8 @@ end
 #exits the application
 
 def quitGame ()
+    puts "You quit the game"
+    exit()
 
 end
 
@@ -80,7 +72,8 @@ def beginVOM()
        # puts "this would load a game"
         loadGame()
     elsif mainMenuNav == 3
-        puts "You quit the game" #this technically works
+        quitGame()
+         #this technically works
     else
         puts "unrecognised input"
     end
