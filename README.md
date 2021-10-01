@@ -8,6 +8,14 @@ Solo Adventures - Beyond the Vale of Madness, 2020. One shot adventures. URL <ht
 
 ## Installation
 
+### Source Code Repository
+
+Source code for latest version:
+[latest version](<https://github.com/MartinO55/MartinOlson_T1A3/tree/branching-from-known-good>)
+
+dependencies can be found in the gemfile
+[Gem dependencies] (<https://github.com/MartinO55/MartinOlson_T1A3/blob/branching-from-known-good/beyond_the_vale_of_madness/Gemfile>)
+
 Copy the source files to a folder on your machine
 
 To play, run the command:
