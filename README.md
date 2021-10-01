@@ -8,19 +8,13 @@ Solo Adventures - Beyond the Vale of Madness, 2020. One shot adventures. URL <ht
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Copy the source files to a folder on your machine
 
-```ruby
-gem 'beyond_the_vale_of_madness'
+To play, run the command:
+
+```bash
+bash beyond_the_vale_of_madness.sh
 ```
-
-And then execute:
-
-bundle install
-
-Or install it yourself as:
-
-gem install beyond_the_vale_of_madness
 
 ## Usage
 

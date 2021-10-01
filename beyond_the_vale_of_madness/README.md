@@ -21,7 +21,6 @@ bundle install
 Or install it yourself as:
 
 gem install beyond_the_vale_of_madness
-
 ## Usage
 
 After installing the gem, select the new game option, then follow the instructions on screen, making choices as prompted. To make a choice type in the appropriate number and press enter.
