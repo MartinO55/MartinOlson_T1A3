@@ -2,8 +2,9 @@ require_relative "game.rb" #this is where the skill checks and probably comat wi
 require_relative "characters.rb" #this is where inventory will need to be pushed to
 #require_relative "main_menu.rb"  #SO this breaks the app
 require "colorize"
-require "colorized_string"
+#require "colorized_string"
 require "yaml"
+require "artii"
 #require "tty-prompt" #dont do it it doesn't work, it just breaks everything and I don't know why
 #maybe tty prompt#NO NOT AGAIN NEVER AGAIN
 #ascii_paradise for ascii animations
@@ -172,7 +173,7 @@ class StoryCard #this class is all the cards, including the endings, whose desti
             end
         end
         if cashEarned > 0
-            puts "Your adventure earned you #{cashEarned} silver\n\n"    
+            puts "Your adventure earned you #{cashEarned} silver\n\n" 
         else
             puts "You have escaped with your life, but little of value\n\n"
         end
@@ -300,13 +301,24 @@ end
         def startCard5() 
             clearScreen()
             autoSave(5)
-            puts "You manage to loop the grapple around the gargoyle’s wing. Confident in your skill, you begin the treacherous climb.\n\nCRACK!\n\n The gargoyle breaks away and you plummet to the snowy ground.\n\nTending your sore arm from the fall, you decide to circle around the castle and look for another way in."
+            crack = Artii::Base.new :font => 'slant'
+
+            puts "You manage to loop the grapple around the gargoyle’s wing. Confident in your skill, you begin the treacherous climb.\n\n" 
+
+            puts crack.asciify("C R A C K !")
+
+            puts "\n\nThe gargoyle breaks away and you plummet to the snowy ground.\n\nTending your sore arm from the fall, you decide to circle around the castle and look for another way in."
             puts "..."
             puts "[1] Continue"
-            #add Fall damage, and emphasis on the CRACK
             fallDamageMid5 = CombatRolls.new.rollDamage
             fallDamage5 = fallDamageMid5 -4
             Player.hitpoints -=fallDamage5
+                if Player.hitpoints <=0
+                    puts "you died"
+                else 
+                    puts "You are hurt by the fall\n\n"
+                    puts "your hitpoints are: #{Player.hitpoints}\n\n"
+                end
     #The fall does 1d-1 cr damage, with only soft armor protecting.
             getNextCard(cardDestinations)
             #@cardDestinations = gets.chomp.to_i
@@ -555,6 +567,12 @@ class Card16 <StoryCard
     puts "As you rummage through the tattered remnants of the skeleton, your hand scrapes across something razor sharp!\nYou raise your bloody hand to your mouth and probe the wound with your tongue.\n\nKicking aside some torn cloth, you see a glass dagger half-embedded in the wood"
     #You take 1d-4 cut damage (minimum 1)
     Player.hitpoints -=1
+        if Player.hitpoints <=0
+            puts "you died"
+        else 
+            puts "You are hurt by the knife\n\n"
+            puts "your hitpoints are: #{Player.hitpoints}\n\n"
+        end
     puts "Now what?"
     puts "[1] Try to pry the dagger out"
     puts "[2] Leave it alone and keep going"
@@ -641,9 +659,18 @@ class Card19 <StoryCard
             if card19test > card19ToPass#fail
                 puts "the cold starts to take its toll on you, and it hurts."
                 Player.fatiguepoints -=1
+
                 damageFromColdmid = CombatRolls.new.rollDamage
+                puts damageFromColdmid
                 damageFromCold = damageFromColdmid -3
                 Player.hitpoints -= damageFromCold
+
+                    if Player.hitpoints <=0
+                        puts "you died"
+                    else 
+                        puts "You are hurt by the cold\n\n"
+                        puts "your hitpoints are: #{Player.hitpoints}\n\n"
+                    end
                 #also need to do D6 -3 damage here
             else card19test <= card19ToPass
                 puts "the cold takes its toll on you"
@@ -732,7 +759,6 @@ class Card23 <StoryCard
     puts "[2] Examine the tapestries more closely" # Make a Merchant roll (or IQ-5 if you do not have the skill) to examine the tapestries further. the axe tapestry is worth 10, the armoured maiden tapestry is worth 100
     getNextCard(cardDestinations)
 
-
         if cardDestinations == 1 #take both or fail check
             Card51.new.startCard51
         else cardDestinations == 2 
@@ -761,6 +787,12 @@ class Card24 <StoryCard
         if card24Test >card24TestToPass
             puts "OWWW"
             Player.hitpoints -=1 #d6-3
+                if Player.hitpoints <=0
+                    puts "you died"
+                else 
+                    puts "You are hurt by the dagger"
+                    puts Player.hitpoints
+                end
         else card24Test <= card24TestToPass
             puts "ooh shiny"
             pushLoot("Glass Dagger")
@@ -788,7 +820,13 @@ class Card25 <StoryCard
     card25TestToPass = Player.dexterity
         if card25Test > card25TestToPass #fail
             Player.hitpoints -=2 #1d6-2
-            puts "You slip down the steps and land hard on the hard stone. You curse your clumsiness and stand up.\n\n"
+            if Player.hitpoints <=0
+                puts "you died"
+            else 
+                puts "You slip down the steps and land hard on the hard stone. You curse your clumsiness and stand up.\n\n"
+                puts "your hitpoints are: #{Player.hitpoints}"
+            end
+            
         else card25Test <= card25TestToPass
             puts "You carefully make your way down the steps and into a large, main room of the castle.\n\n"
         end
@@ -1385,7 +1423,14 @@ class Card52 <StoryCard
             Card36.new.startCard36
         else card52Test > card25TestToPass #fail
             Player.hitpoints -=5
-            puts "You hit the ground. Hard."
+            
+            if Player.hitpoints <=0
+                puts "you died"
+            else 
+                puts "You hit the ground. Hard." 
+                puts "your hitpoints are: #{Player.hitpoints}"
+            end
+
             puts "[1] Continue"
             card52continue = gets.chomp.to_i
             Card36.new.startCard36 #but take 2d6-2 fall damage. if you die you get eaten by grave ghouls

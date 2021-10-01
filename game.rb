@@ -10,7 +10,15 @@ require "crapshoot"
 class SkillChecks
     def roll3d6()
         roll = Crapshoot.roll '3d6'
-        return roll
+
+        if roll <3# just in case
+            puts "crapshoot had an error, you can't have that number"
+        elsif roll >18
+            puts "you cant have that number either"
+        else
+            return roll
+        end
+        
     end
 end
     #This is a massive amount of repitition, but is future proofing in case I want to come back and add modifiers, since all these checks should have minuses in a character who hasn't been given all the skills
@@ -88,12 +96,26 @@ end
 
    #different rolls for combat 
 class CombatRolls
+    
+    def roll3d6()
+        roll = Crapshoot.roll '3d6'
+
+            if roll <3 #just in case
+                puts "crapshoot had an error, you can't have that number"
+            elsif roll >18
+                puts "you cant have that number either"
+            else
+                return roll
+            end
+        
+    end
+
     def rollToHit()#roll under dex
-        attackRoll = Crapshoot.roll '3d6'
+        attackRoll = roll3d6()
         return attackRoll
     end
     def rollToBlock()#roll under block
-        blockRoll = Crapshoot.roll '3d6'
+        blockRoll = roll3d6()
         return blockRoll
     end
     def rollDamage()

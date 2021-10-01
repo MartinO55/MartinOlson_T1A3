@@ -2,10 +2,10 @@ require_relative "game.rb"
 require_relative "main.rb"
 
 require "colorize"
-require "colorized_string"
+#require "colorized_string"
 require "tty-prompt"
 require "yaml"
-
+require "artii"
 
 def startNewGame ()
     #could have you enter your name
@@ -44,12 +44,13 @@ end
 def quitGame ()
     puts "You quit the game"
     exit()
-
 end
 
 def beginVOM()
     prompt = TTY::Prompt.new
-    puts  "Beyond the Veil of Madness\n\n".colorize(:blue)
+    title = Artii::Base.new :font => 'slant'
+
+    puts title.asciify ("Beyond the Veil of Madness")
 
     puts "A GURPS fantasy oneshot for one player by JC Connors\n\n".colorize(:blue)
 
@@ -73,9 +74,8 @@ def beginVOM()
         loadGame()
     elsif mainMenuNav == 3
         quitGame()
-         #this technically works
     else
-        puts "unrecognised input"
+        puts "unrecognised input... also how???"
     end
 end
 
