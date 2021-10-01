@@ -1,10 +1,3 @@
-# frozen_string_literal: true
-
-require_relative "beyond_the_vale_of_madness/version"
-
-module BeyondTheValeOfMadness
-  class Error < StandardError; end
-  
 require_relative "game.rb"
 require_relative "main.rb"
 
@@ -90,4 +83,3 @@ beginVOM()
 
 #this needs to be called by a menu prompt/select
 #startNewGame()
-end
