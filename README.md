@@ -14,7 +14,7 @@ Source code for latest version:
 [latest version](<https://github.com/MartinO55/MartinOlson_T1A3/tree/branching-from-known-good>)
 
 dependencies can be found in the gemfile
-[Gem dependencies] (<https://github.com/MartinO55/MartinOlson_T1A3/blob/branching-from-known-good/beyond_the_vale_of_madness/Gemfile>)
+[Gem dependencies](<https://github.com/MartinO55/MartinOlson_T1A3/blob/branching-from-known-good/beyond_the_vale_of_madness/Gemfile>)
 
 Copy the source files to a folder on your machine
 
@@ -32,7 +32,7 @@ After installing the gem, select the new game option, then follow the instructio
 
 ### High Level Overview
 
-This application will implement the GURPS (Generalised Universal Roleplaying System) Fantasy solo adventure “Beyond the vale of madness” by J.C. Connors as a text-based adventure game in a ruby terminal application. The scope for this project will be to fully implement the story as told by this adventure module as a text-based adventure that is fully playable through all possible outcomes with at least one pre generated character. The module will then be published as a ruby gem to allow anyone (with a working ruby installation) to access it. Dice rolling mechanics are implemented using the gem "crapshoot". ASCII text is implemented using the gem "Artii", text colours are implemented using the gem "Colourize", and the main menu prompt is implemented using "TTY-prompt". The initial version as deployed here as a beta 'version 0.1', lacks ASCII art due to time constraints, but it is hoped that this can be implemented in future using the gems "rmagick" and "TCO" in order to aid the player in visualising the experience dynamically, using the rmagick and tco gems to convert images to ASCII format that can be displayed in terminal.
+This application will implement the GURPS (Generalised Universal Roleplaying System) Fantasy solo adventure “Beyond the vale of madness” by J.C. Connors as a text-based adventure game in a ruby terminal application. The scope for this project will be to fully implement the story as told by this adventure module as a text-based adventure that is fully playable through all possible outcomes with at least one pre generated character. The module will then be published as a ruby gem to allow anyone (with a working ruby installation) to access it. Dice rolling mechanics are implemented using the gem "crapshoot". ASCII text is implemented using the gem "Artii", text colours are implemented using the gem "Colourize", and the main menu prompt is implemented using "TTY-prompt". These gems have all been imported into ruby using gem manager, with a number of functions of each being used throughout the project. The initial version as deployed here as a beta 'version 0.1', lacks ASCII art due to time constraints, but it is hoped that this can be implemented in future using the gems "rmagick" and "TCO" in order to aid the player in visualising the experience dynamically, using the rmagick and tco gems to convert images to ASCII format that can be displayed in terminal.
 
 ### Identify the Problem This Gem Will Solve
 
@@ -78,6 +78,8 @@ Progress was tracked throughout development using a kanban board created using t
 ![kanban board screen shot detailing progress on september 27 and 28, taken on september 29](docs/KanbanBoardShots/KanbanBoardT1A3_29Sept1.png"september 28 kanban board")
 
 ![kanban board screen shot detailing progress on september 29 and 30, taken on october 1](docs/KanbanBoardShots/KanbanBoardT1A3_1Oct1.png"october 1 kanban board")
+
+![final kanban board screen shot taken on October 2, detailing progress and completion up until october 2](docs/KanbanBoardShots/KanbanBoardT1A3_1Oct2.png "october 2 kanban board")
 
 ## Contributing
 
