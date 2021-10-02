@@ -1,20 +1,10 @@
 # BeyondTheValeOfMadness
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/beyond_the_vale_of_madness`. To experiment with that code, run `bin/console` for an interactive prompt.
-
 This gem is an implementation of the GURPS Fantasy adventure "Beyond the Vale of Madness" by JC Connors, submitted as part of the requirements for Coder Academys fast track course subjects CMP1041 - Foundation Programming, and PRG1002 - Programming I.
 
-Solo Adventures - Beyond the Vale of Madness, 2020. One shot adventures. URL <https://1shotadventures.com/solo-adventures-beyond-the-vale-of-madness/> (accessed 10.1.21).
+[Solo Adventures - Beyond the Vale of Madness, 2020. One shot adventures.](https://1shotadventures.com/solo-adventures-beyond-the-vale-of-madness/) (accessed 10.1.21).
 
 ## Installation
-
-### Source Code Repository
-
-Source code for latest version:
-[latest version](<https://github.com/MartinO55/MartinOlson_T1A3/tree/branching-from-known-good>)
-
-dependencies can be found in the gemfile
-[Gem dependencies](<https://github.com/MartinO55/MartinOlson_T1A3/blob/branching-from-known-good/beyond_the_vale_of_madness/Gemfile>)
 
 Copy the source files to a folder on your machine
 
@@ -23,6 +13,14 @@ To play, run the command:
 ```bash
 bash beyond_the_vale_of_madness.sh
 ```
+
+### Source Code Repository
+
+Source code for latest version:
+[latest version](https://github.com/MartinO55/MartinOlson_T1A3/tree/branching-from-known-good)
+
+dependencies can be found in the gemfile
+[Gem dependencies](https://github.com/MartinO55/MartinOlson_T1A3/blob/branching-from-known-good/beyond_the_vale_of_madness/Gemfile)
 
 ## Usage
 
@@ -80,15 +78,3 @@ Progress was tracked throughout development using a kanban board created using t
 ![kanban board screen shot detailing progress on september 29 and 30, taken on october 1](docs/KanbanBoardShots/KanbanBoardT1A3_1Oct1.png"october 1 kanban board")
 
 ![final kanban board screen shot taken on October 2, detailing progress and completion up until october 2](docs/KanbanBoardShots/KanbanBoardT1A3_1Oct2.png "october 2 kanban board")
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at <https://github.com/[USERNAME>]/beyond_the_vale_of_madness. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/beyond_the_vale_of_madness/blob/master/CODE_OF_CONDUCT.md).
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the BeyondTheValeOfMadness project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/beyond_the_vale_of_madness/blob/master/CODE_OF_CONDUCT.md).
